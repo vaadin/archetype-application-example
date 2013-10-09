@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/mockapp">
+    <Valve className="org.apache.catalina.authenticator.BasicAuthenticator"/>
+    <Valve className="org.apache.catalina.authenticator.FormAuthenticator"/>
+</Context>

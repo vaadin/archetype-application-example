@@ -1,9 +1,10 @@
 package org.vaadin.mockapp.backend.impl;
 
-import org.vaadin.mockapp.backend.LoginService;
-import org.vaadin.mockapp.backend.Services;
-import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
 import org.jetbrains.annotations.NotNull;
+import org.vaadin.mockapp.Services;
+import org.vaadin.mockapp.backend.LoginService;
+import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
+import org.vaadin.mockapp.backend.authentication.Roles;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -22,10 +23,10 @@ public class MockLoginService implements LoginService, ServletContextListener {
     @Override
     public boolean login(@NotNull String username, @NotNull String password) {
         if ("admin".equals(username) && "admin123".equals(password)) {
-            AuthenticationHolder.setAuthentication(new SimpleAuthentication("admin", "ADMIN"));
+            AuthenticationHolder.setAuthentication(new SimpleAuthentication("admin", Roles.ROLE_ADMIN));
             return true;
         } else if ("user".equals(username) && "user123".equals(password)) {
-            AuthenticationHolder.setAuthentication(new SimpleAuthentication("user", "USER"));
+            AuthenticationHolder.setAuthentication(new SimpleAuthentication("user", Roles.ROLE_USER));
             return true;
         }
         Logger.getLogger(MockLoginService.class.getCanonicalName()).log(Level.WARNING, "Login failed for user {0}", username);

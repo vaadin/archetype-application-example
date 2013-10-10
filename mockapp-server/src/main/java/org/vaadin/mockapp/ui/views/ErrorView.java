@@ -1,4 +1,4 @@
-package com.vaadin.mockapp.ui.views;
+package org.vaadin.mockapp.ui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;

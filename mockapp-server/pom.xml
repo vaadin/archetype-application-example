@@ -32,6 +32,12 @@
             <artifactId>mockapp-client</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>6.0.2</version>
+        </dependency>
     </dependencies>
 
     <build>

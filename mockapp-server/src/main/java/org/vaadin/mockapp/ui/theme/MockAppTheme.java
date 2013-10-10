@@ -1,4 +1,4 @@
-package com.vaadin.mockapp.ui.theme;
+package org.vaadin.mockapp.ui.theme;
 
 import com.vaadin.ui.themes.Reindeer;
 

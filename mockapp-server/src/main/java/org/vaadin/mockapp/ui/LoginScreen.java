@@ -1,23 +1,22 @@
-package com.vaadin.mockapp.ui.components;
+package org.vaadin.mockapp.ui;
 
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.mockapp.ui.theme.MockAppTheme;
 import com.vaadin.ui.*;
-
-import java.io.Serializable;
+import org.vaadin.mockapp.EventBus;
+import org.vaadin.mockapp.Services;
+import org.vaadin.mockapp.backend.LoginService;
+import org.vaadin.mockapp.ui.theme.MockAppTheme;
 
 /**
  * @author petter@vaadin.com
  */
 public class LoginScreen extends CustomComponent {
 
-    private final Callback callback;
     private TextField username;
     private PasswordField password;
     private Button login;
 
-    public LoginScreen(Callback callback) {
-        this.callback = callback;
+    public LoginScreen() {
         init();
     }
 
@@ -52,16 +51,14 @@ public class LoginScreen extends CustomComponent {
     }
 
     private void login() {
-        if (!callback.login(username.getValue(), password.getValue())) {
+        if (Services.get(LoginService.class).login(username.getValue(), password.getValue())) {
+            Services.get(EventBus.class).publish(new LoginSucceededEvent());
+        } else {
             Notification.show("Login failed", "Please check your username and password and try again.", Notification.Type.HUMANIZED_MESSAGE);
             username.focus();
         }
     }
 
-    public interface Callback extends Serializable {
-
-        boolean login(String username, String password);
-
+    public static final class LoginSucceededEvent {
     }
-
 }

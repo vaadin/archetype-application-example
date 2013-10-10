@@ -1,5 +1,6 @@
 package com.vaadin.mockapp.backend.authentication;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 
 /**
@@ -40,10 +41,11 @@ public interface Authentication extends Serializable {
     /**
      * Returns the name of the authenticated user (never {@code null}).
      */
+    @Nonnull
     String getName();
 
     /**
      * Returns whether the authenticated user holds the specified role.
      */
-    boolean hasRole(String roleName);
+    boolean hasRole(@Nonnull String roleName);
 }

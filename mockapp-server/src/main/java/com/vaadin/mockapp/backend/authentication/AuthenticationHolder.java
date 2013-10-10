@@ -3,6 +3,9 @@ package com.vaadin.mockapp.backend.authentication;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * Class for retrieving and setting the {@link Authentication} object of the current session. All methods of this class
  * require that a {@link VaadinRequest} is bound to the current thread.
@@ -26,6 +29,7 @@ public final class AuthenticationHolder {
      *
      * @throws IllegalStateException if the current session cannot be accessed.
      */
+    @Nonnull
     public static Authentication getAuthentication() {
         Authentication authentication = (Authentication) getCurrentRequest().getWrappedSession().getAttribute(AUTHENTICATION_SESSION_ATTRIBUTE_KEY);
         if (authentication == null) {
@@ -41,7 +45,7 @@ public final class AuthenticationHolder {
      *
      * @throws IllegalStateException if the current session cannot be accessed.
      */
-    public static void setAuthentication(Authentication authentication) {
+    public static void setAuthentication(@Nullable Authentication authentication) {
         if (authentication == null) {
             getCurrentRequest().getWrappedSession().removeAttribute(AUTHENTICATION_SESSION_ATTRIBUTE_KEY);
         } else {
@@ -49,6 +53,7 @@ public final class AuthenticationHolder {
         }
     }
 
+    @Nonnull
     private static VaadinRequest getCurrentRequest() {
         VaadinRequest request = VaadinService.getCurrentRequest();
         if (request == null) {

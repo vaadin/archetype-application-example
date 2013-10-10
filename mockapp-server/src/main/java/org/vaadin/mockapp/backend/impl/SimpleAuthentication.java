@@ -1,6 +1,6 @@
-package com.vaadin.mockapp.backend.impl;
+package org.vaadin.mockapp.backend.impl;
 
-import com.vaadin.mockapp.backend.authentication.Authentication;
+import org.vaadin.mockapp.backend.authentication.Authentication;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Simple implementation of {@link Authentication} that is used by {@link MockLoginService}.
+ * Simple implementation of {@link org.vaadin.mockapp.backend.authentication.Authentication} that is used by {@link MockLoginService}.
  *
  * @author petter@vaadin.com
  */

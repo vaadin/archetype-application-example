@@ -1,8 +1,8 @@
-package com.vaadin.mockapp.backend.impl;
+package org.vaadin.mockapp.backend.impl;
 
-import com.vaadin.mockapp.backend.LoginService;
-import com.vaadin.mockapp.backend.Services;
-import com.vaadin.mockapp.backend.authentication.AuthenticationHolder;
+import org.vaadin.mockapp.backend.LoginService;
+import org.vaadin.mockapp.backend.Services;
+import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
 import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.ServletContextEvent;
@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Very simple implementation of {@link LoginService}. <b>Do not use in real applications!</b>
+ * Very simple implementation of {@link org.vaadin.mockapp.backend.LoginService}. <b>Do not use in real applications!</b>
  *
  * @author petter@vaadin.com
  */

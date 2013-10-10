@@ -1,4 +1,4 @@
-package com.vaadin.mockapp.backend.authentication;
+package org.vaadin.mockapp.backend.authentication;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * Interface representing an authentication token that identifies a user and contains information about his or her permissions.
- * The current authentication token can always be accessed by calling {@link com.vaadin.mockapp.backend.authentication.AuthenticationHolder#getAuthentication()} .
+ * The current authentication token can always be accessed by calling {@link AuthenticationHolder#getAuthentication()} .
  *
  * @author petter@vaadin.com
  */

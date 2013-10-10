@@ -1,4 +1,4 @@
-package com.vaadin.mockapp.backend;
+package org.vaadin.mockapp.backend;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -9,14 +9,14 @@ public interface LoginService {
 
     /**
      * Attempts to login with the specified username and password and returns the result. If the attempt was successful,
-     * the {@link com.vaadin.mockapp.backend.authentication.Authentication} token can be retrieved from {@link com.vaadin.mockapp.backend.authentication.AuthenticationHolder}.
+     * the {@link org.vaadin.mockapp.backend.authentication.Authentication} token can be retrieved from {@link org.vaadin.mockapp.backend.authentication.AuthenticationHolder}.
      *
      * @return true if login succeeded, false if it failed.
      */
     boolean login(@NotNull String username, @NotNull String password);
 
     /**
-     * Logs the user out, clearing the authentication token from {@link com.vaadin.mockapp.backend.authentication.AuthenticationHolder}. The session remains active after this call, though.
+     * Logs the user out, clearing the authentication token from {@link org.vaadin.mockapp.backend.authentication.AuthenticationHolder}. The session remains active after this call, though.
      */
     void logout();
 

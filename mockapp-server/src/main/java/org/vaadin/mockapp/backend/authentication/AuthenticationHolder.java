@@ -1,4 +1,4 @@
-package com.vaadin.mockapp.backend.authentication;
+package org.vaadin.mockapp.backend.authentication;
 
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;

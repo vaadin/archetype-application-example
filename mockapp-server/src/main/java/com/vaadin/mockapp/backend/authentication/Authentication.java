@@ -1,6 +1,7 @@
 package com.vaadin.mockapp.backend.authentication;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -17,13 +18,14 @@ public interface Authentication extends Serializable {
      */
     Authentication ANONYMOUS = new Authentication() {
 
+        @NotNull
         @Override
         public String getName() {
             return "Anonymous";
         }
 
         @Override
-        public boolean hasRole(String roleName) {
+        public boolean hasRole(@NotNull String roleName) {
             return false;
         }
 
@@ -32,6 +34,7 @@ public interface Authentication extends Serializable {
             return 0;
         }
 
+        @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
         @Override
         public boolean equals(Object obj) {
             return obj == this;
@@ -41,11 +44,11 @@ public interface Authentication extends Serializable {
     /**
      * Returns the name of the authenticated user (never {@code null}).
      */
-    @Nonnull
+    @NotNull
     String getName();
 
     /**
      * Returns whether the authenticated user holds the specified role.
      */
-    boolean hasRole(@Nonnull String roleName);
+    boolean hasRole(@NotNull String roleName);
 }

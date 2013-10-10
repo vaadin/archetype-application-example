@@ -3,6 +3,7 @@ package com.vaadin.mockapp.backend.impl;
 import com.vaadin.mockapp.backend.LoginService;
 import com.vaadin.mockapp.backend.Services;
 import com.vaadin.mockapp.backend.authentication.AuthenticationHolder;
+import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
 public class MockLoginService implements LoginService, ServletContextListener {
 
     @Override
-    public boolean login(String username, String password) {
+    public boolean login(@NotNull String username, @NotNull String password) {
         if ("admin".equals(username) && "admin123".equals(password)) {
             AuthenticationHolder.setAuthentication(new SimpleAuthentication("admin", "ADMIN"));
             return true;

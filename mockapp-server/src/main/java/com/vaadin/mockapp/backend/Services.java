@@ -1,7 +1,8 @@
 package com.vaadin.mockapp.backend;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class Services {
      * Returns an instance of the specified service interface, or {@code null} if no service has been registered.
      */
     @Nullable
-    public synchronized static <T> T get(@Nonnull Class<T> serviceInterface) {
+    public synchronized static <T> T get(@NotNull Class<T> serviceInterface) {
         T service = serviceInterface.cast(serviceMap.get(serviceInterface));
         if (service == null) {
             Logger.getLogger(Services.class.getCanonicalName()).log(Level.WARNING, "No service instance found for {0}", serviceInterface);
@@ -36,7 +37,7 @@ public class Services {
     /**
      * Registers the specified service instance for the specified service interfaces.
      */
-    public static <T> void register(@Nonnull T service, @Nonnull Class<? super T>... serviceInterfaces) {
+    public static void register(@NotNull Object service, @NotNull Class<?>... serviceInterfaces) {
         for (Class<?> serviceInterface : serviceInterfaces) {
             serviceMap.put(serviceInterface, service);
             Logger.getLogger(Services.class.getCanonicalName()).log(Level.INFO, "Registered service instance {0} for {1}", new Object[]{service, serviceInterface});
@@ -46,7 +47,7 @@ public class Services {
     /**
      * Removes previously registered service instances for the specified service interfaces.
      */
-    public static void remove(@Nonnull Class<?>... serviceInterfaces) {
+    public static void remove(@NotNull Class<?>... serviceInterfaces) {
         for (Class<?> serviceInterface : serviceInterfaces) {
             serviceMap.remove(serviceInterface);
             Logger.getLogger(Services.class.getCanonicalName()).log(Level.INFO, "Removed service registration for {0}", serviceInterface);

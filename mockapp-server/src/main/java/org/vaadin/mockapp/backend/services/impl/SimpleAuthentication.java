@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.backend.impl;
+package org.vaadin.mockapp.backend.services.impl;
 
 import org.vaadin.mockapp.backend.authentication.Authentication;
 import org.jetbrains.annotations.NotNull;

@@ -9,7 +9,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.vaadin.mockapp.Services;
-import org.vaadin.mockapp.backend.authentication.Roles;
+import org.vaadin.mockapp.backend.MockAppRoles;
 import org.vaadin.mockapp.backend.domain.Doctor;
 import org.vaadin.mockapp.backend.services.DoctorService;
 import org.vaadin.mockapp.ui.theme.MockAppTheme;
@@ -21,7 +21,7 @@ import java.util.UUID;
  * @author petter@vaadin.com
  */
 @ViewDefinition(name = ManageDoctorsFormView.VIEW_NAME,
-        allowedRoles = {Roles.ROLE_ADMIN})
+        allowedRoles = {MockAppRoles.ROLE_ADMIN})
 public class ManageDoctorsFormView extends VerticalLayout implements View, FieldEvents.TextChangeListener {
 
     public static final String VIEW_NAME = "doctor";

@@ -6,8 +6,105 @@
 
 /* This contains all of your theme.*/
 @mixin mockapp {
-  /* Include all the styles from the reindeer theme */
+/* Include all the styles from the reindeer theme */
   @include reindeer;
 
-  /* Insert your theme rules here */
+/* Insert your theme rules here */
+
+  $button-primary-search-background-color: #4d90fe;
+  $button-primary-search-background-additional-color: #4787ed;
+  $button-primary-search-border-color: #3079ed;
+  $button-primary-search-color: white;
+
+  $button-primary-modify-background-color: #d14836;
+  $button-primary-modify-background-additional-color: #d14836;
+  $button-primary-modify-border-color: #c6322a;
+  $button-primary-modify-color: white;
+
+  $button-background-color: #f8f8f8;
+  $button-background-additional-color: #ececec;
+  $button-border-color: #c6c6c6;
+  $button-color: rgb(102, 102, 102);
+
+  .v-textfield-filter {
+    background-image: url("icons/search_16x16.png");
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+    padding-left: 20px !important;
+  }
+
+  .v-button-link {
+
+  }
+
+  .v-button, .v-button.v-disabled {
+    @include colored-button($button-color,
+      $button-background-color,
+      $button-background-additional-color,
+      $button-border-color);
+  }
+
+  .v-button-primary-search, .v-button-primary-search.v-disabled {
+    @include colored-button($button-primary-search-color,
+      $button-primary-search-background-color,
+      $button-primary-search-background-additional-color,
+      $button-primary-search-border-color);
+  }
+
+  .v-button-primary-modify, .v-button-primary-modify.v-disabled {
+   @include colored-button($button-primary-modify-color,
+      $button-primary-modify-background-color,
+      $button-primary-modify-background-additional-color,
+      $button-primary-modify-border-color);
+  }
+
+  .v-calendar-time-slots {
+    background: inherit;
+
+    .v-calendar-day-times, .v-calendar-month-day {
+      background-color: white;
+    }
+
+    .v-calendar-month-day-prev-month, .v-calendar-month-day-next-month {
+      background: inherit;
+    }
+
+    .v-calendar-event-time-slot-past {
+      opacity: 0.5;
+    }
+
+    .v-calendar-event-time-slot-free {
+      background-color: lawngreen;
+    }
+
+    .v-calendar-event-time-slot-taken {
+      background-color: orangered;
+    }
+
+    .v-calendar-back, .v-calendar-next {
+      visibility: hidden;
+    }
+  }
+
+}
+
+@mixin colored-button($color, $background1, $background2, $border) {
+  background-color: $background1;
+  background-image: -webkit-gradient(linear, left top, left bottom, from($background1), to($background2));
+  background-image: -webkit-linear-gradient(top, $background1, $background2);
+  background-image: -moz-linear-gradient(top, $background1, $background2);
+  background-image: -ms-linear-gradient(top, $background1, $background2);
+  background-image: -o-linear-gradient(top, $background1, $background2);
+  background-image: linear-gradient(top, $background1, $background2);
+  border: 1px solid $border;
+  border-radius: 3px;
+
+  .v-button-wrap {
+    background: none;
+
+    .v-button-caption {
+      color: $color;
+      text-shadow: none;
+    }
+  }
 }

@@ -5,6 +5,7 @@ import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalSplitPanel;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author petter@vaadin.com
@@ -31,7 +32,7 @@ public class MainScreen extends CustomComponent implements ViewDisplay {
     }
 
     @Override
-    public void showView(View view) {
+    public void showView(@NotNull View view) {
         root.setSecondComponent((Component) view);
     }
 

@@ -1,50 +1,63 @@
 package org.vaadin.mockapp.backend.services.impl;
 
 import org.jetbrains.annotations.NotNull;
-import org.joda.time.Interval;
-import org.joda.time.LocalDate;
-import org.joda.time.YearMonth;
+import org.joda.time.*;
 import org.vaadin.mockapp.Services;
+import org.vaadin.mockapp.backend.MockAppRoles;
 import org.vaadin.mockapp.backend.authentication.AccessDeniedException;
-import org.vaadin.mockapp.backend.authentication.Roles;
 import org.vaadin.mockapp.backend.domain.Doctor;
 import org.vaadin.mockapp.backend.domain.TimeSlot;
+import org.vaadin.mockapp.backend.services.DoctorService;
 import org.vaadin.mockapp.backend.services.TimeSlotService;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
  * @author petter@vaadin.com
  */
-public class MockTimeSlotService extends MockBaseDomainService<TimeSlot> implements TimeSlotService, ServletContextListener {
+public class MockTimeSlotService extends MockBaseDomainService<TimeSlot> implements TimeSlotService {
+
+    void createMockData() {
+        final Random rnd = new Random();
+        final LocalDate startDay = new LocalDate().minusMonths(2);
+        final LocalDate endDay = new LocalDate().plusMonths(1);
+        for (Doctor doctor : ((MockDoctorService) Services.get(DoctorService.class)).getEntityMap().values()) {
+            for (LocalDate day = startDay; day.compareTo(endDay) <= 0; day = day.plusDays(1)) {
+                int timeSlots = rnd.nextInt(26);
+                DateTime starts = day.toDateTimeAtStartOfDay().withHourOfDay(8);
+                for (int i = 1; i <= timeSlots; i++) {
+                    if (rnd.nextBoolean()) {
+                        TimeSlot timeSlot = new TimeSlot();
+                        timeSlot.setCreateTimestamp(new DateTime());
+                        timeSlot.setCreateUserName("root");
+                        timeSlot.setUuid(UUID.randomUUID());
+                        timeSlot.setDoctor(doctor);
+                        timeSlot.setDuration(Duration.standardMinutes(20));
+                        timeSlot.setStarts(starts);
+                        doSave(timeSlot);
+                    }
+                    starts = starts.plus(Duration.standardMinutes(20));
+                }
+            }
+        }
+    }
 
     @Override
     protected void beforeSave(@NotNull TimeSlot entity) {
-        AccessDeniedException.requireAnyOf(Roles.ROLE_DOCTOR, Roles.ROLE_ADMIN);
+        AccessDeniedException.requireAnyOf(MockAppRoles.ROLE_DOCTOR);
     }
 
     @Override
     protected void beforeDelete(@NotNull TimeSlot entity) {
-        AccessDeniedException.requireAnyOf(Roles.ROLE_DOCTOR, Roles.ROLE_ADMIN);
+        AccessDeniedException.requireAnyOf(MockAppRoles.ROLE_DOCTOR);
     }
 
     @Override
     protected void beforeFindByUuid(@NotNull UUID uuid) {
-        AccessDeniedException.requireAnyOf(Roles.ALL_ROLES);
-    }
-
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        Services.register(this, TimeSlotService.class);
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-        Services.remove(TimeSlotService.class);
+        AccessDeniedException.requireAnyOf(MockAppRoles.ROLE_DOCTOR, MockAppRoles.ROLE_RECEPTIONIST);
     }
 
     @NotNull
@@ -61,8 +74,8 @@ public class MockTimeSlotService extends MockBaseDomainService<TimeSlot> impleme
 
     @NotNull
     @Override
-    public List<TimeSlot> findTimeSlotsForInterval(@NotNull Interval interval, @NotNull Doctor doctor) {
-        AccessDeniedException.requireAnyOf(Roles.ALL_ROLES);
+    public synchronized List<TimeSlot> findTimeSlotsForInterval(@NotNull Interval interval, @NotNull Doctor doctor) {
+        AccessDeniedException.requireAnyOf(MockAppRoles.ROLE_DOCTOR, MockAppRoles.ROLE_RECEPTIONIST);
         List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
         for (TimeSlot timeSlot : entityMap.values()) {
             if (timeSlot.getDoctor().equals(doctor)) {
@@ -73,4 +86,5 @@ public class MockTimeSlotService extends MockBaseDomainService<TimeSlot> impleme
         }
         return timeSlots;
     }
+
 }

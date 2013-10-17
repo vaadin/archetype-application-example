@@ -16,6 +16,6 @@ public interface DoctorService extends BaseDomainService.WritableDomainService<D
     Doctor findByCode(@NotNull String code);
 
     @NotNull
-    List<Doctor> findAll(boolean includeDeleted);
+    List<Doctor> findAll();
 
 }

@@ -3,8 +3,9 @@ package org.vaadin.mockapp.ui;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
+import org.jetbrains.annotations.NotNull;
 import org.vaadin.mockapp.Services;
-import org.vaadin.mockapp.backend.LoginService;
+import org.vaadin.mockapp.backend.services.LoginService;
 import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
 import org.vaadin.mockapp.ui.views.ViewManager;
 
@@ -64,7 +65,7 @@ public class SideBar extends CustomComponent {
         }
     }
 
-    private void addNavigationButton(final ViewManager.ViewDefinitionEntry viewDefinitionEntry) {
+    private void addNavigationButton(@NotNull final ViewManager.ViewDefinitionEntry viewDefinitionEntry) {
         ComponentContainer componentContainer = (ComponentContainer) navigationPanel.getContent();
         NativeButton navigationButton = new NativeButton();
         navigationButton.setCaption(viewDefinitionEntry.getViewCaption());

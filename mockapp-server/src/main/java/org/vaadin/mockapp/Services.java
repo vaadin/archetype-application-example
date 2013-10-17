@@ -29,6 +29,7 @@ public class Services {
         ServiceProvider serviceProvider = serviceMap.get(serviceInterface);
         if (serviceProvider == null) {
             Logger.getLogger(Services.class.getCanonicalName()).log(Level.WARNING, "No service found for {0}", serviceInterface);
+            return null;
         }
         return serviceInterface.cast(serviceProvider.get());
     }

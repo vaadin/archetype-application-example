@@ -17,5 +17,7 @@
     <!--
         Remove this line if you won't want to use the TokenField add-on.
     -->
-    <inherits name="org.vaadin.tokenfield.TokenfieldWidgetset"/>
+    
+
+    <inherits name="org.vaadin.peter.buttongroup.ButtonGroupWidgetset" />
 </module>

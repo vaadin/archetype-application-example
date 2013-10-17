@@ -1,11 +1,11 @@
 package org.vaadin.mockapp.backend.domain;
 
-import org.vaadin.mockapp.backend.SoftDeletableBaseDomain;
+import org.vaadin.mockapp.backend.BaseDomain;
 
 /**
  * @author petter@vaadin.com
  */
-public class Doctor extends SoftDeletableBaseDomain {
+public class Doctor extends BaseDomain {
 
     private String firstName;
     private String lastName;
@@ -45,13 +45,7 @@ public class Doctor extends SoftDeletableBaseDomain {
         this.speciality = speciality;
     }
 
-    @Override
-    public boolean isDeleted() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void setDeleted(boolean deleted) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public String getDisplayName() {
+        return String.format("%s - %s %s", code, lastName, firstName);
     }
 }

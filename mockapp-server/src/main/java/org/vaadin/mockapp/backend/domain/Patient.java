@@ -3,8 +3,6 @@ package org.vaadin.mockapp.backend.domain;
 import org.joda.time.LocalDate;
 import org.vaadin.mockapp.backend.BaseDomain;
 
-import java.util.Date;
-
 /**
  * @author petter@vaadin.com
  */
@@ -54,5 +52,14 @@ public class Patient extends BaseDomain {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getDisplayName() {
+        return String.format("%s %s (%s) born on %s",
+                lastName, firstName, gender.toString().toLowerCase(), dateOfBirth.toString());
+    }
+
+    public String getFullName() {
+        return String.format("%s %s", lastName, firstName);
     }
 }

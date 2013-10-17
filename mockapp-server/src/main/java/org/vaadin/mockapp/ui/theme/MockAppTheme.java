@@ -8,4 +8,10 @@ import com.vaadin.ui.themes.Reindeer;
 public class MockAppTheme extends Reindeer {
 
     public static final String THEME_NAME = "mockapp";
+
+    public static final String BUTTON_DEFAULT_NO_MODIFICATIONS = "primary-search";
+
+    public static final String BUTTON_DEFAULT_MODIFY = "primary-modify";
+
+    public static final String TEXTFIELD_FILTER = "filter";
 }

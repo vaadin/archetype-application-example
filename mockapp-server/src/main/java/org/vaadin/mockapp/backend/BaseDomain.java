@@ -86,12 +86,8 @@ public abstract class BaseDomain implements Serializable, Cloneable {
     }
 
     @Override
-    public BaseDomain clone() {
-        try {
-            return (BaseDomain) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+    public BaseDomain clone() throws CloneNotSupportedException {
+        return (BaseDomain) super.clone();
     }
 
 }

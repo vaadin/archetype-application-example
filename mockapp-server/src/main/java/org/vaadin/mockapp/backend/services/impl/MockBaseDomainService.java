@@ -5,11 +5,9 @@ import org.jetbrains.annotations.Nullable;
 import org.joda.time.DateTime;
 import org.vaadin.mockapp.backend.BaseDomain;
 import org.vaadin.mockapp.backend.BaseDomainService;
-import org.vaadin.mockapp.backend.SoftDeletableBaseDomain;
 import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -22,6 +20,7 @@ public abstract class MockBaseDomainService<E extends BaseDomain> implements Bas
     protected final Map<UUID, E> entityMap = new HashMap<UUID, E>();
 
     @NotNull
+    @SuppressWarnings("unchecked")
     protected Class<E> getEntityClass() {
         return (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
@@ -39,7 +38,7 @@ public abstract class MockBaseDomainService<E extends BaseDomain> implements Bas
             entity.setUpdateTimestamp(new DateTime());
             entity.setUpdateUserName(AuthenticationHolder.getAuthentication().getName());
         }
-        doSave(getEntityClass().cast(entity.clone()));
+        doSave(getEntityClass().cast(nullSafeClone(entity)));
     }
 
     protected void beforeSave(@NotNull E entity) {
@@ -62,12 +61,7 @@ public abstract class MockBaseDomainService<E extends BaseDomain> implements Bas
     public synchronized void delete(@NotNull E entity) {
         beforeDelete(entity);
         if (entityMap.containsKey(entity.getUuid())) {
-            if (entity instanceof SoftDeletableBaseDomain) {
-                ((SoftDeletableBaseDomain) entity).setDeleted(true);
-                save(entity);
-            } else {
-                doDelete(entity);
-            }
+            doDelete(entity);
         }
     }
 
@@ -80,7 +74,14 @@ public abstract class MockBaseDomainService<E extends BaseDomain> implements Bas
 
     @Nullable
     protected E nullSafeClone(@Nullable E entity) {
-        return entity == null ? null : getEntityClass().cast(entity.clone());
+        try {
+            return entity == null ? null : getEntityClass().cast(entity.clone());
+        } catch (CloneNotSupportedException ex) {
+            throw new RuntimeException("Could not clone entity", ex);
+        }
     }
 
+    Map<UUID, E> getEntityMap() {
+        return entityMap;
+    }
 }

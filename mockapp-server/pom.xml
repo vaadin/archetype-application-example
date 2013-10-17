@@ -20,8 +20,8 @@
         -->
         <dependency>
             <groupId>org.vaadin.addons</groupId>
-            <artifactId>tokenfield</artifactId>
-            <version>7.0.1</version>
+            <artifactId>buttongroup</artifactId>
+            <version>2.3</version>
         </dependency>
 
         <!--
@@ -33,10 +33,18 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!--
+            Other dependencies
+        -->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>6.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
         </dependency>
     </dependencies>
 

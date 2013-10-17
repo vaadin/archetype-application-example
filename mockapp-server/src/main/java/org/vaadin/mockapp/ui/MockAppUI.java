@@ -15,6 +15,8 @@ import org.vaadin.mockapp.backend.authentication.Authentication;
 import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
 import org.vaadin.mockapp.ui.theme.MockAppTheme;
 import org.vaadin.mockapp.ui.views.*;
+import org.vaadin.mockapp.ui.views.admin.ManageDoctorsFormView;
+import org.vaadin.mockapp.ui.views.admin.ManageDoctorsView;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -53,8 +55,9 @@ public class MockAppUI extends UI implements EventBus.Subscriber {
                 Add your views here. Remember to annotate the view classes with @ViewDefinition!
              */
             addView(HomeView.class);
-            addView(SampleListView.class);
-            addView(SampleFormView.class);
+            addView(ManageDoctorsView.class);
+            addView(ManageDoctorsFormView.class);
+            addView(CalendarView.class);
         }
     };
     private final EventBus eventBus = new EventBus();

@@ -6,6 +6,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalSplitPanel;
 import org.jetbrains.annotations.NotNull;
+import org.vaadin.mockapp.ui.theme.MockAppTheme;
 
 /**
  * @author petter@vaadin.com
@@ -25,6 +26,7 @@ public class MainScreen extends CustomComponent implements ViewDisplay {
         root = new HorizontalSplitPanel();
         root.setSizeFull();
         root.setSplitPosition(150, Unit.PIXELS);
+        root.addStyleName(MockAppTheme.SPLITPANEL_SMALL);
         setCompositionRoot(root);
 
         SideBar sideBar = new SideBar();

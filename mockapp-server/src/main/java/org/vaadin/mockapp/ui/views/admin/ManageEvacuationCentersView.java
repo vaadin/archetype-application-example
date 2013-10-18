@@ -10,32 +10,34 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.vaadin.mockapp.Services;
 import org.vaadin.mockapp.backend.MockAppRoles;
-import org.vaadin.mockapp.backend.domain.Doctor;
-import org.vaadin.mockapp.backend.services.DoctorService;
+import org.vaadin.mockapp.backend.domain.EvacuationCenter;
+import org.vaadin.mockapp.backend.services.EvacuationCenterService;
 import org.vaadin.mockapp.ui.theme.MockAppTheme;
+import org.vaadin.mockapp.ui.views.DateTimeToStringConverter;
 import org.vaadin.mockapp.ui.views.ViewDefinition;
 
 /**
  * @author petter@vaadin.com
  */
-@ViewDefinition(name = ManageDoctorsView.VIEW_NAME,
-        caption = "Manage Doctors",
+@ViewDefinition(name = ManageEvacuationCentersView.VIEW_NAME,
+        caption = "Manage Centers",
         // TODO add icon
         order = 100,
+        cache = true,
         allowedRoles = {MockAppRoles.ROLE_ADMIN})
-public class ManageDoctorsView extends VerticalLayout implements View {
+public class ManageEvacuationCentersView extends VerticalLayout implements View {
 
-    public static final String VIEW_NAME = "doctors";
+    public static final String VIEW_NAME = "evacuationCenters";
     private Label title;
     private Table table;
-    private BeanItemContainer<Doctor> container;
+    private BeanItemContainer<EvacuationCenter> container;
     private TextField filter;
     private Button refresh;
     private Button add;
     private Button edit;
     private Button delete;
 
-    public ManageDoctorsView() {
+    public ManageEvacuationCentersView() {
         init();
     }
 
@@ -49,16 +51,16 @@ public class ManageDoctorsView extends VerticalLayout implements View {
         header.setSpacing(true);
         addComponent(header);
 
-        title = new Label("Manage Doctors");
+        title = new Label("Manage Evacuation Centers");
         title.setSizeUndefined();
         title.addStyleName(MockAppTheme.LABEL_H1);
         header.addComponent(title);
         header.setExpandRatio(title, 1f);
 
         filter = new TextField();
-        filter.setInputPrompt("Filter by name or speciality");
+        filter.setInputPrompt("Filter by name or address");
         filter.addStyleName(MockAppTheme.TEXTFIELD_FILTER);
-        filter.setWidth(15, Unit.EM);
+        filter.setWidth(25, Unit.EM);
         filter.setImmediate(true);
         filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
             @Override
@@ -69,14 +71,28 @@ public class ManageDoctorsView extends VerticalLayout implements View {
         header.addComponent(filter);
         header.setComponentAlignment(filter, Alignment.MIDDLE_RIGHT);
 
-        container = new BeanItemContainer<Doctor>(Doctor.class);
+        container = new BeanItemContainer<EvacuationCenter>(EvacuationCenter.class);
+        container.addNestedContainerBean("address");
 
         table = new Table();
         table.setSizeFull();
         table.setContainerDataSource(container);
         table.setSelectable(true);
         table.setImmediate(true);
-        table.setVisibleColumns("code", "lastName", "firstName", "speciality");
+        table.setVisibleColumns("name", "address.street", "address.postalCode", "address.city", "openDate", "closeDate");
+        table.setColumnHeaders("Name", "Street", "Postal Code", "City", "Opened", "Closed");
+        table.setCellStyleGenerator(new Table.CellStyleGenerator() {
+            @Override
+            public String getStyle(Table source, Object itemId, Object propertyId) {
+                if (((EvacuationCenter) itemId).isClosed()) {
+                    return "closed";
+                } else {
+                    return null;
+                }
+            }
+        });
+        table.setConverter("openDate", new DateTimeToStringConverter());
+        table.setConverter("closeDate", new DateTimeToStringConverter());
         table.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
@@ -102,7 +118,7 @@ public class ManageDoctorsView extends VerticalLayout implements View {
         footer.addComponent(refresh);
         footer.setExpandRatio(refresh, 1f);
 
-        add = new Button("Add Doctor", new Button.ClickListener() {
+        add = new Button("Add Center", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 add();
@@ -136,33 +152,35 @@ public class ManageDoctorsView extends VerticalLayout implements View {
         updateButtonStates();
     }
 
-    private DoctorService getDoctorService() {
-        return Services.get(DoctorService.class);
+    private EvacuationCenterService getEvacuationCenterService() {
+        return Services.get(EvacuationCenterService.class);
     }
 
     private void refresh() {
         container.removeAllItems();
-        container.addAll(getDoctorService().findAll());
+        container.addAll(getEvacuationCenterService().findAll());
         refresh.setEnabled(true);
     }
 
     private void delete() {
-        Doctor selected = (Doctor) table.getValue();
+        EvacuationCenter selected = (EvacuationCenter) table.getValue();
         if (selected != null) {
-            getDoctorService().delete(selected);
+            getEvacuationCenterService().delete(selected);
             container.removeItem(selected);
         }
     }
 
     private void add() {
-        getUI().getNavigator().navigateTo(ManageDoctorsFormView.VIEW_NAME);
+        getUI().getNavigator().navigateTo(ManageEvacuationCentersFormView.VIEW_NAME);
+        add.setEnabled(true);
     }
 
     private void edit() {
-        Doctor selected = (Doctor) table.getValue();
+        EvacuationCenter selected = (EvacuationCenter) table.getValue();
         if (selected != null) {
-            getUI().getNavigator().navigateTo(ManageDoctorsFormView.VIEW_NAME + "/" + selected.getUuid());
+            getUI().getNavigator().navigateTo(ManageEvacuationCentersFormView.VIEW_NAME + "/" + selected.getUuid());
         }
+        edit.setEnabled(true);
     }
 
     private void filter(String filterString) {
@@ -171,10 +189,10 @@ public class ManageDoctorsView extends VerticalLayout implements View {
             for (String singleFilterTerm : filterString.split(" ")) {
                 container.addContainerFilter(
                         new Or(
-                                new SimpleStringFilter("firstName", singleFilterTerm, true, false),
-                                new SimpleStringFilter("lastName", singleFilterTerm, true, false),
-                                new SimpleStringFilter("code", singleFilterTerm, true, false),
-                                new SimpleStringFilter("speciality", singleFilterTerm, true, false)
+                                new SimpleStringFilter("name", singleFilterTerm, true, false),
+                                new SimpleStringFilter("address.street", singleFilterTerm, true, false),
+                                new SimpleStringFilter("address.postalCode", singleFilterTerm, true, false),
+                                new SimpleStringFilter("address.city", singleFilterTerm, true, false)
                         )
                 );
             }

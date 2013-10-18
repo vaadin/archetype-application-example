@@ -1,12 +1,13 @@
 package org.vaadin.mockapp.ui;
 
 import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.jetbrains.annotations.NotNull;
 import org.vaadin.mockapp.Services;
-import org.vaadin.mockapp.backend.services.LoginService;
 import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
+import org.vaadin.mockapp.backend.services.LoginService;
 import org.vaadin.mockapp.ui.views.ViewManager;
 
 /**
@@ -31,15 +32,21 @@ public class SideBar extends CustomComponent {
         root.setSizeFull();
         setCompositionRoot(root);
 
+        HorizontalLayout titleLayout = new HorizontalLayout();
+        titleLayout.setWidth("100%");
+        root.addComponent(titleLayout);
+
         title = new Label("MockApp");
         title.addStyleName("title");
-        root.addComponent(title);
+        title.setSizeUndefined();
+        titleLayout.addComponent(title);
+        titleLayout.setExpandRatio(title, 1f);
+        titleLayout.setComponentAlignment(title, Alignment.MIDDLE_LEFT);
 
-        currentUser = new Label(AuthenticationHolder.getAuthentication().getName());
-        currentUser.addStyleName("current-user");
-        root.addComponent(currentUser);
-
-        logout = new NativeButton("Logout", new Button.ClickListener() {
+        logout = new NativeButton();
+        logout.setDescription("Logout");
+        logout.setIcon(new ThemeResource("icons/off_20x20.png"));
+        logout.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 logout();
@@ -47,7 +54,12 @@ public class SideBar extends CustomComponent {
         });
         logout.setDisableOnClick(true);
         logout.addStyleName("logout");
-        root.addComponent(logout);
+        titleLayout.addComponent(logout);
+        titleLayout.setComponentAlignment(logout, Alignment.MIDDLE_RIGHT);
+
+        currentUser = new Label(String.format("Logged in as %s", AuthenticationHolder.getAuthentication().getName()));
+        currentUser.addStyleName("current-user");
+        root.addComponent(currentUser);
 
         navigationPanel = new Panel();
         navigationPanel.addStyleName("navigation");

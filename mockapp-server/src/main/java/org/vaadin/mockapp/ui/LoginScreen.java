@@ -30,15 +30,19 @@ public class LoginScreen extends CustomComponent {
         setCompositionRoot(root);
 
         FormLayout loginForm = new FormLayout();
+        loginForm.addStyleName("login-form");
         loginForm.setSizeUndefined();
         loginForm.addComponent(username = new TextField("Username"));
+        username.setWidth(15, Unit.EM);
         loginForm.addComponent(password = new PasswordField("Password"));
+        password.setWidth(15, Unit.EM);
 
         HorizontalLayout buttons = new HorizontalLayout();
         loginForm.addComponent(buttons);
         buttons.setSpacing(true);
 
         buttons.addComponent(login = new Button("Login"));
+        buttons.setComponentAlignment(login, Alignment.MIDDLE_LEFT);
         login.setDisableOnClick(true);
         login.addClickListener(new Button.ClickListener() {
             @Override
@@ -54,6 +58,7 @@ public class LoginScreen extends CustomComponent {
         login.addStyleName(MockAppTheme.BUTTON_DEFAULT_NO_MODIFICATIONS);
 
         buttons.addComponent(forgotPassword = new Button("Forgot password?"));
+        buttons.setComponentAlignment(forgotPassword, Alignment.MIDDLE_LEFT);
         forgotPassword.setDisableOnClick(true);
         forgotPassword.addClickListener(new Button.ClickListener() {
             @Override

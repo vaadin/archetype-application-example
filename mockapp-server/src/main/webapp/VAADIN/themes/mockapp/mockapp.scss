@@ -16,6 +16,10 @@
   $button-primary-search-border-color: #3079ed;
   $button-primary-search-color: white;
 
+  $button-primary-search-hover-background-color: #4d90fe;
+  $button-primary-search-hover-background-additional-color: #357ae8;
+  $button-primary-search-hover-border-color: #2f5bb7;
+
   $button-primary-modify-background-color: #d14836;
   $button-primary-modify-background-additional-color: #d14836;
   $button-primary-modify-border-color: #c6322a;
@@ -24,7 +28,7 @@
   $button-background-color: #f8f8f8;
   $button-background-additional-color: #ececec;
   $button-border-color: #c6c6c6;
-  $button-color: rgb(102, 102, 102);
+  $button-color: #666666;
 
   .v-textfield-filter {
     background-image: url("icons/search_16x16.png");
@@ -33,78 +37,164 @@
     padding-left: 20px !important;
   }
 
-  .v-button-link {
-
-  }
-
   .v-button, .v-button.v-disabled {
-    @include colored-button($button-color,
-      $button-background-color,
-      $button-background-additional-color,
-      $button-border-color);
+    @include colored-button($button-color, $button-background-color, $button-background-additional-color, $button-border-color);
   }
 
   .v-button-primary-search, .v-button-primary-search.v-disabled {
-    @include colored-button($button-primary-search-color,
-      $button-primary-search-background-color,
-      $button-primary-search-background-additional-color,
-      $button-primary-search-border-color);
+    @include colored-button($button-primary-search-color, $button-primary-search-background-color, $button-primary-search-background-additional-color, $button-primary-search-border-color);
+  }
+
+  .v-button-primary-search:hover {
+    @include colored-button($button-primary-search-color, $button-primary-search-hover-background-color, $button-primary-search-hover-background-additional-color, $button-primary-search-hover-border-color);
+    box-shadow: rgba(0, 0, 0, 0.0976563) 0px 1px 1px 0px;
+  }
+
+  .v-button-primary-search:focus {
+    @include colored-button($button-primary-search-color, $button-primary-search-background-color, $button-primary-search-background-additional-color, $button-primary-search-border-color);
+    .v-button-wrap {
+      border: 1px solid $button-primary-search-color;
+      padding: 3px 14px 0 14px;
+      height: 19px;
+    }
+  }
+
+  .v-button-primary-search.v-pressed, .v-button-primary-search:focus.v-pressed {
+    @include colored-button($button-primary-search-color, $button-primary-search-background-additional-color, $button-primary-search-background-color, $button-primary-search-border-color);
   }
 
   .v-button-primary-modify, .v-button-primary-modify.v-disabled {
-   @include colored-button($button-primary-modify-color,
-      $button-primary-modify-background-color,
-      $button-primary-modify-background-additional-color,
-      $button-primary-modify-border-color);
+    @include colored-button($button-primary-modify-color, $button-primary-modify-background-color, $button-primary-modify-background-additional-color, $button-primary-modify-border-color);
   }
 
-  .v-calendar-time-slots {
-    background: inherit;
+  .v-button-link {
+    border: none;
+  }
 
-    .v-calendar-day-times, .v-calendar-month-day {
-      background-color: white;
-    }
+  .v-table-row-closed {
+    background-color: #ffb3ae;
+  }
 
-    .v-calendar-month-day-prev-month, .v-calendar-month-day-next-month {
-      background: inherit;
-    }
+  .login-screen {
+    $login-screen-background-color: #7d7e7d;
+    $login-screen-background-additional-color: #0e0e0e;
 
-    .v-calendar-event-time-slot-past {
-      opacity: 0.5;
-    }
+    background: $login-screen-background-color;
+    background: -moz-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, $login-screen-background-color), color-stop(100%, $login-screen-background-additional-color));
+    background: -webkit-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
+    background: -o-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
+    background: -ms-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
+    background: radial-gradient(ellipse at center, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
 
-    .v-calendar-event-time-slot-free {
-      background-color: lawngreen;
-    }
-
-    .v-calendar-event-time-slot-taken {
-      background-color: orangered;
-    }
-
-    .v-calendar-back, .v-calendar-next {
-      visibility: hidden;
+    .login-form {
+      border: 1px solid #555555;
+      border-radius: 10px;
+      padding: 10px 30px 10px 30px;
+      background-color: #f1f1f1;
     }
   }
 
+  .main-screen {
+    .side-bar {
+      @include linear-gradient(#ececec, #c6c6c6);
+
+      .v-label-title {
+        color: #666666;
+        font-size: 20px;
+        line-height: 30px;
+        padding-left: 5px;
+        padding-top: 5px;
+      }
+
+      .v-label-current-user {
+        color: #666666;
+        font-size: 10px;
+        padding-left: 5px;
+      }
+
+      .v-nativebutton-logout {
+        background: transparent;
+        outline: none;
+        cursor: pointer;
+        border: none;
+        opacity: 0.6;
+        margin-top: 3px;
+      }
+      .v-nativebutton-logout:hover {
+        opacity: 1.0;
+      }
+
+      .v-panel-deco-navigation {
+        visibility: hidden;
+      }
+
+      .v-panel-navigation {
+        padding: 0;
+      }
+
+      .v-panel-content-navigation {
+        background: transparent;
+        border: none;
+
+        .v-nativebutton {
+          width: 100%;
+          cursor: pointer;
+          border: none;
+          background: transparent;
+          opacity: 0.6;
+          outline: none;
+
+          .v-icon {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .v-nativebutton-caption {
+            font-family: sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+          }
+        }
+
+        .v-nativebutton:hover {
+          opacity: 1.0;
+        }
+      }
+    }
+  }
 }
 
 @mixin colored-button($color, $background1, $background2, $border) {
-  background-color: $background1;
-  background-image: -webkit-gradient(linear, left top, left bottom, from($background1), to($background2));
-  background-image: -webkit-linear-gradient(top, $background1, $background2);
-  background-image: -moz-linear-gradient(top, $background1, $background2);
-  background-image: -ms-linear-gradient(top, $background1, $background2);
-  background-image: -o-linear-gradient(top, $background1, $background2);
-  background-image: linear-gradient(top, $background1, $background2);
+  @include linear-gradient($background1, $background2);
   border: 1px solid $border;
   border-radius: 3px;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
 
   .v-button-wrap {
     background: none;
+    border-radius: 3px;
+    padding: 4px 15px 0 15px;
+    margin: 0;
+    border: 0;
 
     .v-button-caption {
       color: $color;
       text-shadow: none;
+      padding: 0;
+      margin: 0;
     }
   }
+}
+
+@mixin linear-gradient($from, $to) {
+  background-color: $from;
+  background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+  background-image: -webkit-linear-gradient(top, $from, $to);
+  background-image: -moz-linear-gradient(top, $from, $to);
+  background-image: -ms-linear-gradient(top, $from, $to);
+  background-image: -o-linear-gradient(top, $from, $to);
+  background-image: linear-gradient(top, $from, $to);
 }

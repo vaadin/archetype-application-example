@@ -47,7 +47,7 @@ public class MockEvacueeService extends MockBaseDomainService<Evacuee> implement
                     evacuee.setEvacuationAddress(MockDataUtils.getRandomNonStreetAddress());
                 }
                 evacuee.setDateOfBirth(MockDataUtils.getRandomDate(1930, 2012));
-                evacuee.setArrived(evacuationCenter.getOpened().plusMinutes(rnd.nextInt(86400)));
+                evacuee.setArrived(evacuationCenter.getOpenDate().plusMinutes(rnd.nextInt(86400)));
                 if (evacuationCenter.isClosed() || rnd.nextBoolean()) {
                     evacuee.setLeft(evacuee.getArrived().plusMinutes(rnd.nextInt(259200)));
                 }

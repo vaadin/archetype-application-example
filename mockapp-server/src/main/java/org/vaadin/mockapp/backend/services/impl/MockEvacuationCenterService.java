@@ -16,16 +16,16 @@ public class MockEvacuationCenterService extends MockBaseDomainService<Evacuatio
 
 
     void createMockData() {
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 50; ++i) {
             EvacuationCenter evacCenter = new EvacuationCenter();
             evacCenter.setCreateTimestamp(new DateTime());
             evacCenter.setCreateUserName("root");
             evacCenter.setUuid(UUID.randomUUID());
             evacCenter.setName(MockDataUtils.getRandomWorkingName());
             evacCenter.setAddress(MockDataUtils.getRandomStreetAddress());
-            evacCenter.setOpened(MockDataUtils.getRandomDateTime(2009, 2012));
+            evacCenter.setOpenDate(MockDataUtils.getRandomDateTime(2009, 2012));
             if (Math.random() > 0.5) {
-                evacCenter.setClosed(evacCenter.getOpened().plusDays(5));
+                evacCenter.setCloseDate(evacCenter.getOpenDate().plusDays(5));
             }
             doSave(evacCenter);
         }
@@ -57,7 +57,7 @@ public class MockEvacuationCenterService extends MockBaseDomainService<Evacuatio
         Collections.sort(centers, new Comparator<EvacuationCenter>() {
             @Override
             public int compare(EvacuationCenter o1, EvacuationCenter o2) {
-                int o = o1.getOpened().compareTo(o2.getOpened());
+                int o = o1.getOpenDate().compareTo(o2.getOpenDate());
                 if (o == 0) {
                     o = o1.getName().compareTo(o2.getName());
                 }

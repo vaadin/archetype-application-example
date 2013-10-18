@@ -10,8 +10,8 @@ public class EvacuationCenter extends BaseDomain {
 
     private String name;
     private Address address = new Address();
-    private DateTime opened;
-    private DateTime closed;
+    private DateTime openDate;
+    private DateTime closeDate;
 
     public String getName() {
         return name;
@@ -32,24 +32,24 @@ public class EvacuationCenter extends BaseDomain {
         this.address = address;
     }
 
-    public DateTime getOpened() {
-        return opened;
+    public DateTime getOpenDate() {
+        return openDate;
     }
 
-    public void setOpened(DateTime opened) {
-        this.opened = opened;
+    public void setOpenDate(DateTime opened) {
+        this.openDate = opened;
     }
 
-    public DateTime getClosed() {
-        return closed;
+    public DateTime getCloseDate() {
+        return closeDate;
     }
 
     public boolean isClosed() {
-        return closed != null;
+        return closeDate != null;
     }
 
-    public void setClosed(DateTime closed) {
-        this.closed = closed;
+    public void setCloseDate(DateTime closed) {
+        this.closeDate = closed;
     }
 
     @Override

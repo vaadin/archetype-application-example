@@ -1,7 +1,9 @@
 package org.vaadin.mockapp.backend.services.impl;
 
 import org.vaadin.mockapp.Services;
-import org.vaadin.mockapp.backend.services.*;
+import org.vaadin.mockapp.backend.services.EvacuationCenterService;
+import org.vaadin.mockapp.backend.services.EvacueeService;
+import org.vaadin.mockapp.backend.services.LoginService;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,39 +16,27 @@ import javax.servlet.annotation.WebListener;
 public class BackendContextListener implements ServletContextListener {
 
     private MockLoginService loginService;
-    private MockDoctorService doctorService;
-    private MockTimeSlotService timeSlotService;
-    private MockPatientService patientService;
-    private MockAppointmentService appointmentService;
+    private MockEvacuationCenterService evacuationCenterService;
+    private MockEvacueeService evacueeService;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         loginService = new MockLoginService();
         Services.register(loginService, LoginService.class);
 
-        doctorService = new MockDoctorService();
-        Services.register(doctorService, DoctorService.class);
-        doctorService.createMockData();
+        evacuationCenterService = new MockEvacuationCenterService();
+        Services.register(evacuationCenterService, EvacuationCenterService.class);
+        evacuationCenterService.createMockData();
 
-        timeSlotService = new MockTimeSlotService();
-        Services.register(timeSlotService, TimeSlotService.class);
-        timeSlotService.createMockData();
-
-        patientService = new MockPatientService();
-        Services.register(patientService, PatientService.class);
-        patientService.createMockData();
-
-        appointmentService = new MockAppointmentService();
-        Services.register(appointmentService, AppointmentService.class);
-        appointmentService.createMockData();
+        evacueeService = new MockEvacueeService();
+        Services.register(evacueeService, EvacueeService.class);
+        evacueeService.createMockData();
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        Services.remove(AppointmentService.class);
-        Services.remove(PatientService.class);
-        Services.remove(TimeSlotService.class);
-        Services.remove(DoctorService.class);
+        Services.remove(EvacueeService.class);
+        Services.remove(EvacuationCenterService.class);
         Services.remove(LoginService.class);
     }
 }

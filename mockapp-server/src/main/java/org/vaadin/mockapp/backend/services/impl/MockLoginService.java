@@ -17,14 +17,14 @@ public class MockLoginService implements LoginService {
 
     @Override
     public boolean login(@NotNull String username, @NotNull String password) {
-        if ("admin".equals(username) && "admin123".equals(password)) {
+        if ("admin".equals(username) && "p".equals(password)) {
             AuthenticationHolder.setAuthentication(new SimpleAuthentication("admin", MockAppRoles.ROLE_ADMIN));
             return true;
-        } else if ("doc".equals(username) && "doc123".equals(password)) {
-            AuthenticationHolder.setAuthentication(new SimpleAuthentication("user", MockAppRoles.ROLE_DOCTOR));
+        } else if ("user".equals(username) && "p".equals(password)) {
+            AuthenticationHolder.setAuthentication(new SimpleAuthentication("user", MockAppRoles.ROLE_USER));
             return true;
-        } else if ("rec".equals(username) && "rec123".equals(password)) {
-            AuthenticationHolder.setAuthentication(new SimpleAuthentication("rec", MockAppRoles.ROLE_RECEPTIONIST));
+        } else if ("observer".equals(username) && "p".equals(password)) {
+            AuthenticationHolder.setAuthentication(new SimpleAuthentication("observer", MockAppRoles.ROLE_OBSERVER));
             return true;
         }
         Logger.getLogger(MockLoginService.class.getCanonicalName()).log(Level.WARNING, "Login failed for user {0}", username);

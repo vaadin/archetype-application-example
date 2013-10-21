@@ -13,7 +13,7 @@ import org.vaadin.mockapp.ui.theme.MockAppTheme;
 @ViewDefinition(name = HomeView.VIEW_NAME,
         caption = "Home",
         iconThemeResource = "icons/HomeView.png",
-        allowedRoles = {MockAppRoles.ROLE_OBSERVER, MockAppRoles.ROLE_ADMIN, MockAppRoles.ROLE_USER})
+        allowedRoles = {MockAppRoles.ROLE_OBSERVER, MockAppRoles.ROLE_SALESMAN})
 public class HomeView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "";

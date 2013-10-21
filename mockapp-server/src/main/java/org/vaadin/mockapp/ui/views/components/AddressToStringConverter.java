@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.ui.views;
+package org.vaadin.mockapp.ui.views.components;
 
 import com.vaadin.data.util.converter.Converter;
 import org.vaadin.mockapp.backend.domain.Address;

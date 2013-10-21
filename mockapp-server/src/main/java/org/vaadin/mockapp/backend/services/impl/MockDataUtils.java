@@ -1,6 +1,7 @@
 package org.vaadin.mockapp.backend.services.impl;
 
 import org.joda.time.DateTime;
+import org.joda.time.IllegalFieldValueException;
 import org.joda.time.LocalDate;
 import org.vaadin.mockapp.backend.domain.Address;
 
@@ -15,7 +16,6 @@ import java.util.TreeSet;
 final class MockDataUtils {
 
     private static final Random rnd = new Random();
-    private static final String[] COMPASS_DIRECTIONS = {"north", "east", "south", "west", "north-east", "north-west", "south-east", "south-west"};
     private static String[] MALE_FIRST_NAMES = {
             "James", "John", "Robert", "Michael",
             "William", "David", "Richard", "Charles",
@@ -116,12 +116,20 @@ final class MockDataUtils {
         return getRandomNames(count, MALE_FIRST_NAMES);
     }
 
-    public static String getRandomPhoneNumber() {
-        return String.format("%03d-%04d-%04d", rnd.nextInt(1000), rnd.nextInt(10000), rnd.nextInt(10000));
+    public static String getRandomName() {
+        StringBuilder sb = new StringBuilder();
+        if (rnd.nextBoolean()) {
+            sb.append(getRandomMaleFirstNames(1));
+        } else {
+            sb.append(getRandomFemaleFirstNames(1));
+        }
+        sb.append(" ");
+        sb.append(getRandomLastName());
+        return sb.toString();
     }
 
-    public static String getRandomWorkingName() {
-        return String.format("%s %s", COLORS[rnd.nextInt(COLORS.length)], GREEK[rnd.nextInt(GREEK.length)]);
+    public static String getRandomPhoneNumber() {
+        return String.format("%03d-%04d-%04d", rnd.nextInt(1000), rnd.nextInt(10000), rnd.nextInt(10000));
     }
 
     public static LocalDate getRandomDate(int minYear, int maxYear) {
@@ -163,36 +171,18 @@ final class MockDataUtils {
         return sb.toString();
     }
 
-    public static Address getRandomNonStreetAddress() {
-        Address address = new Address();
-        address.setCity(CITIES[rnd.nextInt(CITIES.length)]);
-        switch (rnd.nextInt(4)) {
-            case 0:
-                address.setStreet(String.format("Intersection of %s and %s", getRandomStreetName(), getRandomStreetName()));
-                break;
-            case 1:
-                address.setStreet(String.format("%s, about %d kilometers %s of %s",
-                        getRandomStreetName(), rnd.nextInt(60), getRandomCompassDirection(), address.getCity()));
-                break;
-            case 2:
-                address.setStreet(String.format("Swamp near %s", getRandomStreetName()));
-                break;
-            case 3:
-                address.setStreet(String.format("Forrest just %s of %s", getRandomCompassDirection(), getRandomStreetName()));
-                break;
-        }
-        address.setPostalCode("");
-        return address;
-    }
-
     public static DateTime getRandomDateTime(int minYear, int maxYear) {
-        return getRandomDate(minYear, maxYear).toDateTimeAtCurrentTime()
-                .withHourOfDay(rnd.nextInt(24)).withMinuteOfHour(rnd.nextInt(60))
-                .withSecondOfMinute(rnd.nextInt(60));
+        try {
+            return getRandomDate(minYear, maxYear).toDateTimeAtCurrentTime()
+                    .withHourOfDay(rnd.nextInt(24)).withMinuteOfHour(rnd.nextInt(60))
+                    .withSecondOfMinute(rnd.nextInt(60));
+        } catch (IllegalFieldValueException ex) {
+            return getRandomDateTime(minYear, maxYear);
+        }
     }
 
-    private static String getRandomCompassDirection() {
-        return COMPASS_DIRECTIONS[rnd.nextInt(COMPASS_DIRECTIONS.length)];
+    public static <T> T selectRandom(T[] values) {
+        return values[rnd.nextInt(values.length)];
     }
 
     private static String getRandomNames(int count, String[] names) {

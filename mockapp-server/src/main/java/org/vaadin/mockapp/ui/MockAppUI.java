@@ -14,12 +14,7 @@ import org.vaadin.mockapp.Services;
 import org.vaadin.mockapp.backend.authentication.Authentication;
 import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
 import org.vaadin.mockapp.ui.theme.MockAppTheme;
-import org.vaadin.mockapp.ui.views.ErrorView;
-import org.vaadin.mockapp.ui.views.EvacueeView;
-import org.vaadin.mockapp.ui.views.HomeView;
-import org.vaadin.mockapp.ui.views.ViewManager;
-import org.vaadin.mockapp.ui.views.admin.ManageEvacuationCentersFormView;
-import org.vaadin.mockapp.ui.views.admin.ManageEvacuationCentersView;
+import org.vaadin.mockapp.ui.views.*;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -58,9 +53,8 @@ public class MockAppUI extends UI implements EventBus.Subscriber {
                 Add your views here. Remember to annotate the view classes with @ViewDefinition!
              */
             addView(HomeView.class);
-            addView(EvacueeView.class);
-            addView(ManageEvacuationCentersFormView.class);
-            addView(ManageEvacuationCentersView.class);
+            addView(OrderView.class);
+            addView(OrdersView.class);
         }
     };
     private final EventBus eventBus = new EventBus();

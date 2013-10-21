@@ -17,11 +17,8 @@ public class MockLoginService implements LoginService {
 
     @Override
     public boolean login(@NotNull String username, @NotNull String password) {
-        if ("admin".equals(username) && "p".equals(password)) {
-            AuthenticationHolder.setAuthentication(new SimpleAuthentication("admin", MockAppRoles.ROLE_ADMIN));
-            return true;
-        } else if ("user".equals(username) && "p".equals(password)) {
-            AuthenticationHolder.setAuthentication(new SimpleAuthentication("user", MockAppRoles.ROLE_USER));
+        if ("sales".equals(username) && "p".equals(password)) {
+            AuthenticationHolder.setAuthentication(new SimpleAuthentication("sales", MockAppRoles.ROLE_SALESMAN));
             return true;
         } else if ("observer".equals(username) && "p".equals(password)) {
             AuthenticationHolder.setAuthentication(new SimpleAuthentication("observer", MockAppRoles.ROLE_OBSERVER));

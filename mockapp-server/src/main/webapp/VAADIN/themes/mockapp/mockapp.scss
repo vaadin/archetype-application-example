@@ -11,24 +11,7 @@
 
 /* Insert your theme rules here */
 
-  $button-primary-search-background-color: #4d90fe;
-  $button-primary-search-background-additional-color: #4787ed;
-  $button-primary-search-border-color: #3079ed;
-  $button-primary-search-color: white;
-
-  $button-primary-search-hover-background-color: #4d90fe;
-  $button-primary-search-hover-background-additional-color: #357ae8;
-  $button-primary-search-hover-border-color: #2f5bb7;
-
-  $button-primary-modify-background-color: #d14836;
-  $button-primary-modify-background-additional-color: #d14836;
-  $button-primary-modify-border-color: #c6322a;
-  $button-primary-modify-color: white;
-
-  $button-background-color: #f8f8f8;
-  $button-background-additional-color: #ececec;
-  $button-border-color: #c6c6c6;
-  $button-color: #666666;
+/* TODO Theme the application properly! */
 
   .v-textfield-filter {
     background-image: url("icons/search_16x16.png");
@@ -37,42 +20,39 @@
     padding-left: 20px !important;
   }
 
-  .v-button, .v-button.v-disabled {
-    @include colored-button($button-color, $button-background-color, $button-background-additional-color, $button-border-color);
+  .v-button-primary-search {
+    // TODO Implement me
   }
 
-  .v-button-primary-search, .v-button-primary-search.v-disabled {
-    @include colored-button($button-primary-search-color, $button-primary-search-background-color, $button-primary-search-background-additional-color, $button-primary-search-border-color);
+  .v-button-primary-modify {
+    // TODO Implement me
   }
 
-  .v-button-primary-search:hover {
-    @include colored-button($button-primary-search-color, $button-primary-search-hover-background-color, $button-primary-search-hover-background-additional-color, $button-primary-search-hover-border-color);
-    box-shadow: rgba(0, 0, 0, 0.0976563) 0px 1px 1px 0px;
-  }
-
-  .v-button-primary-search:focus {
-    @include colored-button($button-primary-search-color, $button-primary-search-background-color, $button-primary-search-background-additional-color, $button-primary-search-border-color);
-    .v-button-wrap {
-      border: 1px solid $button-primary-search-color;
-      padding: 3px 14px 0 14px;
-      height: 19px;
+  .orders-view {
+    .v-table-cell-content-RECEIVED {
+      // TODO Implement me
     }
-  }
-
-  .v-button-primary-search.v-pressed, .v-button-primary-search:focus.v-pressed {
-    @include colored-button($button-primary-search-color, $button-primary-search-background-additional-color, $button-primary-search-background-color, $button-primary-search-border-color);
-  }
-
-  .v-button-primary-modify, .v-button-primary-modify.v-disabled {
-    @include colored-button($button-primary-modify-color, $button-primary-modify-background-color, $button-primary-modify-background-additional-color, $button-primary-modify-border-color);
-  }
-
-  .v-button-link {
-    border: none;
-  }
-
-  .v-table-row-closed {
-    background-color: #ffb3ae;
+    .v-table-cell-content-WAITING_FOR_ITEMS {
+      // TODO Implement me
+    }
+    .v-table-cell-content-COLLECTING_ITEMS {
+      // TODO Implement me
+    }
+    .v-table-cell-content-PACKAGING {
+      // TODO Implement me
+    }
+    .v-table-cell-content-WAITING_FOR_SHIPMENT {
+      // TODO Implement me
+    }
+    .v-table-cell-content-SHIPPING {
+      // TODO Implement me
+    }
+    .v-table-cell-content-SHIPPED {
+      // TODO Implement me
+    }
+    .v-table-cell-content-CANCELLED {
+      // TODO Implement me
+    }
   }
 
   .login-screen {
@@ -161,30 +141,6 @@
           opacity: 1.0;
         }
       }
-    }
-  }
-}
-
-@mixin colored-button($color, $background1, $background2, $border) {
-  @include linear-gradient($background1, $background2);
-  border: 1px solid $border;
-  border-radius: 3px;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-
-  .v-button-wrap {
-    background: none;
-    border-radius: 3px;
-    padding: 4px 15px 0 15px;
-    margin: 0;
-    border: 0;
-
-    .v-button-caption {
-      color: $color;
-      text-shadow: none;
-      padding: 0;
-      margin: 0;
     }
   }
 }

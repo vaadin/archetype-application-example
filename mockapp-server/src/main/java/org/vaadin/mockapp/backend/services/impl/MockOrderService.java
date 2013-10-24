@@ -7,12 +7,10 @@ import org.joda.time.YearMonth;
 import org.vaadin.mockapp.backend.MockAppRoles;
 import org.vaadin.mockapp.backend.authentication.AccessDeniedException;
 import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
-import org.vaadin.mockapp.backend.domain.ContactMethod;
-import org.vaadin.mockapp.backend.domain.ObjectUtils;
-import org.vaadin.mockapp.backend.domain.Order;
-import org.vaadin.mockapp.backend.domain.OrderState;
+import org.vaadin.mockapp.backend.domain.*;
 import org.vaadin.mockapp.backend.services.OrderService;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -25,6 +23,7 @@ public class MockOrderService implements OrderService {
     private final Map<UUID, Order> entityMap = new HashMap<UUID, Order>();
 
     void createMockData() {
+        Random rnd = new Random();
         for (int i = 0; i < 2000; ++i) {
             Order order = new Order();
             order.setUuid(UUID.randomUUID());
@@ -38,9 +37,21 @@ public class MockOrderService implements OrderService {
             order.setCustomerName(MockDataUtils.getRandomName());
             order.setCustomerAddress(MockDataUtils.getRandomStreetAddress());
             order.setCustomerPhone(MockDataUtils.getRandomPhoneNumber());
-            // TODO E-mail
-            // TODO Billing address
-            // TODO Items
+            order.setCustomerEmail(MockDataUtils.turnNameIntoEmail(order.getCustomerName()));
+            if (rnd.nextBoolean()) {
+                order.setBillingAddress(order.getCustomerAddress());
+            } else {
+                order.setBillingAddress(MockDataUtils.getRandomStreetAddress());
+            }
+            for (int j = 0; j < rnd.nextInt(20); ++j) {
+                OrderItem item = new OrderItem();
+                item.setDescription(MockDataUtils.getRandomProduct());
+                item.setQty(new BigDecimal(rnd.nextInt(100)));
+                item.setTaxPercentage(new BigDecimal(rnd.nextInt(100) / 100d));
+                item.setUnit("pcs");
+                item.setUnitPrice(new BigDecimal(rnd.nextInt(2000) + 1));
+                order.getItems().add(item);
+            }
             entityMap.put(order.getUuid(), order);
         }
     }

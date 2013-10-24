@@ -100,6 +100,52 @@ final class MockDataUtils {
             "Warsaw",
             "Zagreb"
     };
+    private static String[] PRODUCTS = {
+            "Coffee",
+            "Tea",
+            "Chocolate",
+            "Beer",
+            "Water",
+            "Milk",
+            "Soft drink",
+            "Juice",
+            "Bread",
+            "Eggs",
+            "Spaghetti",
+            "Potatoes",
+            "Tomatoes",
+            "Garlic",
+            "Tablet computer",
+            "Laptop computer",
+            "Desktop computer",
+            "Server computer",
+            "Smartphone",
+            "Basic cellphone",
+            "Game console",
+            "Coffee maker",
+            "Toilet paper",
+            "Sunglasses",
+            "Blueray player",
+            "FullHD TV",
+            "Software licenses",
+            "Toothbrush",
+            "Toothpaste",
+            "Perfume",
+            "Soap",
+            "Apples",
+            "Bananas",
+            "Oranges",
+            "A good book",
+            "A not-so-good book",
+            "A really lousy book",
+            "Tabloid newspaper",
+            "Serious newspaper",
+            "Carpet",
+            "Downloadable MP3s",
+            "CD music",
+            "DVD movie",
+            "Blueray movie"
+    };
 
     private MockDataUtils() {
     }
@@ -130,6 +176,10 @@ final class MockDataUtils {
 
     public static String getRandomPhoneNumber() {
         return String.format("%03d-%04d-%04d", rnd.nextInt(1000), rnd.nextInt(10000), rnd.nextInt(10000));
+    }
+
+    public static String getRandomProduct() {
+        return PRODUCTS[rnd.nextInt(PRODUCTS.length)];
     }
 
     public static LocalDate getRandomDate(int minYear, int maxYear) {
@@ -164,9 +214,9 @@ final class MockDataUtils {
         }
         sb.append(" ");
         if (rnd.nextBoolean()) {
-            sb.append(" Road");
+            sb.append("Road");
         } else {
-            sb.append(" Street");
+            sb.append("Street");
         }
         return sb.toString();
     }
@@ -183,6 +233,10 @@ final class MockDataUtils {
 
     public static <T> T selectRandom(T[] values) {
         return values[rnd.nextInt(values.length)];
+    }
+
+    public static String turnNameIntoEmail(String name) {
+        return name.replace(' ', '.').concat("@foo.bar");
     }
 
     private static String getRandomNames(int count, String[] names) {

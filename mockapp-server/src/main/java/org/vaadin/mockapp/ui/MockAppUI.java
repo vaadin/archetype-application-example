@@ -83,7 +83,7 @@ public class MockAppUI extends UI implements EventBus.Subscriber {
         Navigator navigator = new Navigator(this, mainScreen);
         navigator.setErrorView(ErrorView.class);
         navigator.addProvider(viewManager);
-
+        navigator.navigateTo(navigator.getState());
         setContent(mainScreen);
     }
 

@@ -13,9 +13,7 @@ import org.vaadin.mockapp.backend.domain.Order;
 import org.vaadin.mockapp.backend.domain.OrderState;
 import org.vaadin.mockapp.backend.services.OrderService;
 import org.vaadin.mockapp.ui.theme.MockAppTheme;
-import org.vaadin.mockapp.ui.views.components.AddressToStringConverter;
-import org.vaadin.mockapp.ui.views.components.DateTimeToStringConverter;
-import org.vaadin.mockapp.ui.views.components.H1;
+import org.vaadin.mockapp.ui.views.components.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -150,8 +148,13 @@ public class OrdersView extends VerticalLayout implements View, Property.ValueCh
         table.setColumnAlignment("totalWithoutTax", Table.Align.RIGHT);
         table.setColumnAlignment("totalTax", Table.Align.RIGHT);
         table.setColumnAlignment("total", Table.Align.RIGHT);
+        table.setConverter("totalWithoutTax", new MoneyConverter());
+        table.setConverter("totalTax", new MoneyConverter());
+        table.setConverter("total", new MoneyConverter());
         table.setConverter("orderReceived", new DateTimeToStringConverter());
         table.setConverter("customerAddress", new AddressToStringConverter());
+        table.setConverter("orderNo", new OrderNoConverter());
+        table.setConverter("state", new OrderStateToStringConverter());
         table.setCellStyleGenerator(new Table.CellStyleGenerator() {
             @Override
             public String getStyle(Table source, Object itemId, Object propertyId) {

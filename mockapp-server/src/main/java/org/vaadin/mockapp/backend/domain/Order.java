@@ -96,14 +96,6 @@ public class Order extends BaseDomain {
         this.billingAddress = billingAddress == null ? new Address() : ObjectUtils.nullSafeClone(billingAddress);
     }
 
-    public boolean isBillingAddressSameAsCustomerAddress() {
-        return billingAddress.equals(customerAddress);
-    }
-
-    public void setBillingAddressSameAsCustomerAddress() {
-        setBillingAddress(getCustomerAddress());
-    }
-
     public OrderState getState() {
         return state;
     }

@@ -12,7 +12,7 @@ public class OrderNoConverter implements Converter<String, Integer> {
     @Override
     public Integer convertToModel(String value, Class<? extends Integer> targetType, Locale locale) throws ConversionException {
         try {
-            return value == null ? null : Integer.parseInt(value);
+            return value == null || value.isEmpty() ? null : Integer.parseInt(value);
         } catch (NumberFormatException ex) {
             throw new ConversionException(value + " is not a valid integer");
         }

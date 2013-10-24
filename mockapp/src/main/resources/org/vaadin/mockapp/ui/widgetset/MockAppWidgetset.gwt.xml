@@ -4,16 +4,8 @@
 <module>
     <inherits name="com.vaadin.DefaultWidgetSet"/>
 
-    <collapse-all-properties/>
-
-    <!--
-        To disable SuperDevMode, comment or remove this line.
-
-        See https://vaadin.com/wiki/-/wiki/Main/Using%20SuperDevMode for more
-        information and instructions.
-    -->
-    <set-configuration-property name="devModeRedirectEnabled" value="true"/>
 
     <inherits name="fi.jasoft.qrcode.QrcodeWidgetset"/>
+
     <inherits name="org.vaadin.mockapp.ResetButtonForTextFieldWidgetset"/>
 </module>

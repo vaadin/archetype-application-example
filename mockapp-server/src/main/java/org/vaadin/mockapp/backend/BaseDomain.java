@@ -1,6 +1,5 @@
 package org.vaadin.mockapp.backend;
 
-import org.jetbrains.annotations.Nullable;
 import org.joda.time.DateTime;
 
 import java.io.Serializable;
@@ -17,48 +16,43 @@ public abstract class BaseDomain implements Serializable, Cloneable {
     private String updateUserName;
     private DateTime updateTimestamp;
 
-    @Nullable
     public UUID getUuid() {
         return uuid;
     }
 
-    public void setUuid(@Nullable UUID uuid) {
+    public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
 
-    @Nullable
     public String getCreateUserName() {
         return createUserName;
     }
 
-    public void setCreateUserName(@Nullable String createUserName) {
+    public void setCreateUserName(String createUserName) {
         this.createUserName = createUserName;
     }
 
-    @Nullable
     public DateTime getCreateTimestamp() {
         return createTimestamp;
     }
 
-    public void setCreateTimestamp(@Nullable DateTime createTimestamp) {
+    public void setCreateTimestamp(DateTime createTimestamp) {
         this.createTimestamp = createTimestamp;
     }
 
-    @Nullable
     public String getUpdateUserName() {
         return updateUserName;
     }
 
-    public void setUpdateUserName(@Nullable String updateUserName) {
+    public void setUpdateUserName(String updateUserName) {
         this.updateUserName = updateUserName;
     }
 
-    @Nullable
     public DateTime getUpdateTimestamp() {
         return updateTimestamp;
     }
 
-    public void setUpdateTimestamp(@Nullable DateTime updateTimestamp) {
+    public void setUpdateTimestamp(DateTime updateTimestamp) {
         this.updateTimestamp = updateTimestamp;
     }
 

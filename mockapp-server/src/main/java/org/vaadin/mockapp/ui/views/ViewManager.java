@@ -4,8 +4,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewProvider;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.vaadin.mockapp.backend.authentication.Authentication;
 import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
 
@@ -22,7 +20,7 @@ public class ViewManager implements ViewProvider {
     /**
      * @param viewClass
      */
-    public void addView(@NotNull Class<? extends View> viewClass) {
+    public void addView(Class<? extends View> viewClass) {
         ViewDefinition viewDefinition = viewClass.getAnnotation(ViewDefinition.class);
         if (viewDefinition == null) {
             throw new IllegalArgumentException("View class must have the @ViewDefinition annotation");
@@ -34,7 +32,7 @@ public class ViewManager implements ViewProvider {
      * @param viewName
      * @param viewCaption
      */
-    public void setViewCaption(@NotNull String viewName, @Nullable String viewCaption) {
+    public void setViewCaption(String viewName, String viewCaption) {
         getViewDefinitionEntry(viewName).setViewCaption(viewCaption);
     }
 
@@ -42,7 +40,7 @@ public class ViewManager implements ViewProvider {
      * @param viewName
      * @param viewIcon
      */
-    public void setViewIcon(@NotNull String viewName, @Nullable Resource viewIcon) {
+    public void setViewIcon(String viewName, Resource viewIcon) {
         getViewDefinitionEntry(viewName).setViewIcon(viewIcon);
     }
 
@@ -50,14 +48,13 @@ public class ViewManager implements ViewProvider {
      * @param viewName
      * @param allowedRoles
      */
-    public void setAllowedRoles(@NotNull String viewName, @NotNull String... allowedRoles) {
+    public void setAllowedRoles(String viewName, String... allowedRoles) {
         getViewDefinitionEntry(viewName).setAllowedRoles(allowedRoles);
     }
 
     /**
      * @return
      */
-    @NotNull
     public List<ViewDefinitionEntry> getViewDefinitionsForMenu() {
         Authentication currentUser = AuthenticationHolder.getAuthentication();
         List<ViewDefinitionEntry> viewList = new ArrayList<ViewDefinitionEntry>();
@@ -70,8 +67,7 @@ public class ViewManager implements ViewProvider {
         return viewList;
     }
 
-    @NotNull
-    private ViewDefinitionEntry getViewDefinitionEntry(@NotNull String viewName) {
+    private ViewDefinitionEntry getViewDefinitionEntry(String viewName) {
         ViewDefinitionEntry entry = viewDefinitions.get(viewName);
         if (entry == null) {
             throw new IllegalArgumentException("Unknown view name");
@@ -80,8 +76,7 @@ public class ViewManager implements ViewProvider {
     }
 
     @Override
-    @Nullable
-    public String getViewName(@NotNull String viewAndParameters) {
+    public String getViewName(String viewAndParameters) {
         int indexOfSlash = viewAndParameters.indexOf('/');
         String viewName;
 
@@ -99,8 +94,7 @@ public class ViewManager implements ViewProvider {
     }
 
     @Override
-    @Nullable
-    public View getView(@NotNull String viewName) {
+    public View getView(String viewName) {
         ViewDefinitionEntry viewDefinitionEntry = viewDefinitions.get(viewName);
         if (viewDefinitionEntry == null || !viewDefinitionEntry.isAllowed(AuthenticationHolder.getAuthentication())) {
             return null;
@@ -123,7 +117,7 @@ public class ViewManager implements ViewProvider {
         private Resource viewIcon;
         private String viewCaption;
 
-        private ViewDefinitionEntry(@NotNull Class<? extends View> viewClass, @NotNull ViewDefinition viewDefinition) {
+        private ViewDefinitionEntry(Class<? extends View> viewClass, ViewDefinition viewDefinition) {
             this.viewClass = viewClass;
             viewName = viewDefinition.name();
             cache = viewDefinition.cache();
@@ -137,7 +131,6 @@ public class ViewManager implements ViewProvider {
             order = viewDefinition.order();
         }
 
-        @NotNull
         private View createViewInstance() {
             try {
                 return viewClass.newInstance();
@@ -151,7 +144,6 @@ public class ViewManager implements ViewProvider {
         /**
          * @return
          */
-        @NotNull
         public String getViewName() {
             return viewName;
         }
@@ -159,24 +151,22 @@ public class ViewManager implements ViewProvider {
         /**
          * @return
          */
-        @Nullable
         public Resource getViewIcon() {
             return viewIcon;
         }
 
-        private void setViewIcon(@Nullable Resource viewIcon) {
+        private void setViewIcon(Resource viewIcon) {
             this.viewIcon = viewIcon;
         }
 
         /**
          * @return
          */
-        @Nullable
         public String getViewCaption() {
             return viewCaption;
         }
 
-        private void setViewCaption(@Nullable String viewCaption) {
+        private void setViewCaption(String viewCaption) {
             this.viewCaption = viewCaption;
         }
 
@@ -187,7 +177,7 @@ public class ViewManager implements ViewProvider {
             return viewCaption != null || viewIcon != null;
         }
 
-        private void setAllowedRoles(@NotNull String... allowedRoles) {
+        private void setAllowedRoles(String... allowedRoles) {
             this.allowedRoles.clear();
             this.allowedRoles.addAll(Arrays.asList(allowedRoles));
         }
@@ -196,7 +186,7 @@ public class ViewManager implements ViewProvider {
          * @param authentication
          * @return
          */
-        public boolean isAllowed(@NotNull Authentication authentication) {
+        public boolean isAllowed(Authentication authentication) {
             if (allowedRoles.isEmpty()) {
                 return true;
             } else {
@@ -209,7 +199,6 @@ public class ViewManager implements ViewProvider {
             }
         }
 
-        @NotNull
         private View getViewInstance() {
             if (cache) {
                 if (cachedViewInstance == null) {

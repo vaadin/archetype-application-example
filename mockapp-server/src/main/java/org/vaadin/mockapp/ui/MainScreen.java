@@ -5,7 +5,6 @@ import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalSplitPanel;
-import org.jetbrains.annotations.NotNull;
 import org.vaadin.mockapp.ui.theme.MockAppTheme;
 
 /**
@@ -34,7 +33,7 @@ public class MainScreen extends CustomComponent implements ViewDisplay {
     }
 
     @Override
-    public void showView(@NotNull View view) {
+    public void showView(View view) {
         root.setSecondComponent((Component) view);
     }
 

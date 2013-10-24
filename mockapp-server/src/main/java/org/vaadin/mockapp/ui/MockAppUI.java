@@ -7,8 +7,6 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.vaadin.mockapp.EventBus;
 import org.vaadin.mockapp.Services;
 import org.vaadin.mockapp.backend.authentication.Authentication;
@@ -30,7 +28,6 @@ public class MockAppUI extends UI implements EventBus.Subscriber {
          * This makes it possible to access both the EventBus and the ViewManager via the Services class.
          */
         Services.register(new Services.ServiceProvider<EventBus>() {
-            @Nullable
             @Override
             public EventBus get() {
                 MockAppUI ui = MockAppUI.getCurrent();
@@ -38,7 +35,6 @@ public class MockAppUI extends UI implements EventBus.Subscriber {
             }
         }, EventBus.class);
         Services.register(new Services.ServiceProvider<ViewManager>() {
-            @Nullable
             @Override
             public ViewManager get() {
                 MockAppUI ui = MockAppUI.getCurrent();
@@ -62,7 +58,6 @@ public class MockAppUI extends UI implements EventBus.Subscriber {
     /**
      * @return
      */
-    @Nullable
     public static MockAppUI getCurrent() {
         return (MockAppUI) UI.getCurrent();
     }
@@ -98,7 +93,7 @@ public class MockAppUI extends UI implements EventBus.Subscriber {
     }
 
     @Override
-    public void onEventReceived(@NotNull Object event) {
+    public void onEventReceived(Object event) {
         if (event instanceof LoginScreen.LoginSucceededEvent) {
             showMainScreen();
         }

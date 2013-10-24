@@ -11,37 +11,31 @@ import java.lang.annotation.*;
 public @interface ViewDefinition {
 
     /**
-     *
      * @return
      */
     String name();
 
     /**
-     *
      * @return
      */
     String caption() default "";
 
     /**
-     *
      * @return
      */
     String iconThemeResource() default "";
 
     /**
-     *
      * @return
      */
     int order() default 0;
 
     /**
-     *
      * @return
      */
     boolean cache() default false;
 
     /**
-     *
      * @return
      */
     String[] allowedRoles() default {};

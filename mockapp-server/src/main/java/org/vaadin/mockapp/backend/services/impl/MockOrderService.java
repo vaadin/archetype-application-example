@@ -1,7 +1,5 @@
 package org.vaadin.mockapp.backend.services.impl;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -47,15 +45,14 @@ public class MockOrderService implements OrderService {
         }
     }
 
-    @Nullable
     @Override
-    public synchronized Order findByUuid(@NotNull UUID uuid) {
+    public synchronized Order findByUuid(UUID uuid) {
         AccessDeniedException.requireAnyOf(MockAppRoles.ALL_ROLES);
         return ObjectUtils.nullSafeClone(entityMap.get(uuid));
     }
 
     @Override
-    public synchronized void save(@NotNull Order order) {
+    public synchronized void save(Order order) {
         AccessDeniedException.requireAnyOf(MockAppRoles.ROLE_SALESMAN);
         if (order.getUuid() == null || !entityMap.containsKey(order.getUuid())) {
             order.setUuid(UUID.randomUUID());
@@ -73,9 +70,8 @@ public class MockOrderService implements OrderService {
         entityMap.put(order.getUuid(), ObjectUtils.nullSafeClone(order));
     }
 
-    @NotNull
     @Override
-    public synchronized List<Order> find(@NotNull LocalDate from, @NotNull LocalDate to, @NotNull Set<OrderState> states) {
+    public synchronized List<Order> find(LocalDate from, LocalDate to, Set<OrderState> states) {
         AccessDeniedException.requireAnyOf(MockAppRoles.ALL_ROLES);
         final List<Order> result = new ArrayList<Order>();
 

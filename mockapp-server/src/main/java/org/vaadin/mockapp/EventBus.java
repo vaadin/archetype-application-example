@@ -1,6 +1,5 @@
 package org.vaadin.mockapp;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,28 +14,25 @@ public class EventBus implements Serializable {
     private final Set<Subscriber> subscribers = new HashSet<Subscriber>();
 
     /**
-     *
      * @param event
      */
-    public void publish(@NotNull Object event) {
+    public void publish(Object event) {
         for (Subscriber subscriber : new LinkedList<Subscriber>(subscribers)) {
             subscriber.onEventReceived(event);
         }
     }
 
     /**
-     *
      * @param subscriber
      */
-    public void subscribe(@NotNull Subscriber subscriber) {
+    public void subscribe(Subscriber subscriber) {
         subscribers.add(subscriber);
     }
 
     /**
-     *
      * @param subscriber
      */
-    public void unsubscribe(@NotNull Subscriber subscriber) {
+    public void unsubscribe(Subscriber subscriber) {
         subscribers.remove(subscriber);
     }
 
@@ -44,7 +40,7 @@ public class EventBus implements Serializable {
      *
      */
     public interface Subscriber extends Serializable {
-        void onEventReceived(@NotNull Object event);
+        void onEventReceived(Object event);
     }
 
 }

@@ -61,7 +61,6 @@
 
     background: $login-screen-background-color;
     background: -moz-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, $login-screen-background-color), color-stop(100%, $login-screen-background-additional-color));
     background: -webkit-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
     background: -o-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
     background: -ms-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
@@ -145,12 +144,11 @@
   }
 }
 
-@mixin linear-gradient($from, $to) {
-  background-color: $from;
-  background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
-  background-image: -webkit-linear-gradient(top, $from, $to);
-  background-image: -moz-linear-gradient(top, $from, $to);
-  background-image: -ms-linear-gradient(top, $from, $to);
-  background-image: -o-linear-gradient(top, $from, $to);
-  background-image: linear-gradient(top, $from, $to);
+@mixin linear-gradient($fromColor, $toColor) {
+  background-color: $fromColor;
+  background-image: -webkit-linear-gradient(top, $fromColor, $toColor);
+  background-image: -moz-linear-gradient(top, $fromColor, $toColor);
+  background-image: -ms-linear-gradient(top, $fromColor, $toColor);
+  background-image: -o-linear-gradient(top, $fromColor, $toColor);
+  background-image: linear-gradient(top, $fromColor, $toColor);
 }

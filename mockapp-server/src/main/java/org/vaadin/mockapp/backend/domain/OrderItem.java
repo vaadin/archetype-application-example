@@ -27,7 +27,7 @@ public class OrderItem implements Serializable, Cloneable {
     }
 
     public void setQty(BigDecimal qty) {
-        if (qty== null) {
+        if (qty == null) {
             qty = BigDecimal.ZERO;
         }
         this.qty = qty;

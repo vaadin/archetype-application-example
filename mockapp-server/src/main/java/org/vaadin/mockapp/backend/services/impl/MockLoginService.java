@@ -1,6 +1,5 @@
 package org.vaadin.mockapp.backend.services.impl;
 
-import org.jetbrains.annotations.NotNull;
 import org.vaadin.mockapp.backend.MockAppRoles;
 import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
 import org.vaadin.mockapp.backend.services.LoginService;
@@ -16,7 +15,7 @@ import java.util.logging.Logger;
 public class MockLoginService implements LoginService {
 
     @Override
-    public boolean login(@NotNull String username, @NotNull String password) {
+    public boolean login(String username, String password) {
         if ("sales".equals(username) && "p".equals(password)) {
             AuthenticationHolder.setAuthentication(new SimpleAuthentication("sales", MockAppRoles.ROLE_SALESMAN));
             return true;

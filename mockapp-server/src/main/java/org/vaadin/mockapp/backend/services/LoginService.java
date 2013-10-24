@@ -1,6 +1,5 @@
 package org.vaadin.mockapp.backend.services;
 
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author petter@vaadin.com
@@ -13,7 +12,7 @@ public interface LoginService {
      *
      * @return true if login succeeded, false if it failed.
      */
-    boolean login(@NotNull String username, @NotNull String password);
+    boolean login(String username, String password);
 
     /**
      * Logs the user out, clearing the authentication token from {@link org.vaadin.mockapp.backend.authentication.AuthenticationHolder}. The session remains active after this call, though.

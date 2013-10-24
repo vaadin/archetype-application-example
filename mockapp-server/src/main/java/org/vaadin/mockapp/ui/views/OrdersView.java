@@ -91,6 +91,7 @@ public class OrdersView extends VerticalLayout implements View, Property.ValueCh
         states.setImmediate(true);
         for (OrderState state : OrderState.values()) {
             states.addItem(state);
+            states.setItemCaption(state, state.getDisplayName());
         }
         states.setValue(Arrays.asList(OrderState.values()));
         states.addValueChangeListener(this);
@@ -193,22 +194,6 @@ public class OrdersView extends VerticalLayout implements View, Property.ValueCh
         }
         open.setEnabled(true);
     }
-
-    /*private void filter(String filterString) {
-        container.removeAllContainerFilters();
-        if (!filterString.isEmpty()) {
-            for (String singleFilterTerm : filterString.split(" ")) {
-                container.addContainerFilter(
-                        new Or(
-                                new SimpleStringFilter("name", singleFilterTerm, true, false),
-                                new SimpleStringFilter("address.street", singleFilterTerm, true, false),
-                                new SimpleStringFilter("address.postalCode", singleFilterTerm, true, false),
-                                new SimpleStringFilter("address.city", singleFilterTerm, true, false)
-                        )
-                );
-            }
-        }
-    }*/
 
     private void updateButtonStates() {
         boolean hasSelection = table.getValue() != null;

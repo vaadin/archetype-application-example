@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 /**
+ * UI content when the user is not logged in yet.
+ *
  * @author petter@vaadin.com
  */
 public class LoginScreen extends VerticalLayout {

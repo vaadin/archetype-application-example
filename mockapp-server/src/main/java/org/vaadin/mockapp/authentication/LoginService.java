@@ -1,7 +1,8 @@
 package org.vaadin.mockapp.authentication;
 
-
 /**
+ * Interface defining a simple login service that authenticates users based on a username and password.
+ *
  * @author petter@vaadin.com
  */
 public interface LoginService {
@@ -13,10 +14,4 @@ public interface LoginService {
      * @return true if login succeeded, false if it failed.
      */
     boolean login(String username, String password);
-
-    /**
-     * Logs the user out, clearing the authentication token from {@link org.vaadin.mockapp.authentication.AuthenticationHolder}. The session remains active after this call, though.
-     */
-    void logout();
-
 }

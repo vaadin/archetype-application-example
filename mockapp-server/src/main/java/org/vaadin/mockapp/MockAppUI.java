@@ -22,6 +22,7 @@ public class MockAppUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        setLocale(vaadinRequest.getLocale());
         getPage().setTitle("MockApp");
         if (AuthenticationHolder.isAnonymous()) {
             setContent(new LoginScreen(new LoginScreen.Callback() {

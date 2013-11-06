@@ -1,12 +1,10 @@
-package org.vaadin.mockapp.authentication;
+package org.vaadin.mockapp.samples.authentication;
 
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.ServiceLoader;
 
 /**
  * UI content when the user is not logged in yet.
@@ -15,7 +13,6 @@ import java.util.ServiceLoader;
  */
 public class LoginScreen extends VerticalLayout {
 
-    private static final ServiceLoader<LoginService> loginService = ServiceLoader.load(LoginService.class);
     private TextField username;
     private PasswordField password;
     private Button login;
@@ -28,6 +25,9 @@ public class LoginScreen extends VerticalLayout {
         setSizeFull();
 
         FormLayout loginForm = new FormLayout();
+
+        loginForm.addComponent(new Label("Any username will be accepted as long as the password is 'p'."));
+
         loginForm.addStyleName("login-form");
         loginForm.setSizeUndefined();
         loginForm.addComponent(username = new TextField("Username"));
@@ -75,21 +75,17 @@ public class LoginScreen extends VerticalLayout {
         setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
     }
 
+    /**
+     * In a real application, you should delegate to a real authentication service and not
+     * do the authentication hard coded!
+     */
     private void login() {
-        if (getLoginService().login(username.getValue(), password.getValue())) {
+        if (password.getValue().equals("p")) {
+            CurrentUser.set(username.getValue());
             callback.loginSuccessful();
         } else {
             Notification.show("Login failed", "Please check your username and password and try again.", Notification.Type.HUMANIZED_MESSAGE);
             username.focus();
-        }
-    }
-
-    private LoginService getLoginService() {
-        Iterator<LoginService> loginServiceIterator = loginService.iterator();
-        if (loginServiceIterator.hasNext()) {
-            return loginServiceIterator.next();
-        } else {
-            throw new IllegalStateException("No LoginService implementation found");
         }
     }
 

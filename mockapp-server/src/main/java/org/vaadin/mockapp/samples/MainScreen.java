@@ -5,7 +5,7 @@ import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
-import org.vaadin.mockapp.authentication.AuthenticationHolder;
+import org.vaadin.mockapp.samples.authentication.CurrentUser;
 import org.vaadin.mockapp.samples.charts.SampleChartView;
 import org.vaadin.mockapp.samples.form.SampleFormView;
 import org.vaadin.mockapp.samples.table.SampleTableView;
@@ -44,7 +44,7 @@ public class MainScreen extends VerticalLayout {
         header.setSpacing(true);
         header.addStyleName(Reindeer.LAYOUT_BLACK);
 
-        final Label currentUser = new Label("Hello, " + AuthenticationHolder.getAuthentication().getName());
+        final Label currentUser = new Label("Hello, " + CurrentUser.get());
         currentUser.addStyleName(Reindeer.LABEL_H2);
         header.addComponent(currentUser);
 

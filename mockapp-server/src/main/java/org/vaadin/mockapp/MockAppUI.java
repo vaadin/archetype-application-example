@@ -6,9 +6,9 @@ import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
-import org.vaadin.mockapp.authentication.AuthenticationHolder;
-import org.vaadin.mockapp.authentication.LoginScreen;
 import org.vaadin.mockapp.samples.MainScreen;
+import org.vaadin.mockapp.samples.authentication.CurrentUser;
+import org.vaadin.mockapp.samples.authentication.LoginScreen;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -23,7 +23,7 @@ public class MockAppUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         setLocale(vaadinRequest.getLocale());
         getPage().setTitle("MockApp");
-        if (AuthenticationHolder.isAnonymous()) {
+        if (CurrentUser.get().isEmpty()) {
             setContent(new LoginScreen(new LoginScreen.Callback() {
                 @Override
                 public void loginSuccessful() {

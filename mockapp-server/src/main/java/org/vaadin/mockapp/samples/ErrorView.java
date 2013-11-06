@@ -1,12 +1,14 @@
-package org.vaadin.mockapp.ui.views;
+package org.vaadin.mockapp.samples;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.mockapp.ui.views.components.H1;
+import org.vaadin.mockapp.theme.MockAppTheme;
 
 /**
+ * View shown when trying to navigate to a view that does not exist using {@link com.vaadin.navigator.Navigator}.
+ *
  * @author petter@vaadin.com
  */
 public class ErrorView extends VerticalLayout implements View {
@@ -14,14 +16,12 @@ public class ErrorView extends VerticalLayout implements View {
     private Label explanation;
 
     public ErrorView() {
-        init();
-    }
-
-    private void init() {
         setMargin(true);
         setSpacing(true);
 
-        addComponent(new H1("The view could not be found"));
+        Label header = new Label("The view could not be found");
+        header.addStyleName(MockAppTheme.LABEL_H1);
+        addComponent(header);
         addComponent(explanation = new Label());
     }
 

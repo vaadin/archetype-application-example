@@ -4,11 +4,11 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.Reindeer;
 import org.vaadin.mockapp.authentication.AuthenticationHolder;
 import org.vaadin.mockapp.samples.charts.SampleChartView;
 import org.vaadin.mockapp.samples.form.SampleFormView;
 import org.vaadin.mockapp.samples.table.SampleTableView;
-import org.vaadin.mockapp.theme.MockAppTheme;
 
 /**
  * Content of the UI when the user is logged in.
@@ -23,7 +23,7 @@ public class MainScreen extends VerticalLayout {
         createMenuBar();
         final Panel viewContainer = new Panel();
         viewContainer.setSizeFull();
-        viewContainer.addStyleName(MockAppTheme.PANEL_LIGHT);
+        viewContainer.addStyleName(Reindeer.PANEL_LIGHT);
         addComponent(viewContainer);
         setExpandRatio(viewContainer, 1);
 
@@ -42,10 +42,10 @@ public class MainScreen extends VerticalLayout {
         header.setWidth("100%");
         header.setMargin(true);
         header.setSpacing(true);
-        header.addStyleName(MockAppTheme.LAYOUT_BLACK);
+        header.addStyleName(Reindeer.LAYOUT_BLACK);
 
         final Label currentUser = new Label("Hello, " + AuthenticationHolder.getAuthentication().getName());
-        currentUser.addStyleName(MockAppTheme.LABEL_H2);
+        currentUser.addStyleName(Reindeer.LABEL_H2);
         header.addComponent(currentUser);
 
         addComponent(header);

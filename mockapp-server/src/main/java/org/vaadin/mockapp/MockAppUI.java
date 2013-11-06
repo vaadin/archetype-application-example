@@ -9,14 +9,13 @@ import com.vaadin.ui.UI;
 import org.vaadin.mockapp.authentication.AuthenticationHolder;
 import org.vaadin.mockapp.authentication.LoginScreen;
 import org.vaadin.mockapp.samples.MainScreen;
-import org.vaadin.mockapp.theme.MockAppTheme;
 
 import javax.servlet.annotation.WebServlet;
 
 /**
  * @author petter@vaadin.com
  */
-@Theme(MockAppTheme.THEME_NAME)
+@Theme("mockapp")
 @Widgetset("org.vaadin.mockapp.widgetset.MockAppWidgetset")
 public class MockAppUI extends UI {
 

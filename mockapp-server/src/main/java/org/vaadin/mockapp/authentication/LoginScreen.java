@@ -2,7 +2,7 @@ package org.vaadin.mockapp.authentication;
 
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.ui.*;
-import org.vaadin.mockapp.theme.MockAppTheme;
+import com.vaadin.ui.themes.Reindeer;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -54,7 +54,7 @@ public class LoginScreen extends VerticalLayout {
             }
         });
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-        login.addStyleName(MockAppTheme.BUTTON_DEFAULT);
+        login.addStyleName(Reindeer.BUTTON_DEFAULT);
 
         buttons.addComponent(forgotPassword = new Button("Forgot password?"));
         buttons.setComponentAlignment(forgotPassword, Alignment.MIDDLE_LEFT);
@@ -69,7 +69,7 @@ public class LoginScreen extends VerticalLayout {
                 }
             }
         });
-        forgotPassword.addStyleName(MockAppTheme.BUTTON_LINK);
+        forgotPassword.addStyleName(Reindeer.BUTTON_LINK);
 
         addComponent(loginForm);
         setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);

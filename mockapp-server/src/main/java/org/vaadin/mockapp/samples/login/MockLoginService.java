@@ -1,14 +1,14 @@
-package org.vaadin.mockapp.backend.services.impl;
+package org.vaadin.mockapp.samples.login;
 
+import org.vaadin.mockapp.authentication.AuthenticationHolder;
+import org.vaadin.mockapp.authentication.LoginService;
 import org.vaadin.mockapp.backend.MockAppRoles;
-import org.vaadin.mockapp.backend.authentication.AuthenticationHolder;
-import org.vaadin.mockapp.backend.services.LoginService;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Very simple implementation of {@link org.vaadin.mockapp.backend.services.LoginService}. <b>Do not use in real applications!</b>
+ * Very simple implementation of {@link org.vaadin.mockapp.authentication.LoginService}. <b>Do not use in real applications!</b>
  *
  * @author petter@vaadin.com
  */

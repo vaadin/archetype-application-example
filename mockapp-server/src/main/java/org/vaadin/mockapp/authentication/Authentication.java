@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.backend.authentication;
+package org.vaadin.mockapp.authentication;
 
 import java.io.Serializable;
 

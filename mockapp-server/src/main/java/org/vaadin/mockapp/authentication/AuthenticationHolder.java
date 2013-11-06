@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.backend.authentication;
+package org.vaadin.mockapp.authentication;
 
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
@@ -46,6 +46,20 @@ public final class AuthenticationHolder {
         } else {
             getCurrentRequest().getWrappedSession().setAttribute(AUTHENTICATION_SESSION_ATTRIBUTE_KEY, authentication);
         }
+    }
+
+    /**
+     * Returns whether the current user is anonymous or authenticated.
+     */
+    public static boolean isAnonymous() {
+        return getAuthentication() == Authentication.ANONYMOUS;
+    }
+
+    /**
+     * Returns whether the current user is authenticated or anonymous.
+     */
+    public static boolean isAuthenticated() {
+        return getAuthentication() != Authentication.ANONYMOUS;
     }
 
     private static VaadinRequest getCurrentRequest() {

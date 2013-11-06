@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.backend.authentication;
+package org.vaadin.mockapp.authentication;
 
 /**
  * @author petter@vaadin.com

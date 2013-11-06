@@ -30,6 +30,10 @@ public class MainScreen extends VerticalLayout {
         final Navigator navigator = new Navigator(ui, viewContainer);
         navigator.setErrorView(ErrorView.class);
         navigator.navigateTo(navigator.getState());
+
+        navigator.addView(SampleTableView.VIEW_NAME, new SampleTableView());
+        navigator.addView(SampleFormView.VIEW_NAME, SampleFormView.class);
+        navigator.addView(SampleChartView.VIEW_NAME, SampleChartView.class);
     }
 
     private void createHeader() {

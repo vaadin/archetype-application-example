@@ -12,12 +12,12 @@ import java.util.UUID;
 public class SampleMaster implements Serializable, Cloneable {
 
     private UUID uuid;
-    private String stringProperty;
-    private Integer integerProperty;
-    private BigDecimal bigDecimalProperty;
-    private Boolean booleanProperty;
-    private SampleEmbedded embeddedProperty;
-    private Set<SampleDetail> details;
+    private String stringProperty = "";
+    private Integer integerProperty = 0;
+    private BigDecimal bigDecimalProperty = BigDecimal.ZERO;
+    private Boolean booleanProperty = Boolean.FALSE;
+    private SampleEmbedded embeddedProperty = new SampleEmbedded();
+    private Set<SampleDetail> details = new HashSet<SampleDetail>();
 
     public UUID getUuid() {
         return uuid;

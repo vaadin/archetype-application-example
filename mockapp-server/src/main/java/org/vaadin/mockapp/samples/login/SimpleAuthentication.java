@@ -35,11 +35,11 @@ public class SimpleAuthentication implements Authentication, HttpSessionBindingL
 
     @Override
     public void valueBound(HttpSessionBindingEvent event) {
-        System.out.println("Authentication bound to session " + event.getSession().getId());
+        System.out.printf("Authentication %s bound to session %s%n", this, event.getSession().getId());
     }
 
     @Override
     public void valueUnbound(HttpSessionBindingEvent event) {
-        System.out.println("Authentication unbound from session " + event.getSession().getId());
+        System.out.printf("Authentication %s unbound from session %s%n", this, event.getSession().getId());
     }
 }

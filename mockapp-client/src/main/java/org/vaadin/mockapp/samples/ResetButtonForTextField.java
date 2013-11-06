@@ -1,4 +1,4 @@
-package org.vaadin.mockapp;
+package org.vaadin.mockapp.samples;
 
 import com.vaadin.server.AbstractClientConnector;
 import com.vaadin.server.AbstractExtension;

@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.client;
+package org.vaadin.mockapp.samples.client;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
@@ -13,7 +13,7 @@ import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
 import com.vaadin.client.ui.VTextField;
 import com.vaadin.shared.ui.Connect;
-import org.vaadin.mockapp.ResetButtonForTextField;
+import org.vaadin.mockapp.samples.ResetButtonForTextField;
 
 /**
  * @see <a href="https://vaadin.com/blog/-/blogs/2656782">Extending components in Vaadin 7</a>
@@ -61,7 +61,7 @@ public class ResetButtonForTextFieldConnector extends AbstractExtensionConnector
     /*-{
         var self = this;
         el.onclick = $entry(function () {
-            self.@org.vaadin.mockapp.client.ResetButtonForTextFieldConnector::clearTextField()();
+            self.@org.vaadin.mockapp.samples.client.ResetButtonForTextFieldConnector::clearTextField()();
         });
     }-*/;
 

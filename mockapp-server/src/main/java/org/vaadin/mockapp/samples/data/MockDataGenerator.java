@@ -15,6 +15,14 @@ public class MockDataGenerator {
 			"Children's books", "Best sellers", "Romance", "Mystery",
 			"Thriller", "Sci-fi", "Non-fiction", "Cookbooks" };
 
+	private static String[] word1 = new String[] { "The art of", "Mastering",
+			"The secrets of", "Avoiding" };
+
+	private static String[] word2 = new String[] { "gardening",
+			"living a healthy life", "designing tree houses", "home security",
+			"intergalaxy travel", "meditation", "ice hockey",
+			"children's education" };
+
 	static List<Category> createCategories() {
 		List<Category> categories = new ArrayList<Category>();
 		for (String name : categoryNames) {
@@ -59,7 +67,7 @@ public class MockDataGenerator {
 
 	private static Set<Category> getCategory(List<Category> categories,
 			int min, int max) {
-		int nr = random.nextInt(max - 1) + min;
+		int nr = random.nextInt(max) + min;
 		HashSet<Category> productCategories = new HashSet<Category>();
 		for (int i = 0; i < nr; i++) {
 			productCategories.add(categories.get(random.nextInt(categories
@@ -68,13 +76,6 @@ public class MockDataGenerator {
 
 		return productCategories;
 	}
-
-	private static String[] word1 = new String[] { "The art of", "Mastering",
-			"The secrets of" };
-
-	private static String[] word2 = new String[] { "gardening",
-			"living a healthy life", "designing tree houses", "home security",
-			"intergalaxy travel", };
 
 	private static String generateName() {
 		return word1[random.nextInt(word1.length)] + " "

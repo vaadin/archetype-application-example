@@ -1,14 +1,11 @@
 package org.vaadin.mockapp.samples.table;
 
-import java.math.BigDecimal;
-import java.util.Set;
+import java.util.Collection;
 
-import org.vaadin.mockapp.samples.data.Category;
-import org.vaadin.mockapp.samples.data.MockData;
 import org.vaadin.mockapp.samples.data.Product;
-import org.vaadin.mockapp.samples.data.State;
 
 import com.vaadin.data.Container;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.And;
 import com.vaadin.data.util.filter.Or;
@@ -23,18 +20,18 @@ public class ProductTable extends Table {
 	public ProductTable() {
 		setSizeFull();
 		setContainerDataSource(container);
-//		setVisibleColumns("productName", "integerProperty",
-//				"bigDecimalProperty", "booleanProperty",
-//				"embeddedProperty.enumProperty");
-//		setColumnHeaders("UUID", "String", "Integer", "BigDecimal", "Boolean",
-//				"Enum");
+		setVisibleColumns("productName", "price", "state", "stockCount",
+				"category");
+		setColumnHeaders("Product", "Price (€)", "State", "In stock",
+				"Categories");
 		setColumnCollapsingAllowed(true);
 		setColumnCollapsed("integerProperty", true);
 		setColumnCollapsed("bigDecimalProperty", true);
 		setSelectable(true);
 		setImmediate(true);
 
-//		setConverter("price",new EuroConverter());
+		setConverter("price", new EuroConverter());
+		setConverter("category", new CollectionConverter());
 	}
 
 	public void setFilter(String filterString) {

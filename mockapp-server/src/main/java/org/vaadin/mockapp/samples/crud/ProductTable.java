@@ -1,6 +1,7 @@
 package org.vaadin.mockapp.samples.crud;
 
 import org.vaadin.mockapp.samples.data.Product;
+import org.vaadin.mockapp.samples.data.State;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
@@ -36,6 +37,18 @@ public class ProductTable extends Table {
 		setConverter("price", new EuroConverter());
 		// Show categories as a comma separated list
 		setConverter("category", new CollectionToStringConverter());
+		setCellStyleGenerator(new CellStyleGenerator() {
+			
+			@Override
+			public String getStyle(Table source, Object itemId, Object propertyId) {
+				if ("state".equals(propertyId)) {
+					State s = (State) source.getContainerProperty(itemId, propertyId).getValue();
+					if (!s.isAvailable())
+						return "not-available";
+				}
+				return null;
+			}
+		});
 	}
 
 	public void setFilter(String filterString) {

@@ -50,17 +50,4 @@
 //        }
 //    }
 //
-//    private Set<SampleDetail> clone(Set<SampleDetail> original) {
-//        try {
-//            Set<SampleDetail> set = new HashSet<SampleDetail>();
-//            if (original != null) {
-//                for (SampleDetail originalDetail : original) {
-//                    set.add(originalDetail.clone());
-//                }
-//            }
-//            return set;
-//        } catch (CloneNotSupportedException ex) {
-//            throw new RuntimeException(ex);
-//        }
-//    }
 //}

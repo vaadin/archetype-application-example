@@ -13,12 +13,13 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.mockapp.samples.filtering.FilterField;
 
 public class SampleTableView extends VerticalLayout implements View {
 
 	public static final String VIEW_NAME = "sampleTableView";
 	private ProductTable table;
-	private TextField filter = new TextField();
+	private FilterField filter = new FilterField();
 	private Button goToFormView;
 
 	public SampleTableView() {
@@ -26,15 +27,14 @@ public class SampleTableView extends VerticalLayout implements View {
 		setMargin(true);
 		setSizeFull();
 
-		filter.setInputPrompt("Filter the table");
-		ResetButtonForTextField.extend(filter);
-		filter.setImmediate(true);
-		filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
-			@Override
-			public void textChange(FieldEvents.TextChangeEvent event) {
-				table.setFilter(event.getText());
-			}
-		});
+        filter.addFilterListener(new FilterField.FilterListener() {
+            @Override
+            public void filter(FilterField.FilterEvent event) {
+                BeanItemContainer<Product> container = table.getContainerDataSource();
+                container.removeAllContainerFilters();
+                container.addContainerFilter(event.getContainerFilter());
+            }
+        });
 		addComponent(filter);
 		setComponentAlignment(filter, Alignment.TOP_RIGHT);
 

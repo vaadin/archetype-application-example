@@ -19,4 +19,6 @@
     <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet"/>
 
     <inherits name="org.vaadin.mockapp.samples.SampleWidgetset"/>
+
+    
 </module>

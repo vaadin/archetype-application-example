@@ -5,16 +5,21 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 public class Product implements Serializable {
 
+	@NotNull
 	private int id;
+	@NotNull
 	private String productName = "";
 	@Min(0)
 	private BigDecimal price = BigDecimal.ZERO;;
 	private Set<Category> category;
+	@Min(0)
 	private int stockCount = 0;
 	// private boolean onTheWeb = false;
+	@NotNull
 	private State state = State.NOT_YET_AVAILABLE;
 
 	public int getId() {

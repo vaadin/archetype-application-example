@@ -1,7 +1,7 @@
 package org.vaadin.mockapp.samples.table;
 
 import org.vaadin.mockapp.samples.ResetButtonForTextField;
-import org.vaadin.mockapp.samples.data.MockData;
+import org.vaadin.mockapp.samples.backend.MockData;
 import org.vaadin.mockapp.samples.data.Product;
 
 import com.vaadin.data.Property;
@@ -17,7 +17,7 @@ import org.vaadin.mockapp.samples.filtering.FilterField;
 
 public class SampleTableView extends VerticalLayout implements View {
 
-	public static final String VIEW_NAME = "sampleTableView";
+	public static final String VIEW_NAME = "Editor";
 	private ProductTable table;
 	private FilterField filter = new FilterField();
 	private Button goToFormView;

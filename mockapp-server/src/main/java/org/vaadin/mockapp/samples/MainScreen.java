@@ -5,11 +5,14 @@ import org.vaadin.mockapp.samples.charts.SampleChartView;
 import org.vaadin.mockapp.samples.table.SampleTableView;
 
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.MenuBar.Command;
+import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -17,77 +20,79 @@ import com.vaadin.ui.themes.Reindeer;
 
 /**
  * Content of the UI when the user is logged in.
- *
+ * 
  * @author petter@vaadin.com
  */
 public class MainScreen extends VerticalLayout {
 
-    public MainScreen(UI ui) {
-        setSizeFull();
-        createHeader();
-        createMenuBar();
-        final Panel viewContainer = new Panel();
-        viewContainer.setSizeFull();
-        viewContainer.addStyleName(Reindeer.PANEL_LIGHT);
-        addComponent(viewContainer);
-        setExpandRatio(viewContainer, 1);
+	private static final Class<? extends View>[] viewClasses = new Class[] {
+			SampleTableView.class, SampleChartView.class };
 
-        final Navigator navigator = new Navigator(ui, viewContainer);
-        navigator.setErrorView(ErrorView.class);
+	public MainScreen(UI ui) {
+		setSizeFull();
+		createHeader();
+		createMenuBar();
+		final Panel viewContainer = new Panel();
+		viewContainer.setSizeFull();
+		viewContainer.addStyleName(Reindeer.PANEL_LIGHT);
+		addComponent(viewContainer);
+		setExpandRatio(viewContainer, 1);
 
-        navigator.addView(SampleTableView.VIEW_NAME, new SampleTableView());
-//        navigator.addView(SampleFormView.VIEW_NAME, SampleFormView.class);
-        navigator.addView(SampleChartView.VIEW_NAME, SampleChartView.class);
+		final Navigator navigator = new Navigator(ui, viewContainer);
+		navigator.setErrorView(ErrorView.class);
 
-        navigator.navigateTo(navigator.getState());
-    }
+		for (Class<? extends View> viewClass : viewClasses) {
+			navigator.addView(getViewName(viewClass), viewClass);
+		}
 
-    private void createHeader() {
-        final HorizontalLayout header = new HorizontalLayout();
-        header.setWidth("100%");
-        header.setMargin(true);
-        header.setSpacing(true);
-        header.addStyleName(Reindeer.LAYOUT_BLACK);
+		navigator.navigateTo(navigator.getState());
+	}
 
-        final Label currentUser = new Label("Hello, " + CurrentUser.get());
-        currentUser.addStyleName(Reindeer.LABEL_H2);
-        header.addComponent(currentUser);
+	private void createHeader() {
+		final HorizontalLayout header = new HorizontalLayout();
+		header.setWidth("100%");
+		header.setMargin(true);
+		header.setSpacing(true);
+		header.addStyleName(Reindeer.LAYOUT_BLACK);
 
-        addComponent(header);
-    }
+		final Label currentUser = new Label("Hello, " + CurrentUser.get());
+		currentUser.addStyleName(Reindeer.LABEL_H2);
+		header.addComponent(currentUser);
 
-    private void createMenuBar() {
-        final MenuBar menuBar = new MenuBar();
-        menuBar.setWidth("100%");
-        addComponent(menuBar);
+		addComponent(header);
+	}
 
-        final MenuBar.MenuItem samples = menuBar.addItem("Samples", null);
-        samples.addItem("Table", new ViewNavigationCommand(SampleTableView.VIEW_NAME));
-//        samples.addItem("Form", new ViewNavigationCommand(SampleFormView.VIEW_NAME));
-        samples.addItem("Charts", new ViewNavigationCommand(SampleChartView.VIEW_NAME));
+	private void createMenuBar() {
+		final MenuBar menuBar = new MenuBar();
+		menuBar.setWidth("100%");
+		addComponent(menuBar);
 
-        menuBar.addItem("My Session", null).addItem("Log out", new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem selectedItem) {
-                VaadinSession.getCurrent().getSession().invalidate();
-                Page.getCurrent().reload();
-            }
-        });
+		for (Class<? extends View> viewClass : viewClasses) {
+			final String viewName = getViewName(viewClass);
+			menuBar.addItem(viewName, new Command() {
+				@Override
+				public void menuSelected(MenuItem selectedItem) {
+					getUI().getNavigator().navigateTo(viewName);
+				}
+			});
+		}
 
-    }
+		menuBar.addItem("Log out", new MenuBar.Command() {
+			@Override
+			public void menuSelected(MenuBar.MenuItem selectedItem) {
+				VaadinSession.getCurrent().getSession().invalidate();
+				Page.getCurrent().reload();
+			}
+		});
 
-    private class ViewNavigationCommand implements MenuBar.Command {
+	}
 
-        private final String viewName;
-
-        private ViewNavigationCommand(String viewName) {
-            this.viewName = viewName;
-        }
-
-        @Override
-        public void menuSelected(MenuBar.MenuItem selectedItem) {
-            getUI().getNavigator().navigateTo(viewName);
-        }
-    }
+	private String getViewName(Class<? extends View> viewClass) {
+		try {
+			return (String) viewClass.getField("VIEW_NAME").get(null);
+		} catch (Exception e) {
+			return "VIEW_NAME field not found in " + viewClass.getName();
+		}
+	}
 
 }

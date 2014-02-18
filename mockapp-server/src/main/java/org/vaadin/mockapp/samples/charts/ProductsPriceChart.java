@@ -39,7 +39,7 @@ public class ProductsPriceChart extends Chart {
 			Collection<Category> categories) {
 		final Integer[] prices = new Integer[20];
 		for (Product p : products) {
-			int priceCategory = (int) (p.getPrice().doubleValue() / 20);
+			int priceCategory = (int) (p.getPrice().doubleValue() / (1000/20));
 			if (priceCategory > 19)
 				priceCategory = 19;
 

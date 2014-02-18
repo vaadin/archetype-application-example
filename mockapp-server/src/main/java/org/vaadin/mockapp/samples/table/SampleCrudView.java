@@ -9,7 +9,9 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Notification.Type;
 
 public class SampleCrudView extends VerticalLayout implements View {
 
@@ -17,6 +19,7 @@ public class SampleCrudView extends VerticalLayout implements View {
 	ProductTable table;
 	ProductForm form;
 	private FilterField filter = new FilterField();
+	private SampleCrudLogic viewLogic;
 
 	public SampleCrudView() {
 		setSpacing(true);
@@ -39,26 +42,22 @@ public class SampleCrudView extends VerticalLayout implements View {
 		addComponent(table);
 		setExpandRatio(table, 1);
 
-		form = new ProductForm();
+		form = new ProductForm(viewLogic);
 		form.setWidth("100%");
 		form.setEnabled(false);
 		form.setCategories(DataService.get().getAllCategories());
 		addComponent(form);
 
-		new SampleCrudLogic(this);
+		viewLogic = new SampleCrudLogic(this);
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		refreshTable();
+		viewLogic.refreshTable();
 	}
 
-	private void refreshTable() {
-		Product oldSelection = table.getValue();
-		BeanItemContainer<Product> container = table.getContainerDataSource();
-		container.removeAllItems();
-		container.addAll(DataService.get().getAllProducts());
-		table.setValue(oldSelection);
+	public void showError(String msg) {
+		Notification.show(msg, Type.ERROR_MESSAGE);
 	}
 
 }

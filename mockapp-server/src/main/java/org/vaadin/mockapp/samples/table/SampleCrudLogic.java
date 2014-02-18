@@ -10,11 +10,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.validator.IntegerRangeValidator;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
+import com.vaadin.data.util.BeanItemContainer;
 
 public class SampleCrudLogic {
 
@@ -31,30 +27,6 @@ public class SampleCrudLogic {
 	private void setupForm() {
 		fieldGroup = new BeanFieldGroup<Product>(Product.class);
 		fieldGroup.bindMemberFields(view.form);
-
-		IntegerRangeValidator stockValidator = new IntegerRangeValidator(
-				"Can't have negative amount in stock", 0, null);
-		view.form.stockCount.addValidator(stockValidator);
-
-		view.form.saveButton.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				try {
-					fieldGroup.commit();
-					view.table.setValue(null);
-				} catch (CommitException e) {
-					Notification.show("Please re-check the fields",
-							Type.ERROR_MESSAGE);
-				}
-			}
-		});
-		view.form.discardButton.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				fieldGroup.discard();
-				view.table.setValue(null);
-			}
-		});
 
 		fieldGroup.addCommitHandler(new CommitHandler() {
 
@@ -73,7 +45,20 @@ public class SampleCrudLogic {
 
 		// Set default field values
 		setFormDataSource(null);
+	}
 
+	public void discardProduct() {
+		fieldGroup.discard();
+		view.table.setValue(null);
+	}
+
+	public void saveProduct() {
+		try {
+			fieldGroup.commit();
+			view.table.setValue(null);
+		} catch (CommitException e) {
+			view.showError("Please re-check the fields");
+		}
 	}
 
 	private void setupTable() {
@@ -94,4 +79,13 @@ public class SampleCrudLogic {
 		}
 	}
 
+	public void refreshTable() {
+		Product oldSelection = view.table.getValue();
+		BeanItemContainer<Product> container = view.table
+				.getContainerDataSource();
+		container.removeAllItems();
+		container.addAll(DataService.get().getAllProducts());
+		view.table.setValue(oldSelection);
+
+	}
 }

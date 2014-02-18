@@ -2,25 +2,17 @@ package org.vaadin.mockapp.samples.table;
 
 import java.util.Collection;
 
-import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.data.Category;
-import org.vaadin.mockapp.samples.data.Product;
 import org.vaadin.mockapp.samples.data.State;
 
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
-import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 
 public class ProductForm extends GridLayout {
 
@@ -31,9 +23,11 @@ public class ProductForm extends GridLayout {
 	TextField productName = new TextField("Product name");
 	Button saveButton = new Button("Save");
 	Button discardButton = new Button("Discard");
+	private SampleCrudLogic viewLogic;
 
-	public ProductForm() {
+	public ProductForm(SampleCrudLogic sampleCrudLogic) {
 		super(3, 3);
+		this.viewLogic = sampleCrudLogic;
 		setSpacing(true);
 
 		productName.setWidth("100%");
@@ -42,6 +36,9 @@ public class ProductForm extends GridLayout {
 		price.setWidth("60px");
 		addComponent(price);
 
+		IntegerRangeValidator stockValidator = new IntegerRangeValidator(
+				"Can't have negative amount in stock", 0, null);
+		stockCount.addValidator(stockValidator);
 		stockCount.setWidth("80px");
 		addComponent(stockCount);
 
@@ -55,8 +52,22 @@ public class ProductForm extends GridLayout {
 
 		addComponent(saveButton);
 		addComponent(discardButton);
-		
-		setColumnExpandRatio(2,1);
+
+		setColumnExpandRatio(2, 1);
+
+		saveButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				viewLogic.saveProduct();
+			}
+		});
+
+		discardButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				viewLogic.discardProduct();
+			}
+		});
 
 	}
 
@@ -66,4 +77,5 @@ public class ProductForm extends GridLayout {
 			category.addItem(c);
 		}
 	}
+
 }

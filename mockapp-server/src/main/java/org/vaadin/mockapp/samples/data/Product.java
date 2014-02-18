@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
+import javax.validation.constraints.Min;
+
 public class Product implements Serializable {
 
 	private int id;
 	private String productName = "";
+	@Min(0)
 	private BigDecimal price = BigDecimal.ZERO;;
 	private Set<Category> category;
 	private int stockCount = 0;

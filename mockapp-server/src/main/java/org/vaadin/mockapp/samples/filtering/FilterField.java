@@ -73,6 +73,9 @@ public class FilterField extends CustomField<String> {
 
     public FilterField() {
         super();
+        for (State s : State.values())
+        	stateSelect.addItem(s);
+        
         setSizeUndefined();
     }
 

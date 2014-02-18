@@ -4,6 +4,8 @@ import java.util.Collection;
 
 public interface DataService {
 
-	Collection<? extends Product> getAllProducts();
+	Collection<Product> getAllProducts();
+
+	Collection<Category> getAllCategories();
 
 }

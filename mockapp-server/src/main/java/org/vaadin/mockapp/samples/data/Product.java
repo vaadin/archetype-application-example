@@ -7,7 +7,7 @@ import java.util.Set;
 public class Product implements Serializable {
 
 	private int id;
-	private String productName;
+	private String productName = "";
 	private BigDecimal price = BigDecimal.ZERO;;
 	private Set<Category> category;
 	private int stockCount = 0;

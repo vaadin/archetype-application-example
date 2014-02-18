@@ -3,6 +3,7 @@ package org.vaadin.mockapp.samples.table;
 import org.vaadin.mockapp.samples.data.Product;
 
 import com.vaadin.data.Container;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.And;
 import com.vaadin.data.util.filter.Or;
@@ -58,6 +59,11 @@ public class ProductTable extends Table {
 	@Override
 	public Product getValue() {
 		return (Product) super.getValue();
+	}
+
+	@Override
+	public BeanItem<Product> getItem(Object itemId) {
+		return (BeanItem<Product>) super.getItem(itemId);
 	}
 
 	@Override

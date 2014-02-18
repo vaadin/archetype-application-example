@@ -2,7 +2,7 @@ package org.vaadin.mockapp.samples;
 
 import org.vaadin.mockapp.samples.authentication.CurrentUser;
 import org.vaadin.mockapp.samples.charts.SampleChartView;
-import org.vaadin.mockapp.samples.table.SampleTableView;
+import org.vaadin.mockapp.samples.table.SampleCrudView;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
@@ -26,7 +26,7 @@ import com.vaadin.ui.themes.Reindeer;
 public class MainScreen extends VerticalLayout {
 
 	private static final Class<? extends View>[] viewClasses = new Class[] {
-			SampleTableView.class, SampleChartView.class };
+			SampleCrudView.class, SampleChartView.class };
 
 	public MainScreen(UI ui) {
 		setSizeFull();

@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.vaadin.mockapp.samples.backend.MockData;
 import org.vaadin.mockapp.samples.data.Category;
 import org.vaadin.mockapp.samples.data.Product;
 

@@ -5,10 +5,15 @@ import java.util.Collection;
 import org.vaadin.mockapp.samples.data.Category;
 import org.vaadin.mockapp.samples.data.Product;
 
-public interface DataService {
+public abstract class DataService {
 
-	Collection<Product> getAllProducts();
+	public abstract Collection<Product> getAllProducts();
 
-	Collection<Category> getAllCategories();
+	public abstract Collection<Category> getAllCategories();
 
+	public abstract void updateProduct(Product p);
+
+	public static DataService get() {
+		return MockDataService.getInstance();
+	}
 }

@@ -20,12 +20,12 @@ public class MockDataGenerator {
 			"Thriller", "Sci-fi", "Non-fiction", "Cookbooks" };
 
 	private static String[] word1 = new String[] { "The art of", "Mastering",
-			"The secrets of", "Avoiding" };
+			"The secrets of", "Avoiding", "For fun and profit: " };
 
 	private static String[] word2 = new String[] { "gardening",
 			"living a healthy life", "designing tree houses", "home security",
 			"intergalaxy travel", "meditation", "ice hockey",
-			"children's education" };
+			"children's education", "bromance" };
 
 	static List<Category> createCategories() {
 		List<Category> categories = new ArrayList<Category>();

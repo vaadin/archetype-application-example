@@ -41,7 +41,7 @@ public class SampleCrudLogic {
 			public void buttonClick(ClickEvent event) {
 				try {
 					fieldGroup.commit();
-					setFormDataSource(null);
+					view.table.setValue(null);
 				} catch (CommitException e) {
 					Notification.show("Please re-check the fields",
 							Type.ERROR_MESSAGE);
@@ -52,6 +52,7 @@ public class SampleCrudLogic {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				fieldGroup.discard();
+				view.table.setValue(null);
 			}
 		});
 
@@ -67,7 +68,6 @@ public class SampleCrudLogic {
 					throws CommitException {
 				DataService.get().updateProduct(
 						fieldGroup.getItemDataSource().getBean());
-
 			}
 		});
 

@@ -1,14 +1,19 @@
 package org.vaadin.mockapp.samples;
 
+import org.vaadin.mockapp.samples.authentication.CurrentUser;
+import org.vaadin.mockapp.samples.charts.SampleChartView;
+import org.vaadin.mockapp.samples.table.SampleTableView;
+
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.*;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
-import org.vaadin.mockapp.samples.authentication.CurrentUser;
-import org.vaadin.mockapp.samples.charts.SampleChartView;
-import org.vaadin.mockapp.samples.form.SampleFormView;
-import org.vaadin.mockapp.samples.table.SampleTableView;
 
 /**
  * Content of the UI when the user is logged in.
@@ -31,7 +36,7 @@ public class MainScreen extends VerticalLayout {
         navigator.setErrorView(ErrorView.class);
 
         navigator.addView(SampleTableView.VIEW_NAME, new SampleTableView());
-        navigator.addView(SampleFormView.VIEW_NAME, SampleFormView.class);
+//        navigator.addView(SampleFormView.VIEW_NAME, SampleFormView.class);
         navigator.addView(SampleChartView.VIEW_NAME, SampleChartView.class);
 
         navigator.navigateTo(navigator.getState());
@@ -58,7 +63,7 @@ public class MainScreen extends VerticalLayout {
 
         final MenuBar.MenuItem samples = menuBar.addItem("Samples", null);
         samples.addItem("Table", new ViewNavigationCommand(SampleTableView.VIEW_NAME));
-        samples.addItem("Form", new ViewNavigationCommand(SampleFormView.VIEW_NAME));
+//        samples.addItem("Form", new ViewNavigationCommand(SampleFormView.VIEW_NAME));
         samples.addItem("Charts", new ViewNavigationCommand(SampleChartView.VIEW_NAME));
 
         menuBar.addItem("My Session", null).addItem("Log out", new MenuBar.Command() {

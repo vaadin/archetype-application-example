@@ -82,9 +82,6 @@ public class LoginScreen extends VerticalLayout {
 		}
 	}
 
-	private void forgotPassword() {
-	}
-
 	public interface LoginListener extends Serializable {
 		void loginSuccessful(String username);
 	}

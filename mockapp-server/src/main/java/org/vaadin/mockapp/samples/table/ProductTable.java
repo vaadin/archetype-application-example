@@ -35,7 +35,7 @@ public class ProductTable extends Table {
 		// Add " €" automatically after price
 		setConverter("price", new EuroConverter());
 		// Show categories as a comma separated list
-		setConverter("category", new CollectionConverter());
+		setConverter("category", new CollectionToStringConverter());
 	}
 
 	public void setFilter(String filterString) {

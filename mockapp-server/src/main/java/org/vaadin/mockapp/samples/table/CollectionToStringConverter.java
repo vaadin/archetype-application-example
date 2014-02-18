@@ -5,7 +5,7 @@ import java.util.Locale;
 
 import com.vaadin.data.util.converter.Converter;
 
-public class CollectionConverter implements Converter<String, Collection> {
+public class CollectionToStringConverter implements Converter<String, Collection> {
 
 	@Override
 	public Collection convertToModel(String value,

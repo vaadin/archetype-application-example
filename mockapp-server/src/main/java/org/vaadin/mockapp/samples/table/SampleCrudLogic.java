@@ -57,6 +57,9 @@ public class SampleCrudLogic {
 	public void saveProduct() {
 		try {
 			fieldGroup.commit();
+			Product p = fieldGroup.getItemDataSource().getBean();
+			view.showSaveNotification(p.getProductName() + " (" + p.getId()
+					+ ") updated");
 			view.table.setValue(null);
 		} catch (CommitException e) {
 			view.showError("Please re-check the fields");

@@ -60,4 +60,8 @@ public class SampleCrudView extends VerticalLayout implements View {
 		Notification.show(msg, Type.ERROR_MESSAGE);
 	}
 
+	public void showSaveNotification(String msg) {
+		Notification.show(msg, Type.TRAY_NOTIFICATION);
+	}
+	
 }

@@ -1,10 +1,10 @@
-package org.vaadin.mockapp.samples.filtering;
-
-import com.vaadin.ui.ComboBox;
+package org.vaadin.mockapp.samples.components;
 
 import java.util.EnumSet;
 
-public class EnumSelect<E extends Enum<E>> extends ComboBox {
+import com.vaadin.ui.NativeSelect;
+
+public class EnumSelect<E extends Enum<E>> extends NativeSelect {
 
     public EnumSelect(String caption, Class<E> enumClass) {
         super(caption);

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.vaadin.data.util.filter.Compare;
 import com.vaadin.event.ShortcutAction;
 import org.vaadin.mockapp.samples.ResetButtonForTextField;
+import org.vaadin.mockapp.samples.components.EnumSelect;
 import org.vaadin.mockapp.samples.data.State;
 
 import com.vaadin.data.Container;

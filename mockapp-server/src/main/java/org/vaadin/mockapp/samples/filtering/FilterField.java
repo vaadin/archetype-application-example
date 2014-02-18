@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import com.vaadin.data.util.filter.Compare;
+import com.vaadin.event.ShortcutAction;
 import org.vaadin.mockapp.samples.ResetButtonForTextField;
 import org.vaadin.mockapp.samples.data.State;
 
@@ -154,6 +155,7 @@ public class FilterField extends CustomField<String> {
                 UI.getCurrent().removeWindow(filterBuilderWindow);
             }
         });
+        filterButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         filterBuilderLayout.addComponent(filterButton);
         filterBuilderLayout.setComponentAlignment(filterButton,
                 Alignment.BOTTOM_RIGHT);

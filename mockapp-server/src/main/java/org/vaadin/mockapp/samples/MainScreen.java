@@ -1,7 +1,7 @@
 package org.vaadin.mockapp.samples;
 
 import org.vaadin.mockapp.samples.charts.SampleChartView;
-import org.vaadin.mockapp.samples.table.SampleCrudView;
+import org.vaadin.mockapp.samples.crud.SampleCrudView;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;

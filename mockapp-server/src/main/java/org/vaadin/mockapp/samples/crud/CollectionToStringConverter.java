@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.samples.table;
+package org.vaadin.mockapp.samples.crud;
 
 import java.util.Collection;
 import java.util.Locale;

@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.samples.table;
+package org.vaadin.mockapp.samples.crud;
 
 import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.data.Product;

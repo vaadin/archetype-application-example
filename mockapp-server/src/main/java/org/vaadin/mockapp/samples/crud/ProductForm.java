@@ -36,9 +36,6 @@ public class ProductForm extends GridLayout {
 		price.setWidth("60px");
 		addComponent(price);
 
-		IntegerRangeValidator stockValidator = new IntegerRangeValidator(
-				"Can't have negative amount in stock", 0, null);
-		stockCount.addValidator(stockValidator);
 		stockCount.setWidth("80px");
 		addComponent(stockCount);
 

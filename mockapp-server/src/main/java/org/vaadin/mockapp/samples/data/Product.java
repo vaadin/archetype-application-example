@@ -16,9 +16,8 @@ public class Product implements Serializable {
 	@Min(0)
 	private BigDecimal price = BigDecimal.ZERO;;
 	private Set<Category> category;
-	@Min(0)
+	@Min(value = 0, message = "Can't have negative amount in stock")
 	private int stockCount = 0;
-	// private boolean onTheWeb = false;
 	@NotNull
 	private State state = State.NOT_YET_AVAILABLE;
 

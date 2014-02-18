@@ -3,7 +3,7 @@ package org.vaadin.mockapp.samples.data;
 import java.util.List;
 
 /**
- * @author petter@vaadin.com
+ * Mock data model. Does not handling locking in any way and is not thread safe
  */
 public class MockData implements DataService {
 
@@ -24,14 +24,11 @@ public class MockData implements DataService {
 		return INSTANCE;
 	}
 
-	public synchronized List<Product> getAllProducts() {
-		// TODO
+	public List<Product> getAllProducts() {
 		return products;
-		// List<SampleMaster> copy = new ArrayList<SampleMaster>(
-		// masterRecords.size());
-		// for (SampleMaster master : masterRecords) {
-		// copy.add(nullSafeClone(master));
-		// }
-		// return copy;
+	}
+
+	public List<Category> getAllCategories() {
+		return categories;
 	}
 }

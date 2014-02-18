@@ -1,6 +1,5 @@
 package org.vaadin.mockapp.samples;
 
-import org.vaadin.mockapp.samples.authentication.CurrentUser;
 import org.vaadin.mockapp.samples.charts.SampleChartView;
 import org.vaadin.mockapp.samples.table.SampleCrudView;
 
@@ -55,7 +54,7 @@ public class MainScreen extends VerticalLayout {
 		header.setSpacing(true);
 		header.addStyleName(Reindeer.LAYOUT_BLACK);
 
-		final Label currentUser = new Label("Hello, " + CurrentUser.get());
+		final Label currentUser = new Label("Hello");
 		currentUser.addStyleName(Reindeer.LABEL_H2);
 		header.addComponent(currentUser);
 

@@ -33,6 +33,7 @@
 
 	<properties>
 		<vaadin.version>7.2-SNAPSHOT</vaadin.version>
+		<vaadin.plugin.version>7.1.11</vaadin.plugin.version>
 		<project.source.version>1.6</project.source.version>
 		<project.target.version>1.6</project.target.version>
 		<project.encoding>UTF-8</project.encoding>
@@ -72,7 +73,7 @@
 				<plugin>
 					<groupId>com.vaadin</groupId>
 					<artifactId>vaadin-maven-plugin</artifactId>
-					<version>${vaadin.version}</version>
+					<version>${vaadin.plugin.version}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>

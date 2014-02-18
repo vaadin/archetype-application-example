@@ -19,7 +19,7 @@ public class SampleCrudView extends VerticalLayout implements View {
 	ProductTable table;
 	ProductForm form;
 	private FilterField filter = new FilterField();
-	private SampleCrudLogic viewLogic;
+	private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
 
 	public SampleCrudView() {
 		setSpacing(true);
@@ -48,7 +48,7 @@ public class SampleCrudView extends VerticalLayout implements View {
 		form.setCategories(DataService.get().getAllCategories());
 		addComponent(form);
 
-		viewLogic = new SampleCrudLogic(this);
+		viewLogic.init();
 	}
 
 	@Override

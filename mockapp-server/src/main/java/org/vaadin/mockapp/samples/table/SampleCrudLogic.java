@@ -19,7 +19,9 @@ public class SampleCrudLogic {
 
 	public SampleCrudLogic(SampleCrudView simpleCrudView) {
 		this.view = simpleCrudView;
+	}
 
+	public void init() {
 		setupTable();
 		setupForm();
 	}
@@ -88,4 +90,5 @@ public class SampleCrudLogic {
 		view.table.setValue(oldSelection);
 
 	}
+
 }

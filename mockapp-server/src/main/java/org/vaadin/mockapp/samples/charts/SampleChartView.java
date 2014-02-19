@@ -12,7 +12,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.HorizontalLayout;
 
 /**
- * @author petter@vaadin.com
+ * 
  */
 public class SampleChartView extends HorizontalLayout implements View {
 

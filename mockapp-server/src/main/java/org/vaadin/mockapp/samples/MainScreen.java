@@ -1,5 +1,6 @@
 package org.vaadin.mockapp.samples;
 
+import org.vaadin.mockapp.MockAppUI;
 import org.vaadin.mockapp.samples.charts.SampleChartView;
 import org.vaadin.mockapp.samples.crud.SampleCrudView;
 
@@ -12,22 +13,21 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
 /**
  * Content of the UI when the user is logged in.
  * 
- * @author petter@vaadin.com
+ * 
  */
 public class MainScreen extends VerticalLayout {
 
 	private MenuBar menuBar;
 
-	public MainScreen(UI ui) {
+	public MainScreen(MockAppUI ui) {
 		setSizeFull();
-		createHeader();
+		createHeader(ui.getAccessControl().getPrincipalName());
 		final Panel viewContainer = new Panel();
 		viewContainer.setSizeFull();
 		viewContainer.addStyleName(Reindeer.PANEL_LIGHT);
@@ -42,14 +42,14 @@ public class MainScreen extends VerticalLayout {
 		setExpandRatio(viewContainer, 1);
 	}
 
-	private void createHeader() {
+	private void createHeader(String username) {
 		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
 		header.setMargin(true);
 		header.setSpacing(true);
 		header.addStyleName(Reindeer.LAYOUT_BLACK);
 
-		final Label currentUser = new Label("Hello");
+		final Label currentUser = new Label("Hello " + username);
 		currentUser.addStyleName(Reindeer.LABEL_H2);
 		header.addComponent(currentUser);
 

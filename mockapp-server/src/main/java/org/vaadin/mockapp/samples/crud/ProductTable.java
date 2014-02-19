@@ -85,7 +85,7 @@ public class ProductTable extends Table {
 	}
 
 	@Override
-	public BeanContainer<Integer,Product> getContainerDataSource() {
+	public BeanContainer<Integer, Product> getContainerDataSource() {
 		return (BeanContainer<Integer, Product>) super.getContainerDataSource();
 	}
 }

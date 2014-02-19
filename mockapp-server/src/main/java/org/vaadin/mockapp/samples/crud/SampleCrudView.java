@@ -1,19 +1,15 @@
 package org.vaadin.mockapp.samples.crud;
 
 import org.vaadin.mockapp.samples.backend.DataService;
-import org.vaadin.mockapp.samples.data.Product;
 import org.vaadin.mockapp.samples.filtering.FilterField;
 
 import com.vaadin.data.Container;
-import com.vaadin.data.util.BeanContainer;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.VerticalLayout;
 
 public class SampleCrudView extends VerticalLayout implements View {
 

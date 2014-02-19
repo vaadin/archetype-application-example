@@ -16,7 +16,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 
 /**
- * @author petter@vaadin.com
+ * 
  */
 @Theme("mockapp")
 @Widgetset("org.vaadin.mockapp.widgetset.MockAppWidgetset")

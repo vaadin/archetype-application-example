@@ -26,6 +26,7 @@ public class ProductForm extends GridLayout {
 		super(3, 3);
 		this.viewLogic = sampleCrudLogic;
 		setSpacing(true);
+		setMargin(true);
 
 		productName.setWidth("100%");
 		addComponent(productName, 0, 0, 2, 0);

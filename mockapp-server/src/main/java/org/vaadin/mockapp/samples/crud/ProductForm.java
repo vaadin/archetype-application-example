@@ -29,6 +29,7 @@ public class ProductForm extends GridLayout {
 		productName.setWidth("100%");
 		addComponent(productName, 0, 0, 2, 0);
 
+		price.setConverter(new EuroConverter());
 		price.setWidth("60px");
 		addComponent(price);
 

@@ -7,6 +7,10 @@ import com.vaadin.data.Container;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
@@ -18,11 +22,15 @@ public class SampleCrudView extends VerticalLayout implements View {
 	ProductForm form;
 	private FilterField filter = new FilterField();
 	private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
+	Button newProduct = new Button("New product");
 
 	public SampleCrudView() {
 		setSpacing(true);
 		setMargin(true);
 		setSizeFull();
+
+		HorizontalLayout topLayout = new HorizontalLayout();
+		topLayout.setWidth("100%");
 
 		filter.addFilterListener(new FilterField.FilterListener() {
 			@Override
@@ -32,8 +40,17 @@ public class SampleCrudView extends VerticalLayout implements View {
 				container.addContainerFilter(event.getContainerFilter());
 			}
 		});
-		addComponent(filter);
-		setComponentAlignment(filter, Alignment.TOP_RIGHT);
+		addComponent(topLayout);
+		topLayout.addComponent(newProduct);
+		newProduct.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				viewLogic.newProduct();
+			}
+		});
+		topLayout.addComponent(filter);
+		topLayout.setComponentAlignment(filter, Alignment.TOP_RIGHT);
+		topLayout.setExpandRatio(filter, 1);
 
 		table = new ProductTable();
 		addComponent(table);

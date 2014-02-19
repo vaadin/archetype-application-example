@@ -27,6 +27,14 @@ public class SampleCrudLogic {
 	public void init() {
 		setupTable();
 		setupForm();
+
+		// Hide and disable if not admin
+		if (!MockAppUI.get().getAccessControl().isUserInRole("admin")) {
+			view.replaceComponent(view.form, new Label(
+					"Login as 'admin' to have edit access"));
+			view.newProduct.setEnabled(false);
+		}
+
 		refreshTable();
 	}
 
@@ -52,11 +60,6 @@ public class SampleCrudLogic {
 		// Set default field values
 		setFormDataSource(null);
 
-		// Hide the whole form if not admin
-		if (!MockAppUI.get().getAccessControl().isUserInRole("admin")) {
-			view.replaceComponent(view.form, new Label(
-					"Login as 'admin' to have edit access"));
-		}
 	}
 
 	public void discardProduct() {
@@ -82,12 +85,17 @@ public class SampleCrudLogic {
 
 	public void enter(String productId) {
 		if (productId != null && !productId.isEmpty()) {
-			// Ensure this is selected even if coming directly here from login
-			try {
-				int pid = Integer.parseInt(productId);
-				view.table.setValue(pid);
-				editProduct(pid);
-			} catch (NumberFormatException e) {
+			if (productId.equals("new"))
+				newProduct();
+			else {
+				// Ensure this is selected even if coming directly here from
+				// login
+				try {
+					int pid = Integer.parseInt(productId);
+					view.table.setValue(pid);
+					editProduct(pid);
+				} catch (NumberFormatException e) {
+				}
 			}
 		}
 	}
@@ -113,10 +121,12 @@ public class SampleCrudLogic {
 			Product p = fieldGroup.getItemDataSource().getBean();
 			view.showSaveNotification(p.getProductName() + " (" + p.getId()
 					+ ") updated");
+			view.table.setValue(null);
 			refreshTable();
 			setFragmentParameter("");
 		} catch (CommitException e) {
 			view.showError("Please re-check the fields");
+			e.printStackTrace();
 		}
 	}
 
@@ -145,5 +155,11 @@ public class SampleCrudLogic {
 		container.removeAllItems();
 		container.addAll(DataService.get().getAllProducts());
 		view.table.setValue(oldSelection);
+	}
+
+	public void newProduct() {
+		view.table.setValue(null);
+		setFragmentParameter("new");
+		setFormDataSource(new Product());
 	}
 }

@@ -20,6 +20,8 @@ public class CollectionToStringConverter implements
 	public String convertToPresentation(Collection value,
 			Class<? extends String> targetType, Locale locale)
 			throws com.vaadin.data.util.converter.Converter.ConversionException {
+		if (value == null)
+			return "";
 		StringBuilder b = new StringBuilder();
 		for (Object o : value) {
 			b.append(o.toString());

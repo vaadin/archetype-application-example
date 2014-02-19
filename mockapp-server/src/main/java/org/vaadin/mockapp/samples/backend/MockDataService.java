@@ -14,10 +14,12 @@ public class MockDataService extends DataService {
 
 	private List<Product> products;
 	private List<Category> categories;
+	private int nextProductId = 0;
 
 	private MockDataService() {
 		categories = MockDataGenerator.createCategories();
 		products = MockDataGenerator.createProducts(categories);
+		nextProductId = products.size() + 1;
 	}
 
 	public synchronized static DataService getInstance() {
@@ -37,6 +39,12 @@ public class MockDataService extends DataService {
 
 	@Override
 	public void updateProduct(Product p) {
+		if (p.getId() < 0) {
+			// New product
+			p.setId(nextProductId++);
+			products.add(p);
+			return;
+		}
 		for (int i = 0; i < products.size(); i++) {
 			if (products.get(i).getId() == p.getId()) {
 				products.set(i, p);

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class Product implements Serializable {
 
 	@NotNull
-	private int id;
+	private int id = -1;
 	@NotNull
 	private String productName = "";
 	@Min(0)

@@ -10,7 +10,13 @@
 
     
 
-    <inherits name="org.vaadin.mockapp.ui.widgetset.MockAppWidgetset" />
+    
 
-    <inherits name="org.vaadin.mockapp.ResetButtonForTextFieldWidgetset" />
+    
+
+    <inherits name="org.vaadin.mockapp.samples.SampleWidgetset" />
+
+    <inherits name="com.vaadin.addon.charts.Widgetset" />
+
+    <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet" />
 </module>

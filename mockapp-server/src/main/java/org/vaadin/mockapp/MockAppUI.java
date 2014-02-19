@@ -32,12 +32,19 @@ public class MockAppUI extends UI {
 			setContent(new LoginScreen(accessControl, new LoginListener() {
 				@Override
 				public void loginSuccessful() {
-					setContent(new MainScreen(MockAppUI.this));
+					showMainView();
 				}
 			}));
 		} else {
-			setContent(new MainScreen(this));
+			showMainView();
 		}
+	}
+
+	protected void showMainView() {
+		setContent(new MainScreen(MockAppUI.this));
+		// Ensure we navigate to the intial fragment which login view ignores
+		getNavigator().navigateTo(getNavigator().getState());
+
 	}
 
 	public static MockAppUI get() {

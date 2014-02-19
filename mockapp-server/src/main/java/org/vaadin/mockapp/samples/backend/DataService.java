@@ -13,7 +13,10 @@ public abstract class DataService {
 
 	public abstract void updateProduct(Product p);
 
+	public abstract Product getProductById(int productId);
+
 	public static DataService get() {
 		return MockDataService.getInstance();
 	}
+
 }

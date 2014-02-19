@@ -37,7 +37,23 @@ public class MockDataService extends DataService {
 
 	@Override
 	public void updateProduct(Product p) {
-		// We don't actually need to update products as we are use the same
-		// instances in all UIs
+		for (int i = 0; i < products.size(); i++) {
+			if (products.get(i).getId() == p.getId()) {
+				products.set(i, p);
+				return;
+			}
+		}
+
+		throw new IllegalArgumentException("No product with id " + p.getId()
+				+ " found");
+	}
+
+	@Override
+	public Product getProductById(int productId) {
+		for (int i = 0; i < products.size(); i++) {
+			if (products.get(i).getId() == productId)
+				return products.get(i);
+		}
+		return null;
 	}
 }

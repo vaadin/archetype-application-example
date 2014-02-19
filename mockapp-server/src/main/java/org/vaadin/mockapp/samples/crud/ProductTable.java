@@ -4,6 +4,7 @@ import org.vaadin.mockapp.samples.data.Product;
 import org.vaadin.mockapp.samples.data.State;
 
 import com.vaadin.data.Container;
+import com.vaadin.data.util.BeanContainer;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.And;
@@ -13,11 +14,13 @@ import com.vaadin.ui.Table;
 
 public class ProductTable extends Table {
 
-	private BeanItemContainer<Product> container = new BeanItemContainer<Product>(
-			Product.class);
+	private BeanContainer<Integer, Product> container;
 
 	public ProductTable() {
 		setSizeFull();
+
+		container = new BeanContainer<Integer, Product>(Product.class);
+		container.setBeanIdProperty("id");
 		setContainerDataSource(container);
 		setVisibleColumns("id", "productName", "price", "state", "stockCount",
 				"category");
@@ -38,11 +41,13 @@ public class ProductTable extends Table {
 		// Show categories as a comma separated list
 		setConverter("category", new CollectionToStringConverter());
 		setCellStyleGenerator(new CellStyleGenerator() {
-			
+
 			@Override
-			public String getStyle(Table source, Object itemId, Object propertyId) {
+			public String getStyle(Table source, Object itemId,
+					Object propertyId) {
 				if ("state".equals(propertyId)) {
-					State s = (State) source.getContainerProperty(itemId, propertyId).getValue();
+					State s = (State) source.getContainerProperty(itemId,
+							propertyId).getValue();
 					if (!s.isAvailable())
 						return "not-available";
 				}
@@ -70,8 +75,8 @@ public class ProductTable extends Table {
 	}
 
 	@Override
-	public Product getValue() {
-		return (Product) super.getValue();
+	public Integer getValue() {
+		return (Integer) super.getValue();
 	}
 
 	@Override
@@ -80,7 +85,7 @@ public class ProductTable extends Table {
 	}
 
 	@Override
-	public BeanItemContainer<Product> getContainerDataSource() {
-		return (BeanItemContainer<Product>) super.getContainerDataSource();
+	public BeanContainer<Integer,Product> getContainerDataSource() {
+		return (BeanContainer<Integer, Product>) super.getContainerDataSource();
 	}
 }

@@ -4,6 +4,8 @@ import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.data.Product;
 import org.vaadin.mockapp.samples.filtering.FilterField;
 
+import com.vaadin.data.Container;
+import com.vaadin.data.util.BeanContainer;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -29,8 +31,7 @@ public class SampleCrudView extends VerticalLayout implements View {
 		filter.addFilterListener(new FilterField.FilterListener() {
 			@Override
 			public void filter(FilterField.FilterEvent event) {
-				BeanItemContainer<Product> container = table
-						.getContainerDataSource();
+				Container.Filterable container = table.getContainerDataSource();
 				container.removeAllContainerFilters();
 				container.addContainerFilter(event.getContainerFilter());
 			}
@@ -53,7 +54,7 @@ public class SampleCrudView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		viewLogic.refreshTable();
+		viewLogic.enter(event.getParameters());
 	}
 
 	public void showError(String msg) {
@@ -63,5 +64,5 @@ public class SampleCrudView extends VerticalLayout implements View {
 	public void showSaveNotification(String msg) {
 		Notification.show(msg, Type.TRAY_NOTIFICATION);
 	}
-	
+
 }

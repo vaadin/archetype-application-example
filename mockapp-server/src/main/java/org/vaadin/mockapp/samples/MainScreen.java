@@ -4,7 +4,6 @@ import org.vaadin.mockapp.samples.charts.SampleChartView;
 import org.vaadin.mockapp.samples.crud.SampleCrudView;
 
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.View;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.HorizontalLayout;
@@ -24,27 +23,23 @@ import com.vaadin.ui.themes.Reindeer;
  */
 public class MainScreen extends VerticalLayout {
 
-	private static final Class<? extends View>[] viewClasses = new Class[] {
-			SampleCrudView.class, SampleChartView.class };
+	private MenuBar menuBar;
 
 	public MainScreen(UI ui) {
 		setSizeFull();
 		createHeader();
-		createMenuBar();
 		final Panel viewContainer = new Panel();
 		viewContainer.setSizeFull();
 		viewContainer.addStyleName(Reindeer.PANEL_LIGHT);
-		addComponent(viewContainer);
-		setExpandRatio(viewContainer, 1);
 
 		final Navigator navigator = new Navigator(ui, viewContainer);
 		navigator.setErrorView(ErrorView.class);
 
-		for (Class<? extends View> viewClass : viewClasses) {
-			navigator.addView(getViewName(viewClass), viewClass);
-		}
+		createViewsAndNavigation(navigator);
 
-		navigator.navigateTo(navigator.getState());
+		addComponent(menuBar);
+		addComponent(viewContainer);
+		setExpandRatio(viewContainer, 1);
 	}
 
 	private void createHeader() {
@@ -61,20 +56,34 @@ public class MainScreen extends VerticalLayout {
 		addComponent(header);
 	}
 
-	private void createMenuBar() {
-		final MenuBar menuBar = new MenuBar();
+	public class NavigateCommand implements Command {
+		private String fragment;
+
+		public NavigateCommand(String fragment) {
+			this.fragment = fragment;
+		}
+
+		@Override
+		public void menuSelected(MenuItem selectedItem) {
+			getUI().getNavigator().navigateTo(fragment);
+		}
+	}
+
+	private void createViewsAndNavigation(Navigator navigator) {
+		menuBar = new MenuBar();
 		menuBar.setWidth("100%");
 		addComponent(menuBar);
 
-		for (Class<? extends View> viewClass : viewClasses) {
-			final String viewName = getViewName(viewClass);
-			menuBar.addItem(viewName, new Command() {
-				@Override
-				public void menuSelected(MenuItem selectedItem) {
-					getUI().getNavigator().navigateTo(viewName);
-				}
-			});
-		}
+		// Crud view. Use an instance to avoid reinitializing during edit
+		// operations
+		navigator.addView(SampleCrudView.VIEW_NAME, new SampleCrudView());
+		menuBar.addItem(SampleCrudView.VIEW_NAME, new NavigateCommand(
+				SampleCrudView.VIEW_NAME));
+
+		// Charts view, reinitialize on every visit
+		navigator.addView(SampleChartView.VIEW_NAME, SampleChartView.class);
+		menuBar.addItem(SampleChartView.VIEW_NAME, new NavigateCommand(
+				SampleChartView.VIEW_NAME));
 
 		menuBar.addItem("Log out", new MenuBar.Command() {
 			@Override
@@ -84,14 +93,6 @@ public class MainScreen extends VerticalLayout {
 			}
 		});
 
-	}
-
-	private String getViewName(Class<? extends View> viewClass) {
-		try {
-			return (String) viewClass.getField("VIEW_NAME").get(null);
-		} catch (Exception e) {
-			return "VIEW_NAME field not found in " + viewClass.getName();
-		}
 	}
 
 }

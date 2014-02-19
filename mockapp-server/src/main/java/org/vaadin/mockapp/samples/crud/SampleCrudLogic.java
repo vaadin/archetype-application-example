@@ -10,8 +10,10 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
+import com.vaadin.data.util.BeanContainer;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.Label;
 
 public class SampleCrudLogic {
@@ -26,6 +28,7 @@ public class SampleCrudLogic {
 	public void init() {
 		setupTable();
 		setupForm();
+		refreshTable();
 	}
 
 	private void setupForm() {
@@ -59,7 +62,37 @@ public class SampleCrudLogic {
 
 	public void discardProduct() {
 		fieldGroup.discard();
-		view.table.setValue(null);
+		navigateToProduct("");
+	}
+
+	private void navigateToProduct(String productId) {
+		String targetState;
+		if (productId == null || productId.isEmpty()) {
+			targetState = SampleCrudView.VIEW_NAME;
+		} else {
+			targetState = SampleCrudView.VIEW_NAME + "/" + productId;
+		}
+
+		Navigator navigator = view.getUI().getNavigator();
+		String currentState = navigator.getState();
+		if (!currentState.equals(targetState)) {
+			navigator.navigateTo(targetState);
+		}
+	}
+
+	public void enter(String productId) {
+		if (productId == null || productId.isEmpty()) {
+			setFormDataSource(null);
+			view.table.setValue(null);
+		} else {
+			Product product = findProduct(Integer.parseInt(productId));
+			setFormDataSource(product);
+			view.table.setValue(product.getId());
+		}
+	}
+
+	private Product findProduct(int productId) {
+		return DataService.get().getProductById(productId);
 	}
 
 	public void saveProduct() {
@@ -68,7 +101,8 @@ public class SampleCrudLogic {
 			Product p = fieldGroup.getItemDataSource().getBean();
 			view.showSaveNotification(p.getProductName() + " (" + p.getId()
 					+ ") updated");
-			view.table.setValue(null);
+			refreshTable();
+			navigateToProduct("");
 		} catch (CommitException e) {
 			view.showError("Please re-check the fields");
 		}
@@ -78,28 +112,30 @@ public class SampleCrudLogic {
 		view.table.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				setFormDataSource(view.table.getItem(view.table.getValue()));
+				Integer selectedProductId = view.table.getValue();
+				if (selectedProductId == null)
+					navigateToProduct("");
+				else
+					navigateToProduct(selectedProductId + "");
 			}
 		});
 	}
 
-	public void setFormDataSource(BeanItem<Product> item) {
-		view.form.setEnabled(item != null);
-		if (item == null) {
+	public void setFormDataSource(Product product) {
+		view.form.setEnabled(product != null);
+		if (product == null) {
 			fieldGroup.setItemDataSource(new BeanItem<Product>(new Product()));
 		} else {
-			fieldGroup.setItemDataSource(item);
+			fieldGroup.setItemDataSource(new BeanItem<Product>(product));
 		}
 	}
 
-	public void refreshTable() {
-		Product oldSelection = view.table.getValue();
-		BeanItemContainer<Product> container = view.table
+	private void refreshTable() {
+		Object oldSelection = view.table.getValue();
+		BeanContainer<Integer, Product> container = view.table
 				.getContainerDataSource();
 		container.removeAllItems();
 		container.addAll(DataService.get().getAllProducts());
 		view.table.setValue(oldSelection);
-
 	}
-
 }

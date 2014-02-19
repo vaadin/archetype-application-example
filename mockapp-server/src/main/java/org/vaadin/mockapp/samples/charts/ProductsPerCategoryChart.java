@@ -41,8 +41,10 @@ public class ProductsPerCategoryChart extends Chart {
 		}
 
 		for (Product p : products) {
-			for (Category c : p.getCategory()) {
-				categoryData.put(c, categoryData.get(c) + 1);
+			if (p.getCategory() != null) {
+				for (Category c : p.getCategory()) {
+					categoryData.put(c, categoryData.get(c) + 1);
+				}
 			}
 		}
 

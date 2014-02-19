@@ -13,6 +13,8 @@ public abstract class DataService {
 
 	public abstract void updateProduct(Product p);
 
+	public abstract void deleteProduct(int productId);
+
 	public abstract Product getProductById(int productId);
 
 	public static DataService get() {

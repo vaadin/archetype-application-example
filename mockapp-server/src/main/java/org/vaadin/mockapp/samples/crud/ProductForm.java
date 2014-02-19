@@ -18,6 +18,7 @@ public class ProductForm extends GridLayout {
 	TextField price = new TextField("Price");
 	TextField productName = new TextField("Product name");
 	Button saveButton = new Button("Save");
+	Button deleteButton = new Button("Delete");
 	Button discardButton = new Button("Discard");
 	private SampleCrudLogic viewLogic;
 
@@ -50,6 +51,7 @@ public class ProductForm extends GridLayout {
 
 		addComponent(saveButton);
 		addComponent(discardButton);
+		addComponent(deleteButton);
 
 		setColumnExpandRatio(2, 1);
 
@@ -60,6 +62,13 @@ public class ProductForm extends GridLayout {
 			}
 		});
 
+		deleteButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				viewLogic.deleteProduct();
+			}
+		});
+		
 		discardButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {

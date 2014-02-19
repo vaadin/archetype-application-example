@@ -64,4 +64,12 @@ public class MockDataService extends DataService {
 		}
 		return null;
 	}
+
+	@Override
+	public void deleteProduct(int productId) {
+		Product p = getProductById(productId);
+		if (p == null)
+			throw new IllegalArgumentException("Product with id "+productId+" not found");
+		products.remove(p);
+	}
 }

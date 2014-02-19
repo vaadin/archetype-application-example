@@ -130,6 +130,22 @@ public class SampleCrudLogic {
 		}
 	}
 
+	public void deleteProduct() {
+		try {
+			Product p = fieldGroup.getItemDataSource().getBean();
+			DataService.get().deleteProduct(p.getId());
+			view.showSaveNotification(p.getProductName() + " (" + p.getId()
+					+ ") removed");
+
+			view.table.setValue(null);
+			refreshTable();
+			setFragmentParameter("");
+		} catch (Exception e) {
+
+		}
+
+	}
+
 	private void setupTable() {
 		view.table.addValueChangeListener(new ValueChangeListener() {
 			@Override

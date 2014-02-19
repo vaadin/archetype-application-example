@@ -1,11 +1,12 @@
 package org.vaadin.mockapp.samples.crud;
 
+import org.vaadin.mockapp.samples.ResetButtonForTextField;
 import org.vaadin.mockapp.samples.backend.DataService;
-import org.vaadin.mockapp.samples.filtering.FilterField;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.event.FieldEvents;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
@@ -15,6 +16,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -26,7 +28,7 @@ public class SampleCrudView extends VerticalLayout implements View {
 	public static final String VIEW_NAME = "Editor";
 	ProductTable table;
 	ProductForm form;
-	private FilterField filter = new FilterField();
+	private TextField filter = new TextField();
 	private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
 	Button newProduct = new Button("New product");
 
@@ -41,16 +43,21 @@ public class SampleCrudView extends VerticalLayout implements View {
 		HorizontalLayout topLayout = new HorizontalLayout();
 		topLayout.setSpacing(true);
 		topLayout.setWidth("100%");
-
-		filter.addFilterListener(new FilterField.FilterListener() {
+		addComponent(topLayout);
+		
+		filter.setInputPrompt("Filter the table");
+		ResetButtonForTextField.extend(filter);
+		filter.setImmediate(true);
+		filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
 			@Override
-			public void filter(FilterField.FilterEvent event) {
-				Container.Filterable container = table.getContainerDataSource();
-				container.removeAllContainerFilters();
-				container.addContainerFilter(event.getContainerFilter());
+			public void textChange(FieldEvents.TextChangeEvent event) {
+				table.setFilter(event.getText());
 			}
 		});
-		addComponent(topLayout);
+		topLayout.addComponent(filter);
+		topLayout.setComponentAlignment(filter, Alignment.TOP_RIGHT);
+
+
 		topLayout.addComponent(newProduct);
 		newProduct.addClickListener(new ClickListener() {
 			@Override

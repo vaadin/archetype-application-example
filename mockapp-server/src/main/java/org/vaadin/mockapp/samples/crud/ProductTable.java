@@ -59,17 +59,14 @@ public class ProductTable extends Table {
 	public void setFilter(String filterString) {
 		container.removeAllContainerFilters();
 		if (filterString.length() > 0) {
-			String[] filterWords = filterString.split(" ");
-			Container.Filter[] filters = new Container.Filter[filterWords.length];
-			for (int i = 0; i < filterWords.length; ++i) {
-				String word = filterWords[i];
-				filters[i] = new Or(new SimpleStringFilter("stringProperty",
-						word, false, false), new SimpleStringFilter(
-						"integerProperty", word, true, true),
-						new SimpleStringFilter("embeddedProperty.enumProperty",
-								word, true, false));
-			}
-			container.addContainerFilter(new And(filters));
+			SimpleStringFilter nameFilter = new SimpleStringFilter(
+					"productName", filterString, true, false);
+			SimpleStringFilter stateFilter = new SimpleStringFilter("state",
+					filterString, true, false);
+			SimpleStringFilter categoryFilter = new SimpleStringFilter(
+					"category", filterString, true, false);
+			container.addContainerFilter(new Or(nameFilter, stateFilter,
+					categoryFilter));
 		}
 
 	}

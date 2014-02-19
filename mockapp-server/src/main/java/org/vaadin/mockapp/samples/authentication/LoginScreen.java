@@ -33,7 +33,7 @@ public class LoginScreen extends VerticalLayout {
 
 		loginForm.addStyleName("login-form");
 		loginForm.setSizeUndefined();
-		loginForm.addComponent(username = new TextField("Username"));
+		loginForm.addComponent(username = new TextField("Username", "admin"));
 		username.setWidth(15, Unit.EM);
 		loginForm.addComponent(password = new PasswordField("Password"));
 		password.setWidth(15, Unit.EM);

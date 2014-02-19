@@ -16,10 +16,11 @@ public class LoginScreen extends VerticalLayout {
 	private Button login;
 	private Button forgotPassword;
 	private LoginListener loginListener;
-	private Authentication authentication = new AllowAllAuthentication();
+	private AccessControl accessControl;
 
-	public LoginScreen(LoginListener callback) {
-		this.loginListener = callback;
+	public LoginScreen(AccessControl accessControl, LoginListener loginListener) {
+		this.loginListener = loginListener;
+		this.accessControl = accessControl;
 		buildUI();
 		username.focus();
 	}
@@ -71,9 +72,8 @@ public class LoginScreen extends VerticalLayout {
 	}
 
 	private void login() {
-		if (authentication.validateCredentials(username.getValue(),
-				password.getValue())) {
-			loginListener.loginSuccessful(username.getValue());
+		if (accessControl.signIn(username.getValue(), password.getValue())) {
+			loginListener.loginSuccessful();
 		} else {
 			Notification.show("Login failed",
 					"Please check your username and password and try again.",
@@ -83,6 +83,6 @@ public class LoginScreen extends VerticalLayout {
 	}
 
 	public interface LoginListener extends Serializable {
-		void loginSuccessful(String username);
+		void loginSuccessful();
 	}
 }

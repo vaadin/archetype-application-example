@@ -1,5 +1,6 @@
 package org.vaadin.mockapp.samples.crud;
 
+import org.vaadin.mockapp.MockAppUI;
 import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.data.Product;
 
@@ -11,6 +12,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.Label;
 
 public class SampleCrudLogic {
 
@@ -47,6 +49,12 @@ public class SampleCrudLogic {
 
 		// Set default field values
 		setFormDataSource(null);
+
+		// Hide the whole form if not admin
+		if (!MockAppUI.get().getAccessControl().isUserInRole("admin")) {
+			view.replaceComponent(view.form, new Label(
+					"Login as 'admin' to have edit access"));
+		}
 	}
 
 	public void discardProduct() {

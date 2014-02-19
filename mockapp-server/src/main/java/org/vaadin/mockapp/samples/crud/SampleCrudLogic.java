@@ -12,7 +12,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.navigator.Navigator;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Label;
 
 public class SampleCrudLogic {
@@ -61,33 +61,46 @@ public class SampleCrudLogic {
 
 	public void discardProduct() {
 		fieldGroup.discard();
-		navigateToProduct("");
+		setFragmentParameter("");
 	}
 
-	private void navigateToProduct(String productId) {
-		String targetState;
+	/**
+	 * Update the fragment without causing navigator to change view
+	 */
+	private void setFragmentParameter(String productId) {
+		String fragmentParameter;
 		if (productId == null || productId.isEmpty()) {
-			targetState = SampleCrudView.VIEW_NAME;
+			fragmentParameter = "";
 		} else {
-			targetState = SampleCrudView.VIEW_NAME + "/" + productId;
+			fragmentParameter = productId;
 		}
 
-		Navigator navigator = view.getUI().getNavigator();
-		String currentState = navigator.getState();
-		if (!currentState.equals(targetState)) {
-			navigator.navigateTo(targetState);
-		}
+		Page page = view.getUI().getPage();
+		page.setUriFragment("!" + SampleCrudView.VIEW_NAME + "/"
+				+ fragmentParameter, false);
 	}
 
 	public void enter(String productId) {
-		if (productId == null || productId.isEmpty()) {
-			setFormDataSource(null);
-			view.table.setValue(null);
-		} else {
-			Product product = findProduct(Integer.parseInt(productId));
-			setFormDataSource(product);
-			view.table.setValue(product.getId());
+		if (productId != null && !productId.isEmpty()) {
+			// Ensure this is selected even if coming directly here from login
+			try {
+				int pid = Integer.parseInt(productId);
+				view.table.setValue(pid);
+				editProduct(pid);
+			} catch (NumberFormatException e) {
+			}
 		}
+	}
+
+	protected void editProduct(Integer productId) {
+		Product product = null;
+		if (productId == null)
+			setFragmentParameter("");
+		else {
+			setFragmentParameter(productId + "");
+			product = findProduct(productId);
+		}
+		setFormDataSource(product);
 	}
 
 	private Product findProduct(int productId) {
@@ -101,7 +114,7 @@ public class SampleCrudLogic {
 			view.showSaveNotification(p.getProductName() + " (" + p.getId()
 					+ ") updated");
 			refreshTable();
-			navigateToProduct("");
+			setFragmentParameter("");
 		} catch (CommitException e) {
 			view.showError("Please re-check the fields");
 		}
@@ -111,11 +124,7 @@ public class SampleCrudLogic {
 		view.table.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				Integer selectedProductId = view.table.getValue();
-				if (selectedProductId == null)
-					navigateToProduct("");
-				else
-					navigateToProduct(selectedProductId + "");
+				editProduct(view.table.getValue());
 			}
 		});
 	}

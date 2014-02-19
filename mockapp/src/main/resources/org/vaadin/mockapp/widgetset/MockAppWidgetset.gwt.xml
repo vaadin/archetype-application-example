@@ -8,19 +8,5 @@
 
     <inherits name="com.vaadin.addon.charts.Widgetset"/>
 
-<<<<<<< HEAD
-    
-
-    
-
-    
-
-    <inherits name="org.vaadin.mockapp.samples.SampleWidgetset" />
-
-    <inherits name="com.vaadin.addon.charts.Widgetset" />
-
     <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet" />
-=======
-    <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet"/>
->>>>>>> parent of 63a9861... Initial reusable filtering component
 </module>

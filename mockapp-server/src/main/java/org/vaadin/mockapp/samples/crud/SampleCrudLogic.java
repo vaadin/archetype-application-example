@@ -65,6 +65,7 @@ public class SampleCrudLogic {
 	public void discardProduct() {
 		fieldGroup.discard();
 		setFragmentParameter("");
+		view.table.setValue(null);
 		hideFormPopup();
 	}
 

@@ -4,4 +4,9 @@
 target/
 mockapp/overlays/
 mockapp-server/src/main/webapp/VAADIN/themes/mockapp/styles.css
-
+.settings/
+*/.settings/
+.classpath
+*/.classpath
+.project
+*/.project

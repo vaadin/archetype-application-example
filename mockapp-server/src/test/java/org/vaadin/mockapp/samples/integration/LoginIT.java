@@ -4,6 +4,7 @@ import com.vaadin.testbench.By;
 import com.vaadin.testbench.TestBenchElement;
 import com.vaadin.testbench.TestBenchTestCase;
 import com.vaadin.testbench.elements.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +56,7 @@ public class LoginIT extends TestBenchTestCase {
 
         $(MenuBarElement.class).first().findElements(By.xpath("span[@class='v-menubar-menuitem']")).get(0).click();
 
-        LabelElement infoLabel = $(LabelElement.class).in(PanelElement.class).first();
+        LabelElement infoLabel = $(PanelElement.class).$(LabelElement.class).first();
         assertNotNull(infoLabel);
         assertEquals("Login as 'admin' to have edit access", infoLabel.getText());
 

@@ -32,8 +32,8 @@
 	</modules>
 
 	<properties>
-		<vaadin.version>7.2-SNAPSHOT</vaadin.version>
-		<vaadin.plugin.version>7.1.11</vaadin.plugin.version>
+		<vaadin.version>7.3.3</vaadin.version>
+		<vaadin.plugin.version>7.3.3</vaadin.plugin.version>
 		<project.source.version>1.6</project.source.version>
 		<project.target.version>1.6</project.target.version>
 		<project.encoding>UTF-8</project.encoding>
@@ -81,9 +81,9 @@
 					<version>2.4</version>
 				</plugin>
 				<plugin>
-					<groupId>org.mortbay.jetty</groupId>
+					<groupId>org.eclipse.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
-					<version>8.1.13.v20130916</version>
+					<version>9.2.3.v20140905</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>

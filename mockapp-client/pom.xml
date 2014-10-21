@@ -12,6 +12,20 @@
     <artifactId>mockapp-client</artifactId>
     <name>Client Module</name>
     <packaging>jar</packaging>
+    
+    <dependencies>
+    	<!-- Versions for these are configured in the parent POM -->
+    	<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client-compiler</artifactId>
+			<scope>provided</scope>
+		</dependency>
+    </dependencies>
 
     <build>
         <plugins>

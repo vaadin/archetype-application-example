@@ -32,18 +32,6 @@
 			<artifactId>vaadin-themes</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-client</artifactId>
-		</dependency>
-    
-        <!-- Vaadin Charts. Remember that this requires a license! -->
-        <dependency>
-            <groupId>com.vaadin.addon</groupId>
-            <artifactId>vaadin-charts</artifactId>
-            <version>1.1.2</version>
-        </dependency>
-
         <!-- Custom components -->
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -72,20 +60,9 @@
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
-                <configuration>
-                    <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-                    <webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>
-                    <draftCompile>true</draftCompile>
-                    <compileReport>true</compileReport>
-                    <style>OBF</style>
-                    <strict>true</strict>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>update-widgetset</goal>
-                            <goal>resources</goal>
-                            <goal>compile</goal>
                             <!-- Even though the Vaadin sevlet will compile the theme to CSS during
                                 development mode, we explicitly do it here as well to make it easier to assemble
                                 the production build. Remember to exclude the generated styles.css file from
@@ -148,6 +125,7 @@
         <pluginManagement>
         	<plugins>
         		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        		<!-- TODO Remove when http://dev.vaadin.com/ticket/14924 is resolved -->
         		<plugin>
         			<groupId>org.eclipse.m2e</groupId>
         			<artifactId>lifecycle-mapping</artifactId>
@@ -165,10 +143,6 @@
         									[7.1.11,)
         								</versionRange>
         								<goals>
-        									<goal>
-        										update-widgetset
-        									</goal>
-        									<goal>resources</goal>
         									<goal>compile-theme</goal>
         								</goals>
         							</pluginExecutionFilter>
@@ -183,46 +157,5 @@
         	</plugins>
         </pluginManagement>
     </build>
-    <!--  Alternative way to run superdevmode code server. The client-side code changes are picked up directly from the
-    client-module source folder instead of the local maven repository. Run with mvn -Pdev exec:java . -->
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <activation>
-                <property>
-                    <name>dev</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.3</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>java</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-
-                        <configuration>
-                            <mainClass>com.google.gwt.dev.codeserver.CodeServer</mainClass>
-                            <arguments>
-                                <argument>-src</argument>
-                                <argument>${basedir}/../mockapp-client/src/main/java</argument>
-                                <argument>-src</argument>
-                                <argument>${basedir}/../mockapp-client/src/main/resources</argument>
-                                <argument>org.vaadin.mockapp.widgetset.MockAppWidgetset</argument>
-                            </arguments>
-                            <classpathScope>compile</classpathScope>
-                        </configuration>
-
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

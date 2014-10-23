@@ -49,7 +49,7 @@
                     <webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>
                     <draftCompile>true</draftCompile>
                     <compileReport>true</compileReport>
-                    <style>OBF</style>
+                    <style>DETAILED</style>
                     <strict>true</strict>
                 </configuration>
                 <executions>

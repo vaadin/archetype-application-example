@@ -49,6 +49,21 @@
       background-color: #f1f1f1;
     }
   }
+  
+  .black {
+    background-color: #27272f;
+    $v-background-color: #27272f;
+    $v-app-background-color: #27272f;
+    color: valo-font-color(#27272f);
+    
+    padding: 0 10px 0 10px;
+    @include valo-components;
+  }
+  
+  .menu-button {
+   
+  }
+  
   .v-table-cell-content-not-available {
   	color: red;
   }

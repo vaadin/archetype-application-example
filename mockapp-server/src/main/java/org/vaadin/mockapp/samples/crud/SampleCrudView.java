@@ -31,11 +31,6 @@ public class SampleCrudView extends HorizontalLayout implements View {
 	ProductForm form;
 	
 	private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
-	
-
-	
-	Window formWindow = new Window("Edit form");
-	private CheckBox formAsPopup;
 	private Button newProduct;
 
 	public SampleCrudView() {
@@ -44,15 +39,6 @@ public class SampleCrudView extends HorizontalLayout implements View {
 
 		
 		HorizontalLayout topLayout = createTopBar();
-		
-		formWindow.setWidth("400px");
-		formWindow.setModal(true);
-		formWindow.addCloseListener(new CloseListener() {
-			@Override
-			public void windowClose(CloseEvent e) {
-				viewLogic.discardProduct();
-			}
-		});
 		
 		table = new ProductTable();
 		
@@ -99,29 +85,11 @@ public class SampleCrudView extends HorizontalLayout implements View {
 			}
 		});
 		
-		formAsPopup = new CheckBox("Form as popup");
-		formAsPopup.setImmediate(true);
-		formAsPopup.addValueChangeListener(new ValueChangeListener() {
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				if (formAsPopup.getValue()) {
-					removeComponent(form);
-					formWindow.setContent(form);
-				} else {
-					formWindow.setContent(null);
-					addComponent(form);
-				}
-			}
-		});
-		
 		HorizontalLayout topLayout = new HorizontalLayout();
 		topLayout.setSpacing(true);
 		topLayout.setWidth("100%");
 		topLayout.addComponent(filter);
-		topLayout.addComponent(formAsPopup);
 		topLayout.addComponent(newProduct);
-		topLayout.setComponentAlignment(formAsPopup, Alignment.MIDDLE_LEFT);
 		topLayout.setComponentAlignment(filter, Alignment.MIDDLE_LEFT);
 		topLayout.setExpandRatio(filter, 1);
 		return topLayout;
@@ -138,10 +106,6 @@ public class SampleCrudView extends HorizontalLayout implements View {
 
 	public void showSaveNotification(String msg) {
 		Notification.show(msg, Type.TRAY_NOTIFICATION);
-	}
-
-	public boolean getFormAsPopupValue() {
-		return formAsPopup.getValue();
 	}
 
 	public void setNewProductEnabled(boolean enabled) {

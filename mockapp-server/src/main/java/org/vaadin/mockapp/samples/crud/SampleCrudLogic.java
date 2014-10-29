@@ -66,7 +66,6 @@ public class SampleCrudLogic {
 		fieldGroup.discard();
 		setFragmentParameter("");
 		view.table.setValue(null);
-		hideFormPopup();
 	}
 
 	/**
@@ -111,9 +110,6 @@ public class SampleCrudLogic {
 			product = findProduct(productId);
 		}
 		setFormDataSource(product);
-
-		if (product != null)
-			showFormPopup();
 	}
 
 	private Product findProduct(int productId) {
@@ -129,7 +125,6 @@ public class SampleCrudLogic {
 			view.table.setValue(null);
 			refreshTable();
 			setFragmentParameter("");
-			hideFormPopup();
 		} catch (CommitException e) {
 			view.showError("Please re-check the fields");
 			e.printStackTrace();
@@ -146,7 +141,6 @@ public class SampleCrudLogic {
 			view.table.setValue(null);
 			refreshTable();
 			setFragmentParameter("");
-			hideFormPopup();
 		} catch (Exception e) {
 
 		}
@@ -184,23 +178,5 @@ public class SampleCrudLogic {
 		view.table.setValue(null);
 		setFragmentParameter("new");
 		setFormDataSource(new Product());
-		showFormPopup();
 	}
-
-	private void showFormPopup() {
-		if (view.getFormAsPopupValue()) {
-			view.getUI().addWindow(view.formWindow);
-			view.formWindow.center();
-		}
-	}
-
-	private void hideFormPopup() {
-		if (view.formWindow.isAttached()) {
-			view.formWindow.close();
-		}
-
-	}
-	
-	
-
 }

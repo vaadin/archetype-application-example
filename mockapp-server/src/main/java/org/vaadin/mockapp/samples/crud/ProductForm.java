@@ -9,19 +9,17 @@ import org.vaadin.mockapp.samples.data.State;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.TwinColSelect;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class ProductForm extends VerticalLayout {
 
 	TextField stockCount = new TextField("In stock");
 	NativeSelect state = new NativeSelect("Availability");
-	TwinColSelect category = new TwinColSelect("Categories");
+	CategoryField category = new CategoryField("Categories");
 	TextField price = new TextField("Price");
 	TextField productName = new TextField("Product name");
 	Button saveButton = new Button("Save");
@@ -98,10 +96,11 @@ public class ProductForm extends VerticalLayout {
 	}
 
 	public void setCategories(Collection<Category> categories) {
-		category.removeAllItems();
-		for (Category c : categories) {
-			category.addItem(c);
-		}
+		category.setOptions(categories);
+		// category.removeAllItems();
+		// for (Category c : categories) {
+		// category.addItem(c);
+		// }
 	}
 
 }

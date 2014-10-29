@@ -12,7 +12,7 @@ The project consists of the following three modules:
 - parent project: common metadata and configuration
 - mockapp-client: widgetset, custom client side code and dependencies to widget add-ons
 - mockapp-server: main application module, development time
-- mockapp: module that produces a production mode WAR for deployment - no Java code
+- mockapp: module that produces a production mode WAR for deployment
 
 The production mode module recompiles the widgetset (obfuscated, not draft), activates production mode for Vaadin with a context parameter in web.xml and contains a precompiled theme. The server module WAR contains an unobfuscated widgetset, and is meant to be used at development time only.
 
@@ -43,5 +43,5 @@ Other basic workflow steps:
   - run "mvn vaadin:run-codeserver" in client module
   - activate Super Dev Mode in the debug window of the application
 - creating a production mode war
-  - run "mvn package" in the production mode module
+  - run "mvn -Pproduction package" in the production mode module or in the parent module
 

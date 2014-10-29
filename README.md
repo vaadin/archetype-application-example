@@ -33,11 +33,12 @@ Other basic workflow steps:
 - developing the theme
   - run the application as above
   - edit the theme in the server module
-  - if using precompiled theme, run "mvn vaadin:compile-theme" in the server module
+  - only if using precompiled theme, run "mvn vaadin:compile-theme" in the server module
   - reload the application page
 - client side changes or add-ons
   - edit code/POM in client module
   - run "mvn install" in client module
+  - if a new add-on has an embedded theme, run "mvn vaadin:update-theme" in the server module
 - debugging client side code
   - run "mvn vaadin:run-codeserver" in client module
   - activate Super Dev Mode in the debug window of the application

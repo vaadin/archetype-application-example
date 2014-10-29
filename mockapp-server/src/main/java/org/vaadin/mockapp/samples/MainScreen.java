@@ -32,21 +32,20 @@ public class MainScreen extends VerticalLayout {
 
 
 	public MainScreen(MockAppUI ui) {
-		setSizeFull();
-		final Panel viewContainer = new Panel();
+		
+		VerticalLayout viewContainer = new VerticalLayout();
 		viewContainer.setSizeFull();
-		viewContainer.addStyleName(Reindeer.PANEL_LIGHT);
 
 		final Navigator navigator = new Navigator(ui, viewContainer);
 		navigator.setErrorView(ErrorView.class);
-
-		createHeader(navigator);
-
+		HorizontalLayout header = createHeader(navigator);
+		addComponent(header);
 		addComponent(viewContainer);
 		setExpandRatio(viewContainer, 1);
+		setSizeFull();
 	}
 
-	private void createHeader(Navigator navigator) {
+	private HorizontalLayout createHeader(Navigator navigator) {
 		final HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
 		header.setMargin(true);
@@ -77,11 +76,13 @@ public class MainScreen extends VerticalLayout {
 		header.setComponentAlignment(viewLayout, Alignment.MIDDLE_CENTER);
 		header.setComponentAlignment(logoutButton, Alignment.MIDDLE_CENTER);
 		header.setExpandRatio(viewLayout, 1);
-		addComponent(header);
+		
+		return header;
 	}
 
 	private HorizontalLayout createViewsAndNavigation(final Navigator navigator) {
 		HorizontalLayout viewLayout = new HorizontalLayout();
+
 		// Crud view. Use an instance to avoid reinitializing during edit
 		// operations
 		navigator.addView(SampleCrudView.VIEW_NAME, new SampleCrudView());
@@ -94,8 +95,6 @@ public class MainScreen extends VerticalLayout {
 			}
 		});
 		crudButton.setIcon(FontAwesome.EDIT);
-//		menuBar.addItem(SampleCrudView.VIEW_NAME, new NavigateCommand(
-//				SampleCrudView.VIEW_NAME));
 
 		// Charts view, reinitialize on every visit
 		navigator.addView(SampleChartView.VIEW_NAME, new SampleCrudView());
@@ -108,17 +107,7 @@ public class MainScreen extends VerticalLayout {
 			}
 		});
 		chartButton.setIcon(FontAwesome.INFO_CIRCLE);
-//		navigator.addView(SampleChartView.VIEW_NAME, SampleChartView.class);
-//		menuBar.addItem(SampleChartView.VIEW_NAME, new NavigateCommand(
-//				SampleChartView.VIEW_NAME));
 
-//		menuBar.addItem("Log out", new MenuBar.Command() {
-//			@Override
-//			public void menuSelected(MenuBar.MenuItem selectedItem) {
-//				VaadinSession.getCurrent().getSession().invalidate();
-//				Page.getCurrent().reload();
-//			}
-//		});
 		viewLayout.addComponent(crudButton);
 		viewLayout.addComponent(chartButton);
 		return viewLayout;

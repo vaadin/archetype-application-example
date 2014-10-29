@@ -60,8 +60,18 @@
     @include valo-components;
   }
   
-  .menu-button {
-   
+  .dark-button {
+    background-color: #666;
+    $v-background-color: #666;
+    $v-app-background-color: #666;
+    color: valo-font-color(#666);
+    @include valo-button;
+  }
+
+  .form-layout {
+    background-color: white;
+    border-left: 1px solid #aaa;
+    padding: 10px;
   }
   
   .v-table-cell-content-not-available {

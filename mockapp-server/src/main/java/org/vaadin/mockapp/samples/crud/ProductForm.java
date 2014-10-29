@@ -6,14 +6,21 @@ import org.vaadin.mockapp.samples.AttributeExtension;
 import org.vaadin.mockapp.samples.data.Category;
 import org.vaadin.mockapp.samples.data.State;
 
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.TwinColSelect;
+import com.vaadin.ui.VerticalLayout;
 
-public class ProductForm extends GridLayout {
+public class ProductForm extends VerticalLayout {
 
 	TextField stockCount = new TextField("In stock");
-	NativeSelect state = new NativeSelect("State");
+	NativeSelect state = new NativeSelect("Availability");
 	TwinColSelect category = new TwinColSelect("Categories");
 	TextField price = new TextField("Price");
 	TextField productName = new TextField("Product name");
@@ -23,38 +30,49 @@ public class ProductForm extends GridLayout {
 	private SampleCrudLogic viewLogic;
 
 	public ProductForm(SampleCrudLogic sampleCrudLogic) {
-		super(3, 3);
 		this.viewLogic = sampleCrudLogic;
-		setSpacing(true);
-		setMargin(true);
 
 		productName.setWidth("100%");
-		addComponent(productName, 0, 0, 2, 0);
 
 		price.setConverter(new EuroConverter());
-		price.setWidth("60px");
-		addComponent(price);
 
 		AttributeExtension ae = new AttributeExtension();
 		ae.extend(stockCount);
 		ae.setAttribute("type", "number");
 		stockCount.setWidth("80px");
-		addComponent(stockCount);
 
 		state.setNullSelectionAllowed(false);
 		for (State s : State.values()) {
 			state.addItem(s);
 		}
-		addComponent(state);
 
 		category.setWidth("100%");
-		addComponent(category, 0, 2, 2, 2);
 
+		saveButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
+		deleteButton.addStyleName("dark-button");
+		saveButton.setWidth("100%");
+		discardButton.setWidth("100%");
+		deleteButton.setWidth("100%");
+
+		setSizeFull();
+		setMargin(true);
+		setSpacing(true);
+		addStyleName("form-layout");
+
+		HorizontalLayout priceAndStock = new HorizontalLayout(price, stockCount);
+		priceAndStock.setSpacing(true);
+		priceAndStock.setWidth("100%");
+		price.setWidth("100%");
+		stockCount.setWidth("100%");
+		addComponent(productName);
+		addComponent(priceAndStock);
+		addComponent(state);
+		addComponent(category);
 		addComponent(saveButton);
 		addComponent(discardButton);
 		addComponent(deleteButton);
 
-		setColumnExpandRatio(2, 1);
+		setExpandRatio(category, 1);
 
 		saveButton.addClickListener(new ClickListener() {
 			@Override
@@ -69,7 +87,7 @@ public class ProductForm extends GridLayout {
 				viewLogic.deleteProduct();
 			}
 		});
-		
+
 		discardButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {

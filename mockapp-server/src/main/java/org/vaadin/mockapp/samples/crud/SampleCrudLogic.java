@@ -32,7 +32,7 @@ public class SampleCrudLogic {
 		if (!MockAppUI.get().getAccessControl().isUserInRole("admin")) {
 			view.replaceComponent(view.form, new Label(
 					"Login as 'admin' to have edit access"));
-			view.newProduct.setEnabled(false);
+			view.setNewProductEnabled(false);
 		}
 
 		refreshTable();
@@ -188,7 +188,7 @@ public class SampleCrudLogic {
 	}
 
 	private void showFormPopup() {
-		if (view.formAsPopup.getValue()) {
+		if (view.getFormAsPopupValue()) {
 			view.getUI().addWindow(view.formWindow);
 			view.formWindow.center();
 		}
@@ -200,5 +200,7 @@ public class SampleCrudLogic {
 		}
 
 	}
+	
+	
 
 }

@@ -22,51 +22,29 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
+import com.vaadin.ui.themes.ValoTheme;
 
-public class SampleCrudView extends VerticalLayout implements View {
+public class SampleCrudView extends HorizontalLayout implements View {
 
 	public static final String VIEW_NAME = "Editor";
 	ProductTable table;
 	ProductForm form;
-	private TextField filter = new TextField();
+	
 	private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
-	Button newProduct = new Button("New product");
+	
 
-	CheckBox formAsPopup = new CheckBox("Form as popup");
+	
 	Window formWindow = new Window("Edit form");
+	private CheckBox formAsPopup;
+	private Button newProduct;
 
 	public SampleCrudView() {
 		setSpacing(true);
-		setMargin(true);
 		setSizeFull();
 
-		HorizontalLayout topLayout = new HorizontalLayout();
-		topLayout.setSpacing(true);
-		topLayout.setWidth("100%");
-		addComponent(topLayout);
 		
-		filter.setInputPrompt("Filter the table");
-		ResetButtonForTextField.extend(filter);
-		filter.setImmediate(true);
-		filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
-			@Override
-			public void textChange(FieldEvents.TextChangeEvent event) {
-				table.setFilter(event.getText());
-			}
-		});
-		topLayout.addComponent(filter);
-		topLayout.setComponentAlignment(filter, Alignment.TOP_RIGHT);
-
-
-		topLayout.addComponent(newProduct);
-		newProduct.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				viewLogic.newProduct();
-			}
-		});
-		topLayout.addComponent(formAsPopup);
-		topLayout.setComponentAlignment(formAsPopup, Alignment.MIDDLE_LEFT);
+		HorizontalLayout topLayout = createTopBar();
+		
 		formWindow.setWidth("400px");
 		formWindow.setModal(true);
 		formWindow.addCloseListener(new CloseListener() {
@@ -75,6 +53,53 @@ public class SampleCrudView extends VerticalLayout implements View {
 				viewLogic.discardProduct();
 			}
 		});
+		
+		table = new ProductTable();
+		
+		form = new ProductForm(viewLogic);
+		form.setWidth("300px");
+		form.setHeight("100%");
+		form.setEnabled(false);
+		form.setCategories(DataService.get().getAllCategories());
+		
+		VerticalLayout barAndTableLayout = new VerticalLayout();
+		barAndTableLayout.addComponent(topLayout);
+		barAndTableLayout.addComponent(table);
+		barAndTableLayout.setMargin(true);
+		barAndTableLayout.setSpacing(true);
+		barAndTableLayout.setSizeFull();
+		barAndTableLayout.setExpandRatio(table, 1);
+
+		addComponent(barAndTableLayout);
+		addComponent(form);
+		setExpandRatio(barAndTableLayout, 1);
+		
+
+		viewLogic.init();
+	}
+	
+	public HorizontalLayout createTopBar(){
+		TextField filter = new TextField();
+		filter.setInputPrompt("Filter");
+		ResetButtonForTextField.extend(filter);
+		filter.setImmediate(true);
+		filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
+			@Override
+			public void textChange(FieldEvents.TextChangeEvent event) {
+				table.setFilter(event.getText());
+			}
+		});
+		
+		newProduct = new Button("New product");
+		newProduct.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		newProduct.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				viewLogic.newProduct();
+			}
+		});
+		
+		formAsPopup = new CheckBox("Form as popup");
 		formAsPopup.setImmediate(true);
 		formAsPopup.addValueChangeListener(new ValueChangeListener() {
 
@@ -89,21 +114,17 @@ public class SampleCrudView extends VerticalLayout implements View {
 				}
 			}
 		});
+		
+		HorizontalLayout topLayout = new HorizontalLayout();
+		topLayout.setSpacing(true);
+		topLayout.setWidth("100%");
 		topLayout.addComponent(filter);
-		topLayout.setComponentAlignment(filter, Alignment.TOP_RIGHT);
+		topLayout.addComponent(formAsPopup);
+		topLayout.addComponent(newProduct);
+		topLayout.setComponentAlignment(formAsPopup, Alignment.MIDDLE_LEFT);
+		topLayout.setComponentAlignment(filter, Alignment.MIDDLE_LEFT);
 		topLayout.setExpandRatio(filter, 1);
-
-		table = new ProductTable();
-		addComponent(table);
-		setExpandRatio(table, 1);
-
-		form = new ProductForm(viewLogic);
-		form.setWidth("100%");
-		form.setEnabled(false);
-		form.setCategories(DataService.get().getAllCategories());
-		addComponent(form);
-
-		viewLogic.init();
+		return topLayout;
 	}
 
 	@Override
@@ -117,6 +138,15 @@ public class SampleCrudView extends VerticalLayout implements View {
 
 	public void showSaveNotification(String msg) {
 		Notification.show(msg, Type.TRAY_NOTIFICATION);
+	}
+
+	public boolean getFormAsPopupValue() {
+		return formAsPopup.getValue();
+	}
+
+	public void setNewProductEnabled(boolean enabled) {
+		newProduct.setEnabled(enabled);
+		
 	}
 
 }

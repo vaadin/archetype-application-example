@@ -1,11 +1,17 @@
 package org.vaadin.mockapp.samples.crud;
 
+import java.util.Collection;
+
 import org.vaadin.mockapp.samples.ResetButtonForTextField;
 import org.vaadin.mockapp.samples.backend.DataService;
+import org.vaadin.mockapp.samples.data.Product;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanContainer;
+import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -27,26 +33,33 @@ import com.vaadin.ui.themes.ValoTheme;
 public class SampleCrudView extends HorizontalLayout implements View {
 
 	public static final String VIEW_NAME = "Editor";
-	ProductTable table;
-	ProductForm form;
-	
+	private ProductTable table;
+	private ProductForm form;
+
 	private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
 	private Button newProduct;
 
 	public SampleCrudView() {
 		setSpacing(true);
 		setSizeFull();
-		
+
 		HorizontalLayout topLayout = createTopBar();
-		
+
 		table = new ProductTable();
-		
+		table.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				Product product = table.getProduct();
+				viewLogic.rowSelected(product);
+			}
+		});
+
 		form = new ProductForm(viewLogic);
 		form.setWidth("300px");
 		form.setHeight("100%");
 		form.setEnabled(false);
 		form.setCategories(DataService.get().getAllCategories());
-		
+
 		VerticalLayout barAndTableLayout = new VerticalLayout();
 		barAndTableLayout.addComponent(topLayout);
 		barAndTableLayout.addComponent(table);
@@ -58,12 +71,11 @@ public class SampleCrudView extends HorizontalLayout implements View {
 		addComponent(barAndTableLayout);
 		addComponent(form);
 		setExpandRatio(barAndTableLayout, 1);
-		
 
 		viewLogic.init();
 	}
-	
-	public HorizontalLayout createTopBar(){
+
+	public HorizontalLayout createTopBar() {
 		TextField filter = new TextField();
 		filter.setInputPrompt("Filter");
 		ResetButtonForTextField.extend(filter);
@@ -74,7 +86,7 @@ public class SampleCrudView extends HorizontalLayout implements View {
 				table.setFilter(event.getText());
 			}
 		});
-		
+
 		newProduct = new Button("New product");
 		newProduct.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		newProduct.addClickListener(new ClickListener() {
@@ -83,7 +95,7 @@ public class SampleCrudView extends HorizontalLayout implements View {
 				viewLogic.newProduct();
 			}
 		});
-		
+
 		HorizontalLayout topLayout = new HorizontalLayout();
 		topLayout.setSpacing(true);
 		topLayout.setWidth("100%");
@@ -109,7 +121,25 @@ public class SampleCrudView extends HorizontalLayout implements View {
 
 	public void setNewProductEnabled(boolean enabled) {
 		newProduct.setEnabled(enabled);
-		
 	}
 
+	public void selectRow(Integer row) {
+		table.setValue(row);
+	}
+
+	public void editProduct(Product product) {
+		form.setVisible(product != null);
+		form.editProduct(product);
+	}
+
+	public Integer getSelectedRow() {
+		return table.getValue();
+	}
+
+	public void showProducts(Collection<Product> products) {
+		BeanContainer<Integer, Product> container = table
+				.getContainerDataSource();
+		container.removeAllItems();
+		container.addAll(products);
+	}
 }

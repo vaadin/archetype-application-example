@@ -85,4 +85,13 @@ public class ProductTable extends Table {
 	public BeanContainer<Integer, Product> getContainerDataSource() {
 		return (BeanContainer<Integer, Product>) super.getContainerDataSource();
 	}
+
+	public Product getProduct() {
+		Integer id = getValue();
+		if(id != null){
+			return getItem(id).getBean();
+		} else {
+			return null;
+		}
+	}
 }

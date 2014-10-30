@@ -46,8 +46,13 @@ public class CategoryField extends CustomField<Set<Category>> {
 				public void valueChange(
 						com.vaadin.data.Property.ValueChangeEvent event) {
 					if (!updatingField) {
-						Set<Category> categories = new HashSet<Category>(
-								getValue());
+						Set<Category> oldCategories = getValue();
+						Set<Category> categories;
+						if (oldCategories != null) {
+							categories = new HashSet<Category>(oldCategories);
+						} else {
+							categories = new HashSet<Category>();
+						}
 						if (box.getValue()) {
 							categories.add(category);
 						} else {

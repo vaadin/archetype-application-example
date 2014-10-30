@@ -18,20 +18,16 @@ import com.vaadin.ui.Label;
 public class SampleCrudLogic {
 
 	private SampleCrudView view;
-	private BeanFieldGroup<Product> fieldGroup;
 
 	public SampleCrudLogic(SampleCrudView simpleCrudView) {
 		this.view = simpleCrudView;
 	}
 
 	public void init() {
-		setupTable();
 		setupForm();
 
 		// Hide and disable if not admin
 		if (!MockAppUI.get().getAccessControl().isUserInRole("admin")) {
-			view.replaceComponent(view.form, new Label(
-					"Login as 'admin' to have edit access"));
 			view.setNewProductEnabled(false);
 		}
 
@@ -39,33 +35,14 @@ public class SampleCrudLogic {
 	}
 
 	private void setupForm() {
-		fieldGroup = new BeanFieldGroup<Product>(Product.class);
-		fieldGroup.bindMemberFields(view.form);
-
-		fieldGroup.addCommitHandler(new CommitHandler() {
-
-			@Override
-			public void preCommit(CommitEvent commitEvent)
-					throws CommitException {
-			}
-
-			@Override
-			public void postCommit(CommitEvent commitEvent)
-					throws CommitException {
-				DataService.get().updateProduct(
-						fieldGroup.getItemDataSource().getBean());
-			}
-		});
-
 		// Set default field values
 		setFormDataSource(null);
-
 	}
 
 	public void discardProduct() {
-		fieldGroup.discard();
+		// fieldGroup.discard();
 		setFragmentParameter("");
-		view.table.setValue(null);
+		view.selectRow(null);
 	}
 
 	/**
@@ -93,7 +70,7 @@ public class SampleCrudLogic {
 				// login
 				try {
 					int pid = Integer.parseInt(productId);
-					view.table.setValue(pid);
+					view.selectRow(pid);
 					editProduct(pid);
 				} catch (NumberFormatException e) {
 				}
@@ -116,67 +93,43 @@ public class SampleCrudLogic {
 		return DataService.get().getProductById(productId);
 	}
 
-	public void saveProduct() {
-		try {
-			fieldGroup.commit();
-			Product p = fieldGroup.getItemDataSource().getBean();
-			view.showSaveNotification(p.getProductName() + " (" + p.getId()
-					+ ") updated");
-			view.table.setValue(null);
-			refreshTable();
-			setFragmentParameter("");
-		} catch (CommitException e) {
-			view.showError("Please re-check the fields");
-			e.printStackTrace();
-		}
+	public void saveProduct(Product product) {
+		view.showSaveNotification(product.getProductName() + " ("
+				+ product.getId() + ") updated");
+		view.selectRow(null);
+		refreshTable();
+		setFragmentParameter("");
 	}
 
-	public void deleteProduct() {
-		try {
-			Product p = fieldGroup.getItemDataSource().getBean();
-			DataService.get().deleteProduct(p.getId());
-			view.showSaveNotification(p.getProductName() + " (" + p.getId()
-					+ ") removed");
+	public void deleteProduct(Product product) {
+		DataService.get().deleteProduct(product.getId());
+		view.showSaveNotification(product.getProductName() + " ("
+				+ product.getId() + ") removed");
 
-			view.table.setValue(null);
-			refreshTable();
-			setFragmentParameter("");
-		} catch (Exception e) {
-
-		}
-
+		view.selectRow(null);
+		refreshTable();
+		setFragmentParameter("");
 	}
 
-	private void setupTable() {
-		view.table.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				editProduct(view.table.getValue());
-			}
-		});
-	}
 
 	public void setFormDataSource(Product product) {
-		view.form.setEnabled(product != null);
-		if (product == null) {
-			fieldGroup.setItemDataSource(new BeanItem<Product>(new Product()));
-		} else {
-			fieldGroup.setItemDataSource(new BeanItem<Product>(product));
-		}
+		view.editProduct(product);
 	}
 
 	private void refreshTable() {
-		Object oldSelection = view.table.getValue();
-		BeanContainer<Integer, Product> container = view.table
-				.getContainerDataSource();
-		container.removeAllItems();
-		container.addAll(DataService.get().getAllProducts());
-		view.table.setValue(oldSelection);
+		Integer oldSelection = view.getSelectedRow();
+		view.showProducts(DataService.get().getAllProducts());
+		view.selectRow(oldSelection);
 	}
 
 	public void newProduct() {
-		view.table.setValue(null);
+		view.selectRow(null);
 		setFragmentParameter("new");
 		setFormDataSource(new Product());
+	}
+
+	public void rowSelected(Product product) {
+		view.editProduct(product);
+		
 	}
 }

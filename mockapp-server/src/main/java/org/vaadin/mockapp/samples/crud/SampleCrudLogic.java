@@ -117,7 +117,7 @@ public class SampleCrudLogic {
 	}
 
 	private void refreshTable() {
-		Integer oldSelection = view.getSelectedRow();
+		Product oldSelection = view.getSelectedRow();
 		view.showProducts(DataService.get().getAllProducts());
 		view.selectRow(oldSelection);
 	}

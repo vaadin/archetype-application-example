@@ -3,24 +3,21 @@ package org.vaadin.mockapp.samples.crud;
 import org.vaadin.mockapp.samples.data.Product;
 import org.vaadin.mockapp.samples.data.State;
 
-import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.filter.And;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.ui.Table;
 
 public class ProductTable extends Table {
 
-	private BeanContainer<Integer, Product> container;
+	private BeanItemContainer<Product> container;
 
 	public ProductTable() {
 		setSizeFull();
 
-		container = new BeanContainer<Integer, Product>(Product.class);
-		container.setBeanIdProperty("id");
+		container = new BeanItemContainer<Product>(Product.class);
 		setContainerDataSource(container);
 		setVisibleColumns("id", "productName", "price", "state", "stockCount",
 				"category");
@@ -72,8 +69,8 @@ public class ProductTable extends Table {
 	}
 
 	@Override
-	public Integer getValue() {
-		return (Integer) super.getValue();
+	public Product getValue() {
+		return (Product) super.getValue();
 	}
 
 	@Override
@@ -82,16 +79,7 @@ public class ProductTable extends Table {
 	}
 
 	@Override
-	public BeanContainer<Integer, Product> getContainerDataSource() {
-		return (BeanContainer<Integer, Product>) super.getContainerDataSource();
-	}
-
-	public Product getProduct() {
-		Integer id = getValue();
-		if(id != null){
-			return getItem(id).getBean();
-		} else {
-			return null;
-		}
+	public BeanItemContainer<Product> getContainerDataSource() {
+		return container;
 	}
 }

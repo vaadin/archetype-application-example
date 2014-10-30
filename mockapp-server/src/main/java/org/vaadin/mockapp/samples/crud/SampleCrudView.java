@@ -6,11 +6,8 @@ import org.vaadin.mockapp.samples.ResetButtonForTextField;
 import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.data.Product;
 
-import com.vaadin.data.Container;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.BeanContainer;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.navigator.View;
@@ -19,15 +16,11 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
-import com.vaadin.ui.Window.CloseEvent;
-import com.vaadin.ui.Window.CloseListener;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class SampleCrudView extends HorizontalLayout implements View {
@@ -49,15 +42,13 @@ public class SampleCrudView extends HorizontalLayout implements View {
 		table.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				Product product = table.getProduct();
-				viewLogic.rowSelected(product);
+				viewLogic.rowSelected(table.getValue());
 			}
 		});
 
 		form = new ProductForm(viewLogic);
 		form.setWidth("300px");
 		form.setHeight("100%");
-		form.setEnabled(false);
 		form.setCategories(DataService.get().getAllCategories());
 
 		VerticalLayout barAndTableLayout = new VerticalLayout();
@@ -123,8 +114,18 @@ public class SampleCrudView extends HorizontalLayout implements View {
 		newProduct.setEnabled(enabled);
 	}
 
-	public void selectRow(Integer row) {
+	public void selectRow(Product row) {
 		table.setValue(row);
+	}
+	
+
+	public void selectRow(int pid) {
+		for(Product product : table.getContainerDataSource().getItemIds()){
+			if(pid == product.getId()){
+				table.setValue(product);
+				break;
+			}
+		}
 	}
 
 	public void editProduct(Product product) {
@@ -132,14 +133,14 @@ public class SampleCrudView extends HorizontalLayout implements View {
 		form.editProduct(product);
 	}
 
-	public Integer getSelectedRow() {
+	public Product getSelectedRow() {
 		return table.getValue();
 	}
 
 	public void showProducts(Collection<Product> products) {
-		BeanContainer<Integer, Product> container = table
-				.getContainerDataSource();
+		BeanItemContainer<Product> container = table.getContainerDataSource();
 		container.removeAllItems();
 		container.addAll(products);
 	}
+
 }

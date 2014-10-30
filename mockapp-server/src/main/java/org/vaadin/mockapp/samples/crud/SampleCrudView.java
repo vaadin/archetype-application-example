@@ -115,9 +115,18 @@ public class SampleCrudView extends HorizontalLayout implements View {
 	}
 
 	public void selectRow(Product row) {
+		// If you create a new product, nothing is selected in the table while
+		// you fill in the details. When you click on save, null is
+		// automatically selected to clear selection and hide the editor.
+		// Because null was already the selection, the ValueChangeListener will
+		// not fire from table.setValue(null) and the editor won't get hidden.
+		// Thus we handle the hiding by a shortcut here
+		if (table.getValue() == null && row == null) {
+			editProduct(row);
+		}
 		table.setValue(row);
+
 	}
-	
 
 	public void editProduct(Product product) {
 		form.setVisible(product != null);

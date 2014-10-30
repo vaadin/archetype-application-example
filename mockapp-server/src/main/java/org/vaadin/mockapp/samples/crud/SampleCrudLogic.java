@@ -24,19 +24,13 @@ public class SampleCrudLogic {
 	}
 
 	public void init() {
-		setupForm();
-
+		editProduct(null);
 		// Hide and disable if not admin
 		if (!MockAppUI.get().getAccessControl().isUserInRole("admin")) {
 			view.setNewProductEnabled(false);
 		}
 
 		refreshTable();
-	}
-
-	private void setupForm() {
-		// Set default field values
-		setFormDataSource(null);
 	}
 
 	public void discardProduct() {
@@ -56,7 +50,7 @@ public class SampleCrudLogic {
 			fragmentParameter = productId;
 		}
 
-		Page page = view.getUI().getPage();
+		Page page = MockAppUI.get().getPage();
 		page.setUriFragment("!" + SampleCrudView.VIEW_NAME + "/"
 				+ fragmentParameter, false);
 	}
@@ -70,24 +64,15 @@ public class SampleCrudLogic {
 				// login
 				try {
 					int pid = Integer.parseInt(productId);
-					view.selectRow(pid);
-					editProduct(pid);
+					Product product = findProduct(pid);
+					view.selectRow(product);
+//					editProduct(pid);
 				} catch (NumberFormatException e) {
 				}
 			}
 		}
 	}
 
-	protected void editProduct(Integer productId) {
-		Product product = null;
-		if (productId == null)
-			setFragmentParameter("");
-		else {
-			setFragmentParameter(productId + "");
-			product = findProduct(productId);
-		}
-		setFormDataSource(product);
-	}
 
 	private Product findProduct(int productId) {
 		return DataService.get().getProductById(productId);
@@ -112,7 +97,12 @@ public class SampleCrudLogic {
 	}
 
 
-	public void setFormDataSource(Product product) {
+	public void editProduct(Product product) {
+		if (product == null)
+			setFragmentParameter("");
+		else {
+			setFragmentParameter(product.getId() + "");
+		}
 		view.editProduct(product);
 	}
 
@@ -125,7 +115,7 @@ public class SampleCrudLogic {
 	public void newProduct() {
 		view.selectRow(null);
 		setFragmentParameter("new");
-		setFormDataSource(new Product());
+		editProduct(new Product());
 	}
 
 	public void rowSelected(Product product) {

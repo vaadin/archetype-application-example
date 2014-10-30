@@ -119,15 +119,6 @@ public class SampleCrudView extends HorizontalLayout implements View {
 	}
 	
 
-	public void selectRow(int pid) {
-		for(Product product : table.getContainerDataSource().getItemIds()){
-			if(pid == product.getId()){
-				table.setValue(product);
-				break;
-			}
-		}
-	}
-
 	public void editProduct(Product product) {
 		form.setVisible(product != null);
 		form.editProduct(product);

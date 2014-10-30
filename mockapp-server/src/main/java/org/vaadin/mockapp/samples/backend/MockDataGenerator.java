@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.vaadin.mockapp.samples.data.Category;
 import org.vaadin.mockapp.samples.data.Product;
-import org.vaadin.mockapp.samples.data.State;
+import org.vaadin.mockapp.samples.data.Availability;
 
 public class MockDataGenerator {
 	private static int nextCategoryId = 1;
@@ -71,8 +71,8 @@ public class MockDataGenerator {
 		p.setProductName(generateName());
 
 		p.setPrice(new BigDecimal(random.nextInt(10000) / 10.0));
-		p.setState(State.values()[random.nextInt(State.values().length)]);
-		if (p.getState().isAvailable()) {
+		p.setAvailability(Availability.values()[random.nextInt(Availability.values().length)]);
+		if (p.getAvailability().isAvailable()) {
 			p.setStockCount(random.nextInt(523));
 		}
 

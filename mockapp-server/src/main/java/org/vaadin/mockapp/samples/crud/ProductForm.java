@@ -6,7 +6,7 @@ import org.vaadin.mockapp.samples.AttributeExtension;
 import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.data.Category;
 import org.vaadin.mockapp.samples.data.Product;
-import org.vaadin.mockapp.samples.data.State;
+import org.vaadin.mockapp.samples.data.Availability;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
@@ -26,14 +26,14 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class ProductForm extends VerticalLayout {
 
-	TextField stockCount = new TextField("In stock");
-	NativeSelect state = new NativeSelect("Availability");
-	CategoryField category = new CategoryField("Categories");
-	TextField price = new TextField("Price");
-	TextField productName = new TextField("Product name");
+	TextField productName = new TextField("Product name:");
+	TextField price = new TextField("Price:");
+	TextField stockCount = new TextField("In stock:");
+	NativeSelect availability = new NativeSelect("Availability:");
+	CategoryField category = new CategoryField("Categories:");
 	Button saveButton = new Button("Save");
-	Button deleteButton = new Button("Delete");
 	Button discardButton = new Button("Discard");
+	Button deleteButton = new Button("Delete");
 	private SampleCrudLogic viewLogic;
 	private BeanFieldGroup<Product> fieldGroup;
 
@@ -49,9 +49,9 @@ public class ProductForm extends VerticalLayout {
 		ae.setAttribute("type", "number");
 		stockCount.setWidth("80px");
 
-		state.setNullSelectionAllowed(false);
-		for (State s : State.values()) {
-			state.addItem(s);
+		availability.setNullSelectionAllowed(false);
+		for (Availability s : Availability.values()) {
+			availability.addItem(s);
 		}
 
 		category.setWidth("100%");
@@ -72,9 +72,10 @@ public class ProductForm extends VerticalLayout {
 		priceAndStock.setWidth("100%");
 		price.setWidth("100%");
 		stockCount.setWidth("100%");
+		availability.setWidth("100%");
 		addComponent(productName);
 		addComponent(priceAndStock);
-		addComponent(state);
+		addComponent(availability);
 		addComponent(category);
 		addComponent(saveButton);
 		addComponent(discardButton);
@@ -133,10 +134,6 @@ public class ProductForm extends VerticalLayout {
 
 	public void setCategories(Collection<Category> categories) {
 		category.setOptions(categories);
-		// category.removeAllItems();
-		// for (Category c : categories) {
-		// category.addItem(c);
-		// }
 	}
 
 	public void editProduct(Product product) {

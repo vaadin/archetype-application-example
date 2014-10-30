@@ -19,7 +19,7 @@ public class Product implements Serializable {
 	@Min(value = 0, message = "Can't have negative amount in stock")
 	private int stockCount = 0;
 	@NotNull
-	private State state = State.NOT_YET_AVAILABLE;
+	private Availability availability = Availability.COMING_SOON;
 
 	public int getId() {
 		return id;
@@ -61,12 +61,12 @@ public class Product implements Serializable {
 		this.stockCount = stockCount;
 	}
 
-	public State getState() {
-		return state;
+	public Availability getAvailability() {
+		return availability;
 	}
 
-	public void setState(State state) {
-		this.state = state;
+	public void setAvailability(Availability availability) {
+		this.availability = availability;
 	}
 
 }

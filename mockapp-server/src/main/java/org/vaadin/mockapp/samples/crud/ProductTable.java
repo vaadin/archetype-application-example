@@ -1,7 +1,7 @@
 package org.vaadin.mockapp.samples.crud;
 
 import org.vaadin.mockapp.samples.data.Product;
-import org.vaadin.mockapp.samples.data.State;
+import org.vaadin.mockapp.samples.data.Availability;
 
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.data.util.BeanItem;
@@ -19,10 +19,10 @@ public class ProductTable extends Table {
 
 		container = new BeanItemContainer<Product>(Product.class);
 		setContainerDataSource(container);
-		setVisibleColumns("id", "productName", "price", "state", "stockCount",
+		setVisibleColumns("id", "productName", "price", "availability", "stockCount",
 				"category");
-		setColumnHeaders("Product id", "Product", "Price (€)", "State",
-				"In stock", "Categories");
+		setColumnHeaders("ID", "Product", "Price", "Availability",
+				"Stock", "Categories");
 		setColumnCollapsingAllowed(true);
 		setColumnCollapsed("integerProperty", true);
 		setColumnCollapsed("bigDecimalProperty", true);
@@ -42,8 +42,8 @@ public class ProductTable extends Table {
 			@Override
 			public String getStyle(Table source, Object itemId,
 					Object propertyId) {
-				if ("state".equals(propertyId)) {
-					State s = (State) source.getContainerProperty(itemId,
+				if ("availability".equals(propertyId)) {
+					Availability s = (Availability) source.getContainerProperty(itemId,
 							propertyId).getValue();
 					if (!s.isAvailable())
 						return "not-available";
@@ -58,11 +58,11 @@ public class ProductTable extends Table {
 		if (filterString.length() > 0) {
 			SimpleStringFilter nameFilter = new SimpleStringFilter(
 					"productName", filterString, true, false);
-			SimpleStringFilter stateFilter = new SimpleStringFilter("state",
+			SimpleStringFilter availabilityFilter = new SimpleStringFilter("availability",
 					filterString, true, false);
 			SimpleStringFilter categoryFilter = new SimpleStringFilter(
 					"category", filterString, true, false);
-			container.addContainerFilter(new Or(nameFilter, stateFilter,
+			container.addContainerFilter(new Or(nameFilter, availabilityFilter,
 					categoryFilter));
 		}
 
@@ -71,11 +71,6 @@ public class ProductTable extends Table {
 	@Override
 	public Product getValue() {
 		return (Product) super.getValue();
-	}
-
-	@Override
-	public BeanItem<Product> getItem(Object itemId) {
-		return (BeanItem<Product>) super.getItem(itemId);
 	}
 
 	@Override

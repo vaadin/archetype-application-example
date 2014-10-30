@@ -67,8 +67,8 @@ public class CategoryField extends CustomField<Set<Category>> {
 	}
 
 	@Override
-	public Class<? extends Set<Category>> getType() {
-		return (Class<? extends Set<Category>>) Set.class;
+	public Class getType() {
+		return Set.class;
 	}
 
 	@Override

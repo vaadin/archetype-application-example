@@ -60,12 +60,17 @@
     @include valo-components;
   }
   
+  .selected-view.v-button {
+    @include valo-button-style($background-color: #1a191f);
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+    color: valo-font-color(#1a191f);
+  }
+
   .dark-button {
-    background-color: #666;
-    $v-background-color: #666;
-    $v-app-background-color: #666;
-    color: valo-font-color(#666);
-    @include valo-button;
+    @include valo-button-style($background-color: #27272f);
   }
 
   .form-layout {

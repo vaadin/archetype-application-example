@@ -36,7 +36,6 @@ public class SampleCrudView extends HorizontalLayout implements View {
 	public SampleCrudView() {
 		setSpacing(true);
 		setSizeFull();
-
 		
 		HorizontalLayout topLayout = createTopBar();
 		

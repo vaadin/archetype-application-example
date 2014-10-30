@@ -33,8 +33,7 @@ public class SampleCrudLogic {
 		refreshTable();
 	}
 
-	public void discardProduct() {
-		// fieldGroup.discard();
+	public void cancelProduct() {
 		setFragmentParameter("");
 		view.selectRow(null);
 	}
@@ -66,7 +65,6 @@ public class SampleCrudLogic {
 					int pid = Integer.parseInt(productId);
 					Product product = findProduct(pid);
 					view.selectRow(product);
-//					editProduct(pid);
 				} catch (NumberFormatException e) {
 				}
 			}

@@ -32,7 +32,7 @@ public class ProductForm extends VerticalLayout {
 	NativeSelect availability = new NativeSelect("Availability:");
 	CategoryField category = new CategoryField("Categories:");
 	Button saveButton = new Button("Save");
-	Button discardButton = new Button("Discard");
+	Button cancelButton = new Button("Cancel");
 	Button deleteButton = new Button("Delete");
 	private SampleCrudLogic viewLogic;
 	private BeanFieldGroup<Product> fieldGroup;
@@ -59,7 +59,7 @@ public class ProductForm extends VerticalLayout {
 		saveButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 		deleteButton.addStyleName("dark-button");
 		saveButton.setWidth("100%");
-		discardButton.setWidth("100%");
+		cancelButton.setWidth("100%");
 		deleteButton.setWidth("100%");
 
 		setSizeFull();
@@ -78,7 +78,7 @@ public class ProductForm extends VerticalLayout {
 		addComponent(availability);
 		addComponent(category);
 		addComponent(saveButton);
-		addComponent(discardButton);
+		addComponent(cancelButton);
 		addComponent(deleteButton);
 
 		setExpandRatio(category, 1);
@@ -124,10 +124,10 @@ public class ProductForm extends VerticalLayout {
 			}
 		});
 
-		discardButton.addClickListener(new ClickListener() {
+		cancelButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				viewLogic.discardProduct();
+				viewLogic.cancelProduct();
 			}
 		});
 	}

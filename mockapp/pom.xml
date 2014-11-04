@@ -89,7 +89,7 @@
                         <groupId>com.vaadin</groupId>
                         <artifactId>vaadin-maven-plugin</artifactId>
                         <configuration>
-                            <module>org.vaadin.mockapp.widgetset.MockAppWidgetset</module>
+                            <module>org.vaadin.mockapp.MockAppWidgetset</module>
                             <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                             <warSourceDirectory>${vaadin.resource.directory}</warSourceDirectory>
                             <webappDirectory>${vaadin.resource.directory}/VAADIN/widgetsets</webappDirectory>

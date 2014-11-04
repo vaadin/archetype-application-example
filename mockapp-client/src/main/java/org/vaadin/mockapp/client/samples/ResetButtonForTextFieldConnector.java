@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.samples.client;
+package org.vaadin.mockapp.client.samples;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Element;
@@ -61,7 +61,7 @@ public class ResetButtonForTextFieldConnector extends AbstractExtensionConnector
     /*-{
         var self = this;
         el.onclick = $entry(function () {
-            self.@org.vaadin.mockapp.samples.client.ResetButtonForTextFieldConnector::clearTextField()();
+            self.@org.vaadin.mockapp.client.samples.ResetButtonForTextFieldConnector::clearTextField()();
         });
     }-*/;
 

@@ -19,7 +19,7 @@ import com.vaadin.ui.UI;
  * 
  */
 @Theme("mockapp")
-@Widgetset("org.vaadin.mockapp.widgetset.MockAppWidgetset")
+@Widgetset("org.vaadin.mockapp.MockAppWidgetset")
 public class MockAppUI extends UI {
 
 	private AccessControl accessControl = new BasicAccessControl();

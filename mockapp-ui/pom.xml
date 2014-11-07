@@ -74,7 +74,7 @@
             <!-- The Jetty plugin allows us to easily test the development build by
                 running jetty:run on the command line. -->
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
+                <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
             </plugin>
             <!-- TODO remove? -->

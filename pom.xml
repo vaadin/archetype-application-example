@@ -27,8 +27,8 @@
 
 	<modules>
 		<module>mockapp-client</module>
-		<module>mockapp-server</module>
-		<module>mockapp</module>
+		<module>mockapp-ui</module>
+		<module>mockapp-production</module>
 	</modules>
 
 	<properties>

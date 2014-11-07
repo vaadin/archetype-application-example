@@ -11,10 +11,10 @@ The project consists of the following three modules:
 
 - parent project: common metadata and configuration
 - mockapp-client: widgetset, custom client side code and dependencies to widget add-ons
-- mockapp-server: main application module, development time
-- mockapp: module that produces a production mode WAR for deployment
+- mockapp-ui: main application module, development time
+- mockapp-production: module that produces a production mode WAR for deployment
 
-The production mode module recompiles the widgetset (obfuscated, not draft), activates production mode for Vaadin with a context parameter in web.xml and contains a precompiled theme. The server module WAR contains an unobfuscated widgetset, and is meant to be used at development time only.
+The production mode module recompiles the widgetset (obfuscated, not draft), activates production mode for Vaadin with a context parameter in web.xml and contains a precompiled theme. The ui module WAR contains an unobfuscated widgetset, and is meant to be used at development time only.
 
 Workflow
 ========
@@ -27,18 +27,18 @@ Other basic workflow steps:
 - compiling the whole project
   - run "mvn install" in parent project
 - developing the application
-  - edit code in the server module
-  - run "mvn jetty:run" in server module
+  - edit code in the ui module
+  - run "mvn jetty:run" in ui module
   - open http://localhost:8080/
 - developing the theme
   - run the application as above
-  - edit the theme in the server module
-  - only if using precompiled theme, run "mvn vaadin:compile-theme" in the server module
+  - edit the theme in the ui module
+  - only if using precompiled theme, run "mvn vaadin:compile-theme" in the ui module
   - reload the application page
 - client side changes or add-ons
   - edit code/POM in client module
   - run "mvn install" in client module
-  - if a new add-on has an embedded theme, run "mvn vaadin:update-theme" in the server module
+  - if a new add-on has an embedded theme, run "mvn vaadin:update-theme" in the ui module
 - debugging client side code
   - run "mvn vaadin:run-codeserver" in client module
   - activate Super Dev Mode in the debug window of the application

@@ -35,7 +35,7 @@
         <!-- Custom components -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>mockapp-client</artifactId>
+            <artifactId>mockapp-widgetset</artifactId>
             <version>${project.version}</version>
         </dependency>
 

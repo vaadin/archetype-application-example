@@ -72,7 +72,7 @@
                                         </artifactItem>
                                         <artifactItem>
                                             <groupId>${project.groupId}</groupId>
-                                            <artifactId>mockapp-client</artifactId>
+                                            <artifactId>mockapp-widgetset</artifactId>
                                             <version>${project.version}</version>
                                             <type>jar</type>
                                             <includes>org/vaadin/mockapp/widgetset/*.gwt.xml</includes>

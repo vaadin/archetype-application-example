@@ -10,7 +10,7 @@ Project Structure
 The project consists of the following three modules:
 
 - parent project: common metadata and configuration
-- mockapp-client: widgetset, custom client side code and dependencies to widget add-ons
+- mockapp-widgetset: widgetset, custom client side code and dependencies to widget add-ons
 - mockapp-ui: main application module, development time
 - mockapp-production: module that produces a production mode WAR for deployment
 
@@ -36,11 +36,11 @@ Other basic workflow steps:
   - only if using precompiled theme, run "mvn vaadin:compile-theme" in the ui module
   - reload the application page
 - client side changes or add-ons
-  - edit code/POM in client module
-  - run "mvn install" in client module
+  - edit code/POM in widgetset module
+  - run "mvn install" in widgetset module
   - if a new add-on has an embedded theme, run "mvn vaadin:update-theme" in the ui module
 - debugging client side code
-  - run "mvn vaadin:run-codeserver" in client module
+  - run "mvn vaadin:run-codeserver" in widgetset module
   - activate Super Dev Mode in the debug window of the application
 - creating a production mode war
   - run "mvn -Pproduction package" in the production mode module or in the parent module

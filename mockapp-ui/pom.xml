@@ -76,6 +76,10 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.plugin.version}</version>
+				<configuration>
+				    <scanIntervalSeconds>10</scanIntervalSeconds>
+				</configuration>
             </plugin>
             <!-- TODO remove? -->
             <plugin>

@@ -44,4 +44,5 @@ Other basic workflow steps:
   - activate Super Dev Mode in the debug window of the application
 - creating a production mode war
   - run "mvn -Pproduction package" in the production mode module or in the parent module
-
+- testing the production mode war
+  - run "mvn -Pproduction jetty:run-war" in the production mode module

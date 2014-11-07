@@ -146,6 +146,7 @@
                     <plugin>
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-maven-plugin</artifactId>
+                        <version>${jetty.plugin.version}</version>
                         <configuration>
                             <baseResource>${vaadin.resource.directory}</baseResource>
                         </configuration>
@@ -157,7 +158,7 @@
 
     <build>
         <plugins>
-            <!-- Do not produce and install artifacts when not usign the production profile -->
+            <!-- Do not produce and install artifacts when not using the production profile -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>

@@ -34,6 +34,7 @@
 	<properties>
 		<vaadin.version>7.3.3</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+		<jetty.plugin.version>9.2.3.v20140905</jetty.plugin.version>
 		<project.source.version>1.7</project.source.version>
 		<project.target.version>1.7</project.target.version>
 		<project.encoding>UTF-8</project.encoding>
@@ -79,14 +80,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>2.5</version>
-				</plugin>
-				<plugin>
-					<groupId>org.eclipse.jetty</groupId>
-					<artifactId>jetty-maven-plugin</artifactId>
-					<version>9.2.3.v20140905</version>
-					<configuration>
-					    <scanIntervalSeconds>10</scanIntervalSeconds>
-					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

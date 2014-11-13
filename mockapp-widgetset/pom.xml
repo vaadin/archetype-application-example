@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mockapp-client</artifactId>
+    <artifactId>mockapp-widgetset</artifactId>
     <name>Client Module</name>
     <packaging>jar</packaging>
     

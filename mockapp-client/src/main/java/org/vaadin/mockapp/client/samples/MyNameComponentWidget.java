@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.samples.client;
+package org.vaadin.mockapp.client.samples;
 
 import com.google.gwt.user.client.ui.Label;
 

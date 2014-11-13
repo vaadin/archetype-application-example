@@ -1,6 +1,6 @@
 package org.vaadin.mockapp.samples;
 
-import org.vaadin.mockapp.samples.client.MyNameComponentState;
+import org.vaadin.mockapp.client.samples.MyNameComponentState;
 
 // This is the server-side UI component that provides public API 
 // for MyComponent

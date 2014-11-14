@@ -78,7 +78,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.plugin.version}</version>
 				<configuration>
-				    <scanIntervalSeconds>10</scanIntervalSeconds>
+				    <scanIntervalSeconds>2</scanIntervalSeconds>
 				</configuration>
             </plugin>
             <!-- TODO remove? -->

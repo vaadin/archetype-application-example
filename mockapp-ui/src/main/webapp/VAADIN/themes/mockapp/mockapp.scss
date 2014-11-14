@@ -32,6 +32,8 @@
 @mixin mockapp {
   @include valo;
   
+  
+  /* dark color for table header */
   .v-table-header-wrap,
   .v-table-footer-wrap,
   .v-table-header-drag {
@@ -40,6 +42,7 @@
     text-shadow: 0 1px 0 rgba(70, 70, 70, 1);
   }
   
+  /* login screen */
   .login-screen {
     $login-screen-background-color: #7d7e7d;
     $login-screen-background-additional-color: #0e0e0e;
@@ -58,31 +61,7 @@
       background-color: #f1f1f1;
     }
   }
-  
-  .black {
-  	background-color: #27272f;
-    padding: 0 10px 0 10px;
-    
-    .v-label {
-      color: valo-font-color(#27272f);
-    }
-    
-    @include valo-button-style($background-color: #27272f);
-  }
-  
-  .selected-view.v-button {
-    @include valo-button-style($background-color: #1a191f);
-    border: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    border-radius: 0;
-    color: valo-font-color(#1a191f);
-  }
-
-  .dark-button {
-    @include valo-button-style($background-color: #27272f);
-  }
-  
+  /* Following buttons are in the CRUD editor */
   .save-button {
     @include valo-button-style($background-color: #60a0ea, $font-color: #ffffff);
   }
@@ -95,13 +74,17 @@
     @include valo-button-style($background-color: #ffffff, $font-color: #000000);
   }
   
-  
+  /* makes the CRUD view keep the sidebar editor within the view as sidebar is absolutely positioned */
   .crud-view {
   	position:relative;
   }
   
-  $side-bar-color: #3b3f42 !default;
+  /** side bar editor for CRUD */
   .product-form-wrapper {
+    $side-bar-color: #3b3f42 !default; 
+    $side-bar-field-color: #323335 !default;
+    $field-border: 2px solid #494d50;
+    $field-shadow: null;
   	position:absolute;
   	top:0;
   	bottom:0;
@@ -114,29 +97,27 @@
   	background-color: $side-bar-color;
   	color: valo-font-color($side-bar-color);
   	.v-textfield {
-  	  @include valo-textfield-style($background-color: $side-bar-color);
+  	  @include valo-textfield-style($background-color: $side-bar-field-color, $border: $field-border, $shadow: $field-shadow);
   	}
   	
   	.v-checkbox {
-  	  @include valo-checkbox-style($background-color: $side-bar-color);
+  	  @include valo-checkbox-style($background-color: $side-bar-field-color);
   	}
   	
   	.v-filterselect {
-  	  @include valo-combobox-style($background-color: $side-bar-color);
+  	  @include valo-combobox-style($background-color: $side-bar-field-color, $border: $field-border, $shadow: $field-shadow);
   	}
   	
   	@include transition(all 300ms);
   	@include transform(translatex(100%));
   }
   
+  /* Enables animation for opening CRUD editor */ 
   .visible {
   	@include transform(none);
   }
-
-  .form-layout {
-
-  }
   
+  /* Editor field section scrolls when there is not enough space vertically */
   .product-form-fields {
   	overflow:scroll;
   	height:100%;
@@ -145,6 +126,4 @@
   .v-table-cell-content-not-available {
   	color: red;
   }
-  
-  // Insert your own theme rules here
 }

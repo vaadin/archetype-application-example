@@ -128,8 +128,10 @@ public class SampleCrudView extends CssLayout implements View {
 	public void editProduct(Product product) {
 		if(product != null){
 			form.addStyleName("visible");
+			form.setEnabled(true);
 		} else {
 			form.removeStyleName("visible");
+			form.setEnabled(false);
 		}
 		form.editProduct(product);
 	}

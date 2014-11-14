@@ -16,6 +16,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
@@ -23,7 +24,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class SampleCrudView extends HorizontalLayout implements View {
+public class SampleCrudView extends CssLayout implements View {
 
 	public static final String VIEW_NAME = "Editor";
 	private ProductTable table;
@@ -33,9 +34,8 @@ public class SampleCrudView extends HorizontalLayout implements View {
 	private Button newProduct;
 
 	public SampleCrudView() {
-		setSpacing(true);
 		setSizeFull();
-
+		addStyleName("crud-view");
 		HorizontalLayout topLayout = createTopBar();
 
 		table = new ProductTable();
@@ -45,10 +45,8 @@ public class SampleCrudView extends HorizontalLayout implements View {
 				viewLogic.rowSelected(table.getValue());
 			}
 		});
-
+		
 		form = new ProductForm(viewLogic);
-		form.setWidth("300px");
-		form.setHeight("100%");
 		form.setCategories(DataService.get().getAllCategories());
 
 		VerticalLayout barAndTableLayout = new VerticalLayout();
@@ -61,7 +59,6 @@ public class SampleCrudView extends HorizontalLayout implements View {
 
 		addComponent(barAndTableLayout);
 		addComponent(form);
-		setExpandRatio(barAndTableLayout, 1);
 
 		viewLogic.init();
 	}
@@ -129,7 +126,11 @@ public class SampleCrudView extends HorizontalLayout implements View {
 	}
 
 	public void editProduct(Product product) {
-		form.setVisible(product != null);
+		if(product != null){
+			form.addStyleName("visible");
+		} else {
+			form.removeStyleName("visible");
+		}
 		form.editProduct(product);
 	}
 

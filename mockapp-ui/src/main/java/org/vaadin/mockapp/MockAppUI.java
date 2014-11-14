@@ -11,6 +11,7 @@ import org.vaadin.mockapp.samples.authentication.LoginScreen.LoginListener;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
+import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
@@ -26,6 +27,7 @@ public class MockAppUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
+		Responsive.makeResponsive(this);
 		setLocale(vaadinRequest.getLocale());
 		getPage().setTitle("MockApp");
 		if (!accessControl.isUserSignedIn()) {

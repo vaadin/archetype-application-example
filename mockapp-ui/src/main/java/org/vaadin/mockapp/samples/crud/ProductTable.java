@@ -27,7 +27,7 @@ public class ProductTable extends Table {
 		setColumnCollapsed("integerProperty", true);
 		setColumnCollapsed("bigDecimalProperty", true);
 
-		setColumnWidth("id", 70);
+		setColumnWidth("id", 50);
 		setColumnAlignment("price", Align.RIGHT);
 		setColumnAlignment("stockCount", Align.RIGHT);
 		setSelectable(true);

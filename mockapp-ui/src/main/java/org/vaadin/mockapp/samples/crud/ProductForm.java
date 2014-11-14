@@ -4,9 +4,9 @@ import java.util.Collection;
 
 import org.vaadin.mockapp.samples.AttributeExtension;
 import org.vaadin.mockapp.samples.backend.DataService;
+import org.vaadin.mockapp.samples.data.Availability;
 import org.vaadin.mockapp.samples.data.Category;
 import org.vaadin.mockapp.samples.data.Product;
-import org.vaadin.mockapp.samples.data.Availability;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
@@ -16,30 +16,32 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class ProductForm extends VerticalLayout {
+public class ProductForm extends CssLayout {
 
 	TextField productName = new TextField("Product name:");
 	TextField price = new TextField("Price:");
 	TextField stockCount = new TextField("In stock:");
-	NativeSelect availability = new NativeSelect("Availability:");
+	ComboBox availability = new ComboBox("Availability:");
 	CategoryField category = new CategoryField("Categories:");
 	Button saveButton = new Button("Save");
 	Button cancelButton = new Button("Cancel");
-	Button deleteButton = new Button("Delete");
+	Button removeButton = new Button("Delete");
 	private SampleCrudLogic viewLogic;
 	private BeanFieldGroup<Product> fieldGroup;
 
 	public ProductForm(SampleCrudLogic sampleCrudLogic) {
 		this.viewLogic = sampleCrudLogic;
-
+		addStyleName("product-form-wrapper");
 		productName.setWidth("100%");
 
 		price.setConverter(new EuroConverter());
@@ -50,22 +52,24 @@ public class ProductForm extends VerticalLayout {
 		stockCount.setWidth("80px");
 
 		availability.setNullSelectionAllowed(false);
+		availability.setTextInputAllowed(false);
 		for (Availability s : Availability.values()) {
 			availability.addItem(s);
 		}
 
 		category.setWidth("100%");
 
-		saveButton.addStyleName(ValoTheme.BUTTON_FRIENDLY);
-		deleteButton.addStyleName("dark-button");
+		saveButton.addStyleName("save-button");
+		cancelButton.addStyleName("cancel-button");
+		removeButton.addStyleName("remove-button");
 		saveButton.setWidth("100%");
 		cancelButton.setWidth("100%");
-		deleteButton.setWidth("100%");
+		removeButton.setWidth("100%");
 
-		setSizeFull();
-		setMargin(true);
-		setSpacing(true);
-		addStyleName("form-layout");
+		VerticalLayout layout = new VerticalLayout();
+		layout.setHeight("100%");
+		layout.setSpacing(true);
+		layout.addStyleName("form-layout");
 
 		HorizontalLayout priceAndStock = new HorizontalLayout(price, stockCount);
 		priceAndStock.setSpacing(true);
@@ -73,15 +77,20 @@ public class ProductForm extends VerticalLayout {
 		price.setWidth("100%");
 		stockCount.setWidth("100%");
 		availability.setWidth("100%");
-		addComponent(productName);
-		addComponent(priceAndStock);
-		addComponent(availability);
-		addComponent(category);
-		addComponent(saveButton);
-		addComponent(cancelButton);
-		addComponent(deleteButton);
+		VerticalLayout fieldLayout = new VerticalLayout();
+		fieldLayout.setSpacing(true);
+		fieldLayout.addStyleName("product-form-fields");
+		fieldLayout.addComponent(productName);
+		fieldLayout.addComponent(priceAndStock);
+		fieldLayout.addComponent(availability);
+		fieldLayout.addComponent(category);
+		layout.addComponent(fieldLayout);
+		layout.addComponent(saveButton);
+		layout.addComponent(cancelButton);
+		layout.addComponent(removeButton);
 
-		setExpandRatio(category, 1);
+		layout.setExpandRatio(fieldLayout, 1);
+		addComponent(layout);
 
 		fieldGroup = new BeanFieldGroup<Product>(Product.class);
 		fieldGroup.bindMemberFields(this);
@@ -116,18 +125,18 @@ public class ProductForm extends VerticalLayout {
 			}
 		});
 
-		deleteButton.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				Product product = fieldGroup.getItemDataSource().getBean();
-				viewLogic.deleteProduct(product);
-			}
-		});
-
 		cancelButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				viewLogic.cancelProduct();
+			}
+		});
+		
+		removeButton.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Product product = fieldGroup.getItemDataSource().getBean();
+				viewLogic.deleteProduct(product);
 			}
 		});
 	}

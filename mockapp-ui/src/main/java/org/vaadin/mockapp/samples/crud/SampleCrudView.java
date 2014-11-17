@@ -12,6 +12,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -77,6 +78,7 @@ public class SampleCrudView extends CssLayout implements View {
 
 		newProduct = new Button("New product");
 		newProduct.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		newProduct.setIcon(FontAwesome.PLUS_CIRCLE);
 		newProduct.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {

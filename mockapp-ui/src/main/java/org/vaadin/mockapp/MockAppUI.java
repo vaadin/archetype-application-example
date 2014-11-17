@@ -44,9 +44,7 @@ public class MockAppUI extends UI {
 
 	protected void showMainView() {
 		setContent(new MainScreen(MockAppUI.this));
-		// Ensure we navigate to the intial fragment which login view ignores
 		getNavigator().navigateTo(getNavigator().getState());
-
 	}
 
 	public static MockAppUI get() {

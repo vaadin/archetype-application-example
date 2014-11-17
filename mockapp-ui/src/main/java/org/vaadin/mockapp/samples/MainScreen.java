@@ -26,8 +26,8 @@ public class MainScreen extends HorizontalLayout {
 	public MainScreen(MockAppUI ui) {
 
 		CssLayout viewContainer = new CssLayout();
-		viewContainer.setSizeFull();
 		viewContainer.addStyleName("valo-content");
+		viewContainer.setSizeFull();
 
 		final Navigator navigator = new Navigator(ui, viewContainer);
 		navigator.setErrorView(ErrorView.class);

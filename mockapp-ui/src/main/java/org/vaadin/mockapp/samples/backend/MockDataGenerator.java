@@ -70,9 +70,10 @@ public class MockDataGenerator {
 		p.setId(nextProductId++);
 		p.setProductName(generateName());
 
-		p.setPrice(new BigDecimal(random.nextInt(10000) / 10.0));
-		p.setAvailability(Availability.values()[random.nextInt(Availability.values().length)]);
-		if (p.getAvailability().isAvailable()) {
+		p.setPrice(new BigDecimal((random.nextInt(250) + 50) / 10.0));
+		p.setAvailability(Availability.values()[random.nextInt(Availability
+				.values().length)]);
+		if (p.getAvailability() == Availability.AVAILABLE) {
 			p.setStockCount(random.nextInt(523));
 		}
 

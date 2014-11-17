@@ -123,7 +123,8 @@
   	height:100%;
   }
   
-  .v-table-cell-content-not-available {
-  	color: red;
+  /* Editor should take whole browser width when we are under 550px in width. */
+  .v-ui[width-range~="0-550px"] .product-form-wrapper {
+    width:100%;
   }
 }

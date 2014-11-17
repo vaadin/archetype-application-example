@@ -19,7 +19,7 @@ public class Product implements Serializable {
 	@Min(value = 0, message = "Can't have negative amount in stock")
 	private int stockCount = 0;
 	@NotNull
-	private Availability availability = Availability.COMING_SOON;
+	private Availability availability = Availability.COMING;
 
 	public int getId() {
 		return id;

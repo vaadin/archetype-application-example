@@ -57,6 +57,7 @@ public class SampleCrudView extends CssLayout implements View {
 		barAndTableLayout.setSpacing(true);
 		barAndTableLayout.setSizeFull();
 		barAndTableLayout.setExpandRatio(table, 1);
+		barAndTableLayout.setStyleName("crud-main-layout");
 
 		addComponent(barAndTableLayout);
 		addComponent(form);
@@ -66,6 +67,7 @@ public class SampleCrudView extends CssLayout implements View {
 
 	public HorizontalLayout createTopBar() {
 		TextField filter = new TextField();
+		filter.setStyleName("filter-textfield");
 		filter.setInputPrompt("Filter");
 		ResetButtonForTextField.extend(filter);
 		filter.setImmediate(true);
@@ -93,6 +95,7 @@ public class SampleCrudView extends CssLayout implements View {
 		topLayout.addComponent(newProduct);
 		topLayout.setComponentAlignment(filter, Alignment.MIDDLE_LEFT);
 		topLayout.setExpandRatio(filter, 1);
+		topLayout.setStyleName("top-bar");
 		return topLayout;
 	}
 

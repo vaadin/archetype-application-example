@@ -117,8 +117,10 @@ public class Menu extends CssLayout {
 		for (Button button : viewButtons.values()) {
 			button.removeStyleName("selected");
 		}
-
-		viewButtons.get(viewName).addStyleName("selected");
+		Button selected = viewButtons.get(viewName);
+		if(selected != null) {
+			selected.addStyleName("selected");
+		}
 		menuPart.removeStyleName("valo-menu-visible");
 	}
 }

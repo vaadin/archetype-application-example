@@ -1,7 +1,10 @@
 package org.vaadin.mockapp;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.vaadin.mockapp.samples.MainScreen;
 import org.vaadin.mockapp.samples.authentication.AccessControl;
 import org.vaadin.mockapp.samples.authentication.BasicAccessControl;
@@ -11,7 +14,13 @@ import org.vaadin.mockapp.samples.authentication.LoginScreen.LoginListener;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
+import com.vaadin.server.BootstrapFragmentResponse;
+import com.vaadin.server.BootstrapListener;
+import com.vaadin.server.BootstrapPageResponse;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.ServiceException;
+import com.vaadin.server.SessionInitEvent;
+import com.vaadin.server.SessionInitListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
@@ -58,5 +67,56 @@ public class MockAppUI extends UI {
 	@WebServlet(urlPatterns = "/*", name = "MockAppUIServlet", asyncSupported = true)
 	@VaadinServletConfiguration(ui = MockAppUI.class, productionMode = false)
 	public static class MockAppUIServlet extends VaadinServlet {
+		/**
+		 * Configure the viewport meta tags appropriately on mobile devices.
+		 * Instead of device based scaling (default), using responsive layouts.
+		 * 
+		 * If using Vaadin TouchKit, this is done automatically and it is
+		 * sufficient to have an empty servlet class extending TouchKitServlet.
+		 */
+		@Override
+		protected void servletInitialized() throws ServletException {
+			super.servletInitialized();
+			getService().addSessionInitListener(new SessionInitListener() {
+
+				@Override
+				public void sessionInit(SessionInitEvent event)
+						throws ServiceException {
+					event.getSession().addBootstrapListener(
+							new BootstrapListener() {
+
+								@Override
+								public void modifyBootstrapFragment(
+										BootstrapFragmentResponse response) {
+									log("Warning, "
+											+ MockAppUIServlet.class
+													.getSimpleName()
+											+ " does not support fragments.");
+								}
+
+								@Override
+								public void modifyBootstrapPage(
+										BootstrapPageResponse response) {
+									// <meta name="viewport"
+									// content="user-scalable=no,initial-scale=1.0">
+									Document d = response.getDocument();
+									Element el = d.createElement("meta");
+									el.attr("name", "viewport");
+									el.attr("content",
+											getViewPortConfiguration(response));
+									d.getElementsByTag("head").get(0)
+											.appendChild(el);
+								}
+
+							});
+
+				}
+			});
+
+		}
+
+		protected String getViewPortConfiguration(BootstrapPageResponse response) {
+			return "user-scalable=no,initial-scale=1.0";
+		}
 	}
 }

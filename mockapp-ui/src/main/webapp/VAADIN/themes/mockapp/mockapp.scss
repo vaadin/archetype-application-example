@@ -77,6 +77,9 @@
   /* makes the CRUD view keep the sidebar editor within the view as sidebar is absolutely positioned */
   .crud-view {
   	position:relative;
+    .filter-textfield {
+      width: 300px;
+    }
   }
   
   /** side bar editor for CRUD */
@@ -124,7 +127,22 @@
   }
   
   /* Editor should take whole browser width when we are under 550px in width. */
-  .v-ui[width-range~="0-550px"] .product-form-wrapper {
-    width:100%;
+  .v-ui[width-range~="0-550px"] {
+    .product-form-wrapper {
+      width:100%;
+    }
+    /* Remove margins around the table and reduce top bar margins on small screens */
+    .crud-view .crud-main-layout {
+      padding: 0 0 0 0;
+      .top-bar {
+        /* Use spacing to the table below as the margin - smaller than default margin */
+        padding: $v-layout-spacing-vertical $v-layout-spacing-horizontal 0 $v-layout-spacing-horizontal;
+        .filter-textfield {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
+    }
   }
+
 }

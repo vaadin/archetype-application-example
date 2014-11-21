@@ -1,6 +1,7 @@
 package org.vaadin.mockapp.samples.authentication;
 
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
 /**
  * UI content when the user is not logged in yet.
  */
-public class LoginScreen extends VerticalLayout {
+public class LoginScreen extends CssLayout {
 
 	private TextField username;
 	private PasswordField password;
@@ -27,8 +28,21 @@ public class LoginScreen extends VerticalLayout {
 
 	private void buildUI() {
 		addStyleName("login-screen");
-		setSizeFull();
 
+		Component loginForm = buildLoginForm();
+
+		CssLayout loginInformation = buildLoginInformation();
+		
+		VerticalLayout centeringLayout = new VerticalLayout();
+		centeringLayout.setStyleName("centering-layout");
+		centeringLayout.addComponent(loginForm);
+		centeringLayout.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
+		
+		addComponent(centeringLayout);
+		addComponent(loginInformation);
+	}
+
+	private Component buildLoginForm() {
 		FormLayout loginForm = new FormLayout();
 
 		loginForm.addStyleName("login-form");
@@ -37,12 +51,11 @@ public class LoginScreen extends VerticalLayout {
 		username.setWidth(15, Unit.EM);
 		loginForm.addComponent(password = new PasswordField("Password"));
 		password.setWidth(15, Unit.EM);
-		HorizontalLayout buttons = new HorizontalLayout();
+		CssLayout buttons = new CssLayout();
+		buttons.setStyleName("buttons");
 		loginForm.addComponent(buttons);
-		buttons.setSpacing(true);
 
 		buttons.addComponent(login = new Button("Login"));
-		buttons.setComponentAlignment(login, Alignment.MIDDLE_LEFT);
 		login.setDisableOnClick(true);
 		login.addClickListener(new Button.ClickListener() {
 			@Override
@@ -58,7 +71,6 @@ public class LoginScreen extends VerticalLayout {
 		login.addStyleName(Reindeer.BUTTON_DEFAULT);
 
 		buttons.addComponent(forgotPassword = new Button("Forgot password?"));
-		buttons.setComponentAlignment(forgotPassword, Alignment.MIDDLE_LEFT);
 		forgotPassword.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
@@ -66,9 +78,17 @@ public class LoginScreen extends VerticalLayout {
 			}
 		});
 		forgotPassword.addStyleName(Reindeer.BUTTON_LINK);
+		return loginForm;
+	}
 
-		addComponent(loginForm);
-		setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
+	private CssLayout buildLoginInformation() {
+		CssLayout loginInformation = new CssLayout();
+		loginInformation.setStyleName("login-information");
+		Label loginInfoText = new Label("<h1>Login Information</h1>"
+				+ "The user admin has more privileges than any other user.",
+				ContentMode.HTML);
+		loginInformation.addComponent(loginInfoText);
+		return loginInformation;
 	}
 
 	private void login() {

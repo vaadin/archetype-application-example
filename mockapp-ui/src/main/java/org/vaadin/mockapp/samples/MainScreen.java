@@ -24,6 +24,8 @@ public class MainScreen extends HorizontalLayout {
 	private Menu menu;
 
 	public MainScreen(MockAppUI ui) {
+		
+		setStyleName("main-screen");
 
 		CssLayout viewContainer = new CssLayout();
 		viewContainer.addStyleName("valo-content");

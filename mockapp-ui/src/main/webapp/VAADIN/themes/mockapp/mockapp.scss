@@ -32,6 +32,7 @@
 @mixin mockapp {
   @include valo;
   
+  $login-opacity: 0.7;
   
   /* dark color for table header */
   .v-table-header-wrap,
@@ -42,25 +43,46 @@
     text-shadow: 0 1px 0 rgba(70, 70, 70, 1);
   }
   
-  /* login screen */
+  /* login screen - for small screens, see below */
   .login-screen {
-    $login-screen-background-color: #7d7e7d;
-    $login-screen-background-additional-color: #0e0e0e;
-
-    background: $login-screen-background-color;
-    background: -moz-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
-    background: -webkit-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
-    background: -o-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
-    background: -ms-radial-gradient(center, ellipse cover, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
-    background: radial-gradient(ellipse at center, $login-screen-background-color 0%, $login-screen-background-additional-color 100%);
+    background: #dddddd;
+    
+    width: 100%;
+    height: 100%;
+    
+    $login-info-width: 300px;
 
     .login-form {
-      border: 1px solid #555555;
-      border-radius: 10px;
+      border: none;
       padding: 10px 30px 10px 30px;
-      background-color: #f1f1f1;
+      background-color: white;
+    }
+    
+    .login-information {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: $login-info-width;
+      height: 100%;
+      background: rgba($v-selection-color, $login-opacity);
+      color: white;
+      h1 {
+        color: white;
+      }
+    }
+    
+    .centering-layout {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      padding-left: $login-info-width;
+      .v-slot {
+        height: 100%;
+      }
     }
   }
+
   /* Following buttons are in the CRUD editor */
   .save-button {
     @include valo-button-style($background-color: #60a0ea, $font-color: #ffffff);
@@ -88,31 +110,31 @@
     $side-bar-field-color: #323335 !default;
     $field-border: 2px solid #494d50;
     $field-shadow: null;
-  	position:absolute;
-  	top:0;
-  	bottom:0;
-  	right:0;
-  	width:300px;
-  	height:100%;
-  	z-index: 1;
-  	padding: 10px;
-  	
-  	background-color: $side-bar-color;
-  	color: valo-font-color($side-bar-color);
-  	.v-textfield {
-  	  @include valo-textfield-style($background-color: $side-bar-field-color, $border: $field-border, $shadow: $field-shadow);
-  	}
-  	
-  	.v-checkbox {
-  	  @include valo-checkbox-style($background-color: $side-bar-field-color);
-  	}
-  	
-  	.v-filterselect {
-  	  @include valo-combobox-style($background-color: $side-bar-field-color, $border: $field-border, $shadow: $field-shadow);
-  	}
-  	
-  	@include transition(all 300ms);
-  	@include transform(translatex(100%));
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    width:300px;
+    height:100%;
+    z-index: 1;
+    padding: 10px;
+    
+    background-color: $side-bar-color;
+    color: valo-font-color($side-bar-color);
+    .v-textfield {
+      @include valo-textfield-style($background-color: $side-bar-field-color, $border: $field-border, $shadow: $field-shadow);
+    }
+    
+    .v-checkbox {
+      @include valo-checkbox-style($background-color: $side-bar-field-color);
+    }
+    
+    .v-filterselect {
+      @include valo-combobox-style($background-color: $side-bar-field-color, $border: $field-border, $shadow: $field-shadow);
+    }
+    
+    @include transition(all 300ms);
+    @include transform(translatex(100%));
   }
   
   /* Enables animation for opening CRUD editor */ 
@@ -125,7 +147,67 @@
   	overflow:scroll;
   	height:100%;
   }
+
+  /* Style rules for smaller display sizes */
   
+  /* No top menu on the login view, login screen layout changes */
+  .v-ui[width-range~="0-800px"] {
+    /* Move default top menu space from UI to main screen only - workaround for #14679 */
+    padding-top: 0;
+    .main-screen {
+      padding-top: $v-unit-size;
+    }
+    /* TODO also move loading indicator if using the hack above */
+    
+    /* More compact login screen */
+    .login-screen {
+      height: auto;
+      .login-information {
+        position: static;
+        width: 100%;
+        height: auto;
+        .v-label {
+          text-align: center;
+        }
+      }
+    
+      .centering-layout {
+        display: block;
+        width: 100%;
+        height: auto;
+        padding-left: 0;
+        padding-top: 100px;
+        padding-bottom: 150px;
+      }
+      
+      .login-form {
+        width: 100%;
+        height: 100%;
+        opacity: $login-opacity;
+        table {
+          width: 100%;
+        }
+        .v-textfield {
+          width: 100% !important;
+        }
+        .v-formlayout-captioncell,
+        .v-formlayout-contentcell,
+        .v-formlayout-errorcell {
+          display: block;
+          text-align: center;
+          padding-top: 0;
+        }
+        .buttons {
+          width: 100%;
+          .v-button {
+            display: block;
+            text-align: center;
+          }
+        }
+      }
+	}
+  }
+
   /* Editor should take whole browser width when we are under 550px in width. */
   .v-ui[width-range~="0-550px"] {
     .product-form-wrapper {

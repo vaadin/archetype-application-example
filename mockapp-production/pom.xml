@@ -130,7 +130,14 @@
                                     <groupId>${project.groupId}</groupId>
                                     <artifactId>mockapp-ui</artifactId>
                                     <excludes>
+                                        <!-- Exclude larger development time widgetset. -->
+                                        <!-- The relevant classes are copied to the WAR above. -->
                                         <exclude>WEB-INF/lib/mockapp-widgetset-*.jar</exclude>
+                                        <!-- Exclude the Sass compiler and its dependencies. -->
+                                        <!-- The production WAR includes a precompiled theme. -->
+                                        <exclude>WEB-INF/lib/vaadin-sass-compiler-*.jar</exclude>
+                                        <exclude>WEB-INF/lib/sac-*.jar</exclude>
+                                        <exclude>WEB-INF/lib/flute-*.jar</exclude>
                                     </excludes>
                                 </overlay>
                             </overlays>

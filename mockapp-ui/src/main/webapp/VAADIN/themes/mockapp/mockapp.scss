@@ -46,6 +46,9 @@
   /* login screen - for small screens, see below */
   .login-screen {
     background: #dddddd;
+    background-image: url("img/archetype-login-bg.jpg");
+    background-size: cover;
+    background-position: 50% 50%;
     
     width: 100%;
     height: 100%;

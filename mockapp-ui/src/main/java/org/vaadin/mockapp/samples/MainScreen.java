@@ -1,6 +1,7 @@
 package org.vaadin.mockapp.samples;
 
 import org.vaadin.mockapp.MockAppUI;
+import org.vaadin.mockapp.samples.about.AboutView;
 import org.vaadin.mockapp.samples.crud.SampleCrudView;
 
 import com.vaadin.navigator.Navigator;
@@ -29,6 +30,7 @@ public class MainScreen extends HorizontalLayout {
 		navigator.setErrorView(ErrorView.class);
 		menu = new Menu(navigator);
 		menu.addView(new SampleCrudView(), SampleCrudView.VIEW_NAME, SampleCrudView.VIEW_NAME, FontAwesome.EDIT);
+		menu.addView(new AboutView(), AboutView.VIEW_NAME, AboutView.VIEW_NAME, FontAwesome.INFO_CIRCLE);
 		
 		navigator.addViewChangeListener(viewChangeListener);
 		

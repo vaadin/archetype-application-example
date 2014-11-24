@@ -150,6 +150,18 @@
   	overflow:scroll;
   	height:100%;
   }
+  
+  /* About view */
+  
+  .about-view {
+    background-color: #eeeeee;
+    
+    .about-content {
+      background-color: white;
+      max-width: 500px;
+      padding: $v-unit-size;
+    }
+  }
 
   /* Style rules for smaller display sizes */
   
@@ -226,6 +238,22 @@
           width: 100%;
           max-width: 300px;
         }
+      }
+    }
+    
+    /* About view fills the display on small screens */
+    .about-view {
+      padding-bottom: 0;
+      padding-top: 0;
+      background-color: #fafafa;
+      
+      .about-content {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        vertical-align: top;
+        padding: 0;
+        background-color: #fafafa;
       }
     }
   }

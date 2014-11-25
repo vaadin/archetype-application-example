@@ -5,10 +5,9 @@
 .resetbuttonfortextfield-resetbutton {
     position: relative;
     display: inline-block;
-    vertical-align: bottom;
+    vertical-align: middle;
     right: 15pt;
     margin-right: -15pt;
-    top: -3pt;
     cursor: pointer;
     width: 16px;
     height: 16px;

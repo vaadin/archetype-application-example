@@ -7,6 +7,10 @@ import java.util.Locale;
 
 import com.vaadin.data.util.converter.StringToBigDecimalConverter;
 
+/**
+ * A converter that adds/removes the euro sign and formats currencies with two
+ * decimal places.
+ */
 public class EuroConverter extends StringToBigDecimalConverter {
 
 	private static String suffix = " €";

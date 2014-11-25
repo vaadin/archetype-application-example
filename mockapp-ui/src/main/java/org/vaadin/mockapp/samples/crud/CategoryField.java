@@ -14,6 +14,10 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * A custom Field implementation that allows selecting a set of categories using
+ * checkboxes rather than multi-selection in a list/table or a TwinColSelect.
+ */
 public class CategoryField extends CustomField<Set<Category>> {
 
 	private VerticalLayout options;
@@ -34,6 +38,13 @@ public class CategoryField extends CustomField<Set<Category>> {
 		return options;
 	}
 
+	/**
+	 * Set the collection of categories among which the used can select a
+	 * subset.
+	 * 
+	 * @param categories
+	 *            all available categories
+	 */
 	public void setOptions(Collection<Category> categories) {
 		options.removeAllComponents();
 		checkboxes.clear();

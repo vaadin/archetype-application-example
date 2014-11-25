@@ -12,6 +12,11 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
+/**
+ * Table of products, handling the visual presentation and filtering of a set of
+ * items. This version uses an in-memory data source that is suitable for small
+ * data sets.
+ */
 public class ProductTable extends Table {
 
 	private BeanItemContainer<Product> container;
@@ -89,6 +94,13 @@ public class ProductTable extends Table {
         return super.formatPropertyValue(rowId, colId, property);
     }
 
+	/**
+	 * Filter the table based on a search string that is searched for in the
+	 * product name, availability and category columns.
+	 * 
+	 * @param filterString
+	 *            string to look for
+	 */
 	public void setFilter(String filterString) {
 		container.removeAllContainerFilters();
 		if (filterString.length() > 0) {

@@ -4,17 +4,17 @@ import org.vaadin.mockapp.MockAppUI;
 import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.data.Product;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
-import com.vaadin.data.util.BeanContainer;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.Page;
-import com.vaadin.ui.Label;
 
+/**
+ * This class provides an interface for the logical operations between the CRUD
+ * view, its parts like the product editor form and the data source, including
+ * fetching and saving products.
+ * 
+ * Having this separate from the view makes it easier to test various parts of
+ * the system separately, and to e.g. provide alternative views for the same
+ * data.
+ */
 public class SampleCrudLogic {
 
 	private SampleCrudView view;

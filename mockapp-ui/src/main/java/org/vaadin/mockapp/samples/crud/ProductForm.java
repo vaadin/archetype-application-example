@@ -19,13 +19,18 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
 
+/**
+ * A form for editing a single product.
+ * 
+ * Using responsive layouts, the form can be displayed either sliding out on the
+ * side of the view or filling the whole screen - see the theme for the related
+ * CSS rules.
+ */
 public class ProductForm extends CssLayout {
 
 	TextField productName = new TextField("Product name:");
@@ -46,6 +51,8 @@ public class ProductForm extends CssLayout {
 
 		price.setConverter(new EuroConverter());
 
+		// Mark the field as numeric.
+		// This affects the virtual keyboard shown on mobile devices.
 		AttributeExtension ae = new AttributeExtension();
 		ae.extend(stockCount);
 		ae.setAttribute("type", "number");

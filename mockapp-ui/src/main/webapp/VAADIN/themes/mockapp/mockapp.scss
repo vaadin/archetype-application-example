@@ -155,6 +155,7 @@
   
   .about-view {
     background-color: #eeeeee;
+    overflow: auto;
     
     .about-content {
       background-color: white;
@@ -246,6 +247,12 @@
       padding-bottom: 0;
       padding-top: 0;
       background-color: #fafafa;
+      height: auto;
+      padding: 0.1 * $v-unit-size;
+      
+      .v-slot-about-content {
+        overflow: auto;
+      }
       
       .about-content {
         width: 100%;

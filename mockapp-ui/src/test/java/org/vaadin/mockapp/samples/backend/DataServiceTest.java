@@ -7,6 +7,9 @@ import org.vaadin.mockapp.samples.data.Product;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+/**
+ * Simple unit test for the back-end data service.
+ */
 public class DataServiceTest {
 
     private DataService service;

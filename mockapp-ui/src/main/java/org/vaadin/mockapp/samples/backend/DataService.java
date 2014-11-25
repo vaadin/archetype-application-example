@@ -5,6 +5,9 @@ import java.util.Collection;
 import org.vaadin.mockapp.samples.data.Category;
 import org.vaadin.mockapp.samples.data.Product;
 
+/**
+ * Back-end service interface for retrieving and updating product data.
+ */
 public abstract class DataService {
 
 	public abstract Collection<Product> getAllProducts();

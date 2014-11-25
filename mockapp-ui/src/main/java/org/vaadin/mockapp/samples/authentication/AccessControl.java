@@ -1,5 +1,8 @@
 package org.vaadin.mockapp.samples.authentication;
 
+/**
+ * Simple interface for authentication and authorization checks.
+ */
 public interface AccessControl {
 
 	public boolean signIn(String username, String password);

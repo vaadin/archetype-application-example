@@ -40,6 +40,8 @@ public class MainScreen extends HorizontalLayout {
 		setSizeFull();
 	}
 	
+	// notify the view menu about view changes so that it can display which view
+	// is currently active
 	ViewChangeListener viewChangeListener = new ViewChangeListener(){
 
 		@Override

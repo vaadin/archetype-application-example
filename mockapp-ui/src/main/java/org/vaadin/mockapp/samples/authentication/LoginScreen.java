@@ -29,15 +29,19 @@ public class LoginScreen extends CssLayout {
 	private void buildUI() {
 		addStyleName("login-screen");
 
+		// login form, centered in the available part of the screen
 		Component loginForm = buildLoginForm();
 
-		CssLayout loginInformation = buildLoginInformation();
-		
+		// layout to center login form when there is sufficient screen space
+		// - see the theme for how this is made responsive for various screen sizes
 		VerticalLayout centeringLayout = new VerticalLayout();
 		centeringLayout.setStyleName("centering-layout");
 		centeringLayout.addComponent(loginForm);
 		centeringLayout.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
-		
+
+		// information text about logging in
+		CssLayout loginInformation = buildLoginInformation();
+
 		addComponent(centeringLayout);
 		addComponent(loginInformation);
 	}

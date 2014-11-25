@@ -23,6 +23,9 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.themes.ValoTheme;
 
+/**
+ * Responsive navigation menu presenting a list of available views to the user.
+ */
 public class Menu extends CssLayout {
 
 	private Navigator navigator;
@@ -37,6 +40,7 @@ public class Menu extends CssLayout {
 		menuPart = new CssLayout();
 		menuPart.addStyleName("valo-menu-part");
 
+		// header of the menu
 		final HorizontalLayout top = new HorizontalLayout();
 		top.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		top.addStyleName("valo-menu-title");
@@ -49,6 +53,7 @@ public class Menu extends CssLayout {
 		top.addComponent(title);
 		menuPart.addComponent(top);
 
+		// logout menu item
 		MenuBar logoutMenu = new MenuBar();
 		logoutMenu.addItem("Logout", FontAwesome.SIGN_OUT, new Command() {
 
@@ -62,6 +67,7 @@ public class Menu extends CssLayout {
 		logoutMenu.addStyleName("user-menu");
 		menuPart.addComponent(logoutMenu);
 
+		// button for toggling the visibility of the menu when on a small screen
 		final Button showMenu = new Button("Menu", new ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
@@ -78,6 +84,7 @@ public class Menu extends CssLayout {
 		showMenu.setIcon(FontAwesome.LIST);
 		menuPart.addComponent(showMenu);
 
+		// container for the navigation buttons, which are added by addView()
 		menuItemsLayout = new CssLayout();
 		menuItemsLayout.setPrimaryStyleName("valo-menuitems");
 		menuPart.addComponent(menuItemsLayout);
@@ -85,12 +92,42 @@ public class Menu extends CssLayout {
 		addComponent(menuPart);
 	}
 
+	/**
+	 * Register a pre-created view instance in the navigation menu and in the
+	 * {@link Navigator}.
+	 * 
+	 * @see Navigator#addView(String, View)
+	 * 
+	 * @param view
+	 *            view instance to register
+	 * @param name
+	 *            view name
+	 * @param caption
+	 *            view caption in the menu
+	 * @param icon
+	 *            view icon in the menu
+	 */
 	public void addView(View view, final String name, String caption,
 			Resource icon) {
 		navigator.addView(name, view);
 		createViewButton(name, caption, icon);
 	}
 
+	/**
+	 * Register a view in the navigation menu and in the {@link Navigator} based
+	 * on a view class.
+	 * 
+	 * @see Navigator#addView(String, Class)
+	 * 
+	 * @param viewClass
+	 *            class of the views to create
+	 * @param name
+	 *            view name
+	 * @param caption
+	 *            view caption in the menu
+	 * @param icon
+	 *            view icon in the menu
+	 */
 	public void addView(Class<? extends View> viewClass, final String name,
 			String caption, Resource icon) {
 		navigator.addView(name, viewClass);
@@ -113,6 +150,12 @@ public class Menu extends CssLayout {
 		viewButtons.put(name, button);
 	}
 
+	/**
+	 * Highlights a view navigation button as the currently active view in the menu.
+	 * This method does not perform the actual navigation.
+	 * 
+	 * @param viewName the name of the view to show as active
+	 */
 	public void setActiveView(String viewName) {
 		for (Button button : viewButtons.values()) {
 			button.removeStyleName("selected");

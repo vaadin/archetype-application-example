@@ -1,5 +1,10 @@
 package org.vaadin.mockapp.samples.authentication;
 
+/**
+ * Default mock implementation of {@link AccessControl}. This implementation
+ * accepts any string as a password, and considers the user "admin" as the
+ * only administrator.
+ */
 public class BasicAccessControl implements AccessControl {
 
 	@Override

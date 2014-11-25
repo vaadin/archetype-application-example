@@ -16,6 +16,8 @@ import com.vaadin.shared.ui.Connect;
 import org.vaadin.mockapp.samples.ResetButtonForTextField;
 
 /**
+ * Client side implementation of {@link ResetButtonForTextField}.
+ * 
  * @see <a href="https://vaadin.com/blog/-/blogs/2656782">Extending components in Vaadin 7</a>
  */
 @Connect(ResetButtonForTextField.class)

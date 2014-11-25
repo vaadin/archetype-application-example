@@ -5,7 +5,11 @@ import com.vaadin.server.AbstractExtension;
 import com.vaadin.ui.TextField;
 
 /**
- * @see <a href="https://vaadin.com/blog/-/blogs/2656782">Extending components in Vaadin 7</a>
+ * An extension adding a button in a text field for clearing the field. Only
+ * shown when the text field is non-empty.
+ * 
+ * @see <a href="https://vaadin.com/blog/-/blogs/2656782">Extending components
+ *      in Vaadin 7</a>
  */
 public class ResetButtonForTextField extends AbstractExtension {
 

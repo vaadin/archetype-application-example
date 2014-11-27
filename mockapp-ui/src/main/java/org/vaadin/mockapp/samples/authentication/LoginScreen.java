@@ -33,11 +33,13 @@ public class LoginScreen extends CssLayout {
 		Component loginForm = buildLoginForm();
 
 		// layout to center login form when there is sufficient screen space
-		// - see the theme for how this is made responsive for various screen sizes
+		// - see the theme for how this is made responsive for various screen
+		// sizes
 		VerticalLayout centeringLayout = new VerticalLayout();
 		centeringLayout.setStyleName("centering-layout");
 		centeringLayout.addComponent(loginForm);
-		centeringLayout.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
+		centeringLayout.setComponentAlignment(loginForm,
+				Alignment.MIDDLE_CENTER);
 
 		// information text about logging in
 		CssLayout loginInformation = buildLoginInformation();
@@ -88,8 +90,9 @@ public class LoginScreen extends CssLayout {
 	private CssLayout buildLoginInformation() {
 		CssLayout loginInformation = new CssLayout();
 		loginInformation.setStyleName("login-information");
-		Label loginInfoText = new Label("<h1>Login Information</h1>"
-				+ "The user admin has more privileges than any other user.",
+		Label loginInfoText = new Label(
+				"<h1>Login Information</h1>"
+						+ "Log in as &quot;Admin&quot; to have full access. Log in with any other username to have read-only access. For all users, any password is fine",
 				ContentMode.HTML);
 		loginInformation.addComponent(loginInfoText);
 		return loginInformation;

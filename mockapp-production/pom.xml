@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mockapp-production</artifactId>
-    <name>Server Overlay Module for Production</name>
+    <name>mockapp-production</name>
     <packaging>war</packaging>
     
     <properties>

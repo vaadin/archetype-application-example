@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mockapp-ui</artifactId>
-    <name>Server Module for Development</name>
+    <name>mockapp-ui</name>
     <packaging>war</packaging>
 
     <dependencies>

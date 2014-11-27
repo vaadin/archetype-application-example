@@ -20,8 +20,9 @@
 
 	<licenses>
 		<license>
-			<name>Apache License 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+			<name>UNLICENSE</name>
+			<url>http://unlicense.org/</url>
+			<distribution>repo</distribution>
 		</license>
 	</licenses>
 

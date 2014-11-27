@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.samples.data;
+package org.vaadin.mockapp.samples.backend.data;
 
 public enum Availability {
 	COMING("Coming"), AVAILABLE("Available"), DISCONTINUED("Discontinued");

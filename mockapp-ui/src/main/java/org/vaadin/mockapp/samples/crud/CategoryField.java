@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.vaadin.mockapp.samples.data.Category;
+import org.vaadin.mockapp.samples.backend.data.Category;
 
 import com.vaadin.data.util.converter.Converter.ConversionException;
 import com.vaadin.ui.CheckBox;

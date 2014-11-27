@@ -1,9 +1,10 @@
-package org.vaadin.mockapp.samples.backend;
+package org.vaadin.mockapp.samples.backend.mock;
 
 import java.util.List;
 
-import org.vaadin.mockapp.samples.data.Category;
-import org.vaadin.mockapp.samples.data.Product;
+import org.vaadin.mockapp.samples.backend.DataService;
+import org.vaadin.mockapp.samples.backend.data.Category;
+import org.vaadin.mockapp.samples.backend.data.Product;
 
 /**
  * Mock data model. Does not handling locking in any way and is not thread safe

@@ -2,7 +2,7 @@ package org.vaadin.mockapp.samples.crud;
 
 import org.vaadin.mockapp.MockAppUI;
 import org.vaadin.mockapp.samples.backend.DataService;
-import org.vaadin.mockapp.samples.data.Product;
+import org.vaadin.mockapp.samples.backend.data.Product;
 
 import com.vaadin.server.Page;
 

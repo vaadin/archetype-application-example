@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.vaadin.mockapp.samples.ResetButtonForTextField;
 import org.vaadin.mockapp.samples.backend.DataService;
-import org.vaadin.mockapp.samples.data.Product;
+import org.vaadin.mockapp.samples.backend.data.Product;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;

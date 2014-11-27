@@ -1,7 +1,7 @@
 package org.vaadin.mockapp.samples.crud;
 
-import org.vaadin.mockapp.samples.data.Availability;
-import org.vaadin.mockapp.samples.data.Product;
+import org.vaadin.mockapp.samples.backend.data.Availability;
+import org.vaadin.mockapp.samples.backend.data.Product;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;

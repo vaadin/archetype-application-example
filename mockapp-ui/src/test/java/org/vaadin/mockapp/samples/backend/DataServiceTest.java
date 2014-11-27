@@ -2,7 +2,8 @@ package org.vaadin.mockapp.samples.backend;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.vaadin.mockapp.samples.data.Product;
+import org.vaadin.mockapp.samples.backend.data.Product;
+import org.vaadin.mockapp.samples.backend.mock.MockDataService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

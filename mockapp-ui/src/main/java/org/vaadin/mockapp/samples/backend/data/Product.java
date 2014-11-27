@@ -1,4 +1,4 @@
-package org.vaadin.mockapp.samples.data;
+package org.vaadin.mockapp.samples.backend.data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

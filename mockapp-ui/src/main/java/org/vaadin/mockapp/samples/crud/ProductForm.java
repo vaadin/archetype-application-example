@@ -4,9 +4,9 @@ import java.util.Collection;
 
 import org.vaadin.mockapp.samples.AttributeExtension;
 import org.vaadin.mockapp.samples.backend.DataService;
-import org.vaadin.mockapp.samples.data.Availability;
-import org.vaadin.mockapp.samples.data.Category;
-import org.vaadin.mockapp.samples.data.Product;
+import org.vaadin.mockapp.samples.backend.data.Availability;
+import org.vaadin.mockapp.samples.backend.data.Category;
+import org.vaadin.mockapp.samples.backend.data.Product;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;

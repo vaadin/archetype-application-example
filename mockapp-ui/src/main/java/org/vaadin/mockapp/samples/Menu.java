@@ -28,6 +28,9 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class Menu extends CssLayout {
 
+	private static final String VALO_MENUITEMS = "valo-menuitems";
+	private static final String VALO_MENU_TOGGLE = "valo-menu-toggle";
+	private static final String VALO_MENU_VISIBLE = "valo-menu-visible";
 	private Navigator navigator;
 	private Map<String, Button> viewButtons = new HashMap<String, Button>();
 
@@ -38,12 +41,12 @@ public class Menu extends CssLayout {
 		this.navigator = navigator;
 		setPrimaryStyleName(ValoTheme.MENU_ROOT);
 		menuPart = new CssLayout();
-		menuPart.addStyleName("valo-menu-part");
+		menuPart.addStyleName(ValoTheme.MENU_PART);
 
 		// header of the menu
 		final HorizontalLayout top = new HorizontalLayout();
 		top.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-		top.addStyleName("valo-menu-title");
+		top.addStyleName(ValoTheme.MENU_TITLE);
 		top.setSpacing(true);
 		Label title = new Label("My CRUD");
 		title.addStyleName(ValoTheme.LABEL_H3);
@@ -71,22 +74,22 @@ public class Menu extends CssLayout {
 		final Button showMenu = new Button("Menu", new ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
-				if (menuPart.getStyleName().contains("valo-menu-visible")) {
-					menuPart.removeStyleName("valo-menu-visible");
+				if (menuPart.getStyleName().contains(VALO_MENU_VISIBLE)) {
+					menuPart.removeStyleName(VALO_MENU_VISIBLE);
 				} else {
-					menuPart.addStyleName("valo-menu-visible");
+					menuPart.addStyleName(VALO_MENU_VISIBLE);
 				}
 			}
 		});
 		showMenu.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		showMenu.addStyleName(ValoTheme.BUTTON_SMALL);
-		showMenu.addStyleName("valo-menu-toggle");
+		showMenu.addStyleName(VALO_MENU_TOGGLE);
 		showMenu.setIcon(FontAwesome.LIST);
 		menuPart.addComponent(showMenu);
 
 		// container for the navigation buttons, which are added by addView()
 		menuItemsLayout = new CssLayout();
-		menuItemsLayout.setPrimaryStyleName("valo-menuitems");
+		menuItemsLayout.setPrimaryStyleName(VALO_MENUITEMS);
 		menuPart.addComponent(menuItemsLayout);
 
 		addComponent(menuPart);
@@ -164,6 +167,6 @@ public class Menu extends CssLayout {
 		if(selected != null) {
 			selected.addStyleName("selected");
 		}
-		menuPart.removeStyleName("valo-menu-visible");
+		menuPart.removeStyleName(VALO_MENU_VISIBLE);
 	}
 }

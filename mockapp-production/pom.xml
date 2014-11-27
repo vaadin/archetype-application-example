@@ -72,9 +72,9 @@
                                             <artifactId>mockapp-ui</artifactId>
                                             <version>${project.version}</version>
                                             <type>war</type>
-                                            <includes>VAADIN/themes/mockapp/**/*</includes>
+                                            <includes>VAADIN/themes/**/*</includes>
                                             <!-- If there already is a compiled theme, we want to recompile it -->
-                                            <excludes>VAADIN/themes/mockapp/styles.css</excludes>
+                                            <excludes>VAADIN/themes/**/styles.css</excludes>
                                             <outputDirectory>${vaadin.resource.directory}</outputDirectory>
                                         </artifactItem>
                                         <artifactItem>

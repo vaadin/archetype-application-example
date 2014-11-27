@@ -69,6 +69,7 @@
       width: $login-info-width;
       height: 100%;
       background: rgba($v-selection-color, $login-opacity);
+      padding: 0.2 * $v-unit-size;
       color: white;
       h1 {
         color: white;

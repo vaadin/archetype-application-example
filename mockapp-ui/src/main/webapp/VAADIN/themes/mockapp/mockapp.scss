@@ -160,7 +160,8 @@
     .about-content {
       background-color: white;
       max-width: 500px;
-      padding: $v-unit-size;
+      /* Override the default of CustomLayout */
+      padding: $v-unit-size !important;
     }
   }
 

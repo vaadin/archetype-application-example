@@ -122,13 +122,14 @@ public class ProductForm extends CssLayout {
 			public void buttonClick(ClickEvent event) {
 				try {
 					fieldGroup.commit();
+
+					// only if validation succeeds
+					Product product = fieldGroup.getItemDataSource().getBean();
+					viewLogic.saveProduct(product);
 				} catch (CommitException e) {
 					Notification.show("Please re-check the fields",
 							Type.ERROR_MESSAGE);
-					e.printStackTrace();
 				}
-				Product product = fieldGroup.getItemDataSource().getBean();
-				viewLogic.saveProduct(product);
 			}
 		});
 

@@ -33,7 +33,7 @@ Other basic workflow steps:
 - developing the theme
   - run the application as above
   - edit the theme in the ui module
-  - only if using precompiled theme, run "mvn vaadin:compile-theme" in the ui module
+  - optional: see below for precompiling the theme
   - reload the application page
 - client side changes or add-ons
   - edit code/POM in widgetset module
@@ -46,3 +46,20 @@ Other basic workflow steps:
   - run "mvn -Pproduction package" in the production mode module or in the parent module
 - testing the production mode war
   - run "mvn -Pproduction jetty:run-war" in the production mode module
+
+
+Using a precompiled theme
+-------------------------
+
+When developing the UI module, Vaadin can compile the theme on the fly on every
+application reload, or the theme can be precompiled to speed up page loads.
+
+To precompile the theme run "mvn vaadin:compile-theme" in the ui module. Note, though,
+that once the theme has been precompiled, any theme changes will not be visible until
+the next theme compilation or running the "mvn clean" target.
+
+When developing the theme, running the application in the "run" mode (rather than
+in "debug") in the IDE can speed up consecutive on-the-fly theme compilations
+significantly.
+
+The production module always automatically precompiles the theme for the production WAR.

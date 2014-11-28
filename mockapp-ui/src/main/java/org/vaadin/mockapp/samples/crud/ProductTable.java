@@ -47,8 +47,10 @@ public class ProductTable extends Table {
 								.toHexString(FontAwesome.CIRCLE.getCodepoint())
 						+ ";</span>";
 
-				return new Label(iconCode + " " + property.getValue(),
+				Label label = new Label(iconCode + " " + property.getValue(),
 						ContentMode.HTML);
+				label.setSizeUndefined();
+				return label;
 			}
 			return null;
 		}

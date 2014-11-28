@@ -117,7 +117,8 @@ public class SampleCrudLogic {
 	}
 
 	public void rowSelected(Product product) {
-		view.editProduct(product);
-		
+		if (MockAppUI.get().getAccessControl().isUserInRole("admin")) {
+			view.editProduct(product);
+		}
 	}
 }

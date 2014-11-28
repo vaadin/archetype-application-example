@@ -8,16 +8,22 @@ import org.vaadin.mockapp.samples.backend.data.Availability;
 import org.vaadin.mockapp.samples.backend.data.Category;
 import org.vaadin.mockapp.samples.backend.data.Product;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.event.FieldEvents.TextChangeNotifier;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
@@ -101,6 +107,17 @@ public class ProductForm extends CssLayout {
 
 		fieldGroup = new BeanFieldGroup<Product>(Product.class);
 		fieldGroup.bindMemberFields(this);
+		
+		// perform validation and enable/disable buttons while editing
+		ValueChangeListener valueListener = new ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				formHasChanged();
+			}
+		};
+		for (Field f : fieldGroup.getFields()) {
+			f.addValueChangeListener(valueListener);
+		}
 
 		fieldGroup.addCommitHandler(new CommitHandler() {
 
@@ -161,4 +178,18 @@ public class ProductForm extends CssLayout {
 		}
 	}
 
+	private void formHasChanged() {
+		// only valid products can be saved
+		boolean allFieldsValid = fieldGroup.isValid();
+		saveButton.setEnabled(allFieldsValid);
+
+		// only products that have been saved should be removable
+		boolean canRemoveProduct = false;
+		BeanItem<Product> item = fieldGroup.getItemDataSource();
+		if (item != null) {
+			Product product = item.getBean();
+			canRemoveProduct = product.getId() != -1;
+		}
+		removeButton.setEnabled(canRemoveProduct);
+	}
 }

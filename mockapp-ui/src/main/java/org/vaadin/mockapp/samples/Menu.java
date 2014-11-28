@@ -51,8 +51,9 @@ public class Menu extends CssLayout {
 		Label title = new Label("My CRUD");
 		title.addStyleName(ValoTheme.LABEL_H3);
 		title.setSizeUndefined();
-		top.addComponent(new Image(null,
-				new ThemeResource("img/table-logo.png")));
+		Image image = new Image(null, new ThemeResource("img/table-logo.png"));
+		image.setStyleName("logo");
+		top.addComponent(image);
 		top.addComponent(title);
 		menuPart.addComponent(top);
 

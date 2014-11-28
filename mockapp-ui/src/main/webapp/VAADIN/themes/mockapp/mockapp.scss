@@ -226,6 +226,13 @@
 	}
   }
 
+  // hide the logo for a more compact header when the menu is narrow
+  .v-ui[width-range~="801px-1100px"] .valo-menu-part {
+    .v-slot-logo, .v-slot-logo + .v-spacing {
+      display: none;
+    }
+  }
+
   /* Editor should take whole browser width when we are under 550px in width. */
   .v-ui[width-range~="0-550px"] {
     .product-form-wrapper {

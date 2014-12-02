@@ -271,7 +271,7 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
           }
         }
       }
-	}
+    }
   }
 
   // hide the logo for a more compact header when the menu is narrow
@@ -279,6 +279,15 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
     .v-slot-logo,
     .v-slot-logo + .v-spacing {
       display: none;
+    }
+  }
+
+  // Move logout button to the bottom of the menu on large screens
+  .v-ui[width-range~="801px-"] .valo-menu-part {
+    .user-menu {
+      position: fixed;
+      bottom: 0;
+      margin-bottom: 0;
     }
   }
 

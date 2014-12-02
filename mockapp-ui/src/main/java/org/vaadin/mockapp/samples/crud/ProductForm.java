@@ -170,7 +170,6 @@ public class ProductForm extends CssLayout {
             product = new Product();
         }
         fieldGroup.setItemDataSource(new BeanItem<Product>(product));
-        productName.focus();
 
         // before the user makes any changes, disable save button and
         // validation error indicator of the product name field (which

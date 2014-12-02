@@ -1,11 +1,20 @@
 package org.vaadin.mockapp.samples.authentication;
 
+import java.io.Serializable;
+
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import com.vaadin.ui.themes.Reindeer;
-
-import java.io.Serializable;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * UI content when the user is not logged in yet.
@@ -53,6 +62,8 @@ public class LoginScreen extends CssLayout {
 
         loginForm.addStyleName("login-form");
         loginForm.setSizeUndefined();
+        loginForm.setMargin(false);
+
         loginForm.addComponent(username = new TextField("Username", "admin"));
         username.setWidth(15, Unit.EM);
         loginForm.addComponent(password = new PasswordField("Password"));
@@ -74,7 +85,7 @@ public class LoginScreen extends CssLayout {
             }
         });
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-        login.addStyleName(Reindeer.BUTTON_DEFAULT);
+        login.addStyleName(ValoTheme.BUTTON_FRIENDLY);
 
         buttons.addComponent(forgotPassword = new Button("Forgot password?"));
         forgotPassword.addClickListener(new Button.ClickListener() {
@@ -83,7 +94,7 @@ public class LoginScreen extends CssLayout {
                 Notification.show("Hint: Try anything");
             }
         });
-        forgotPassword.addStyleName(Reindeer.BUTTON_LINK);
+        forgotPassword.addStyleName(ValoTheme.BUTTON_LINK);
         return loginForm;
     }
 

@@ -39,156 +39,156 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class ProductForm extends CssLayout {
 
-	TextField productName = new TextField("Product name:");
-	TextField price = new TextField("Price:");
-	TextField stockCount = new TextField("In stock:");
-	ComboBox availability = new ComboBox("Availability:");
-	CategoryField category = new CategoryField("Categories:");
-	Button saveButton = new Button("Save");
-	Button cancelButton = new Button("Cancel");
-	Button removeButton = new Button("Delete");
-	private SampleCrudLogic viewLogic;
-	private BeanFieldGroup<Product> fieldGroup;
+    TextField productName = new TextField("Product name:");
+    TextField price = new TextField("Price:");
+    TextField stockCount = new TextField("In stock:");
+    ComboBox availability = new ComboBox("Availability:");
+    CategoryField category = new CategoryField("Categories:");
+    Button saveButton = new Button("Save");
+    Button cancelButton = new Button("Cancel");
+    Button removeButton = new Button("Delete");
+    private SampleCrudLogic viewLogic;
+    private BeanFieldGroup<Product> fieldGroup;
 
-	public ProductForm(SampleCrudLogic sampleCrudLogic) {
-		this.viewLogic = sampleCrudLogic;
-		addStyleName("product-form-wrapper");
-		productName.setWidth("100%");
+    public ProductForm(SampleCrudLogic sampleCrudLogic) {
+        this.viewLogic = sampleCrudLogic;
+        addStyleName("product-form-wrapper");
+        productName.setWidth("100%");
 
-		price.setConverter(new EuroConverter());
+        price.setConverter(new EuroConverter());
 
-		// Mark the field as numeric.
-		// This affects the virtual keyboard shown on mobile devices.
-		AttributeExtension ae = new AttributeExtension();
-		ae.extend(stockCount);
-		ae.setAttribute("type", "number");
-		stockCount.setWidth("80px");
+        // Mark the field as numeric.
+        // This affects the virtual keyboard shown on mobile devices.
+        AttributeExtension ae = new AttributeExtension();
+        ae.extend(stockCount);
+        ae.setAttribute("type", "number");
+        stockCount.setWidth("80px");
 
-		availability.setNullSelectionAllowed(false);
-		availability.setTextInputAllowed(false);
-		for (Availability s : Availability.values()) {
-			availability.addItem(s);
-		}
+        availability.setNullSelectionAllowed(false);
+        availability.setTextInputAllowed(false);
+        for (Availability s : Availability.values()) {
+            availability.addItem(s);
+        }
 
-		category.setWidth("100%");
+        category.setWidth("100%");
 
-		saveButton.addStyleName("save-button");
-		cancelButton.addStyleName("cancel-button");
-		removeButton.addStyleName("remove-button");
-		saveButton.setWidth("100%");
-		cancelButton.setWidth("100%");
-		removeButton.setWidth("100%");
+        saveButton.addStyleName("save-button");
+        cancelButton.addStyleName("cancel-button");
+        removeButton.addStyleName("remove-button");
+        saveButton.setWidth("100%");
+        cancelButton.setWidth("100%");
+        removeButton.setWidth("100%");
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setHeight("100%");
-		layout.setSpacing(true);
-		layout.addStyleName("form-layout");
+        VerticalLayout layout = new VerticalLayout();
+        layout.setHeight("100%");
+        layout.setSpacing(true);
+        layout.addStyleName("form-layout");
 
-		HorizontalLayout priceAndStock = new HorizontalLayout(price, stockCount);
-		priceAndStock.setSpacing(true);
-		priceAndStock.setWidth("100%");
-		price.setWidth("100%");
-		stockCount.setWidth("100%");
-		availability.setWidth("100%");
-		VerticalLayout fieldLayout = new VerticalLayout();
-		fieldLayout.setSpacing(true);
-		fieldLayout.addStyleName("product-form-fields");
-		fieldLayout.addComponent(productName);
-		fieldLayout.addComponent(priceAndStock);
-		fieldLayout.addComponent(availability);
-		fieldLayout.addComponent(category);
-		layout.addComponent(fieldLayout);
-		layout.addComponent(saveButton);
-		layout.addComponent(cancelButton);
-		layout.addComponent(removeButton);
+        HorizontalLayout priceAndStock = new HorizontalLayout(price, stockCount);
+        priceAndStock.setSpacing(true);
+        priceAndStock.setWidth("100%");
+        price.setWidth("100%");
+        stockCount.setWidth("100%");
+        availability.setWidth("100%");
+        VerticalLayout fieldLayout = new VerticalLayout();
+        fieldLayout.setSpacing(true);
+        fieldLayout.addStyleName("product-form-fields");
+        fieldLayout.addComponent(productName);
+        fieldLayout.addComponent(priceAndStock);
+        fieldLayout.addComponent(availability);
+        fieldLayout.addComponent(category);
+        layout.addComponent(fieldLayout);
+        layout.addComponent(saveButton);
+        layout.addComponent(cancelButton);
+        layout.addComponent(removeButton);
 
-		layout.setExpandRatio(fieldLayout, 1);
-		addComponent(layout);
+        layout.setExpandRatio(fieldLayout, 1);
+        addComponent(layout);
 
-		fieldGroup = new BeanFieldGroup<Product>(Product.class);
-		fieldGroup.bindMemberFields(this);
-		
-		// perform validation and enable/disable buttons while editing
-		ValueChangeListener valueListener = new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				formHasChanged();
-			}
-		};
-		for (Field f : fieldGroup.getFields()) {
-			f.addValueChangeListener(valueListener);
-		}
+        fieldGroup = new BeanFieldGroup<Product>(Product.class);
+        fieldGroup.bindMemberFields(this);
 
-		fieldGroup.addCommitHandler(new CommitHandler() {
+        // perform validation and enable/disable buttons while editing
+        ValueChangeListener valueListener = new ValueChangeListener() {
+            @Override
+            public void valueChange(ValueChangeEvent event) {
+                formHasChanged();
+            }
+        };
+        for (Field f : fieldGroup.getFields()) {
+            f.addValueChangeListener(valueListener);
+        }
 
-			@Override
-			public void preCommit(CommitEvent commitEvent)
-					throws CommitException {
-			}
+        fieldGroup.addCommitHandler(new CommitHandler() {
 
-			@Override
-			public void postCommit(CommitEvent commitEvent)
-					throws CommitException {
-				DataService.get().updateProduct(
-						fieldGroup.getItemDataSource().getBean());
-			}
-		});
+            @Override
+            public void preCommit(CommitEvent commitEvent)
+                    throws CommitException {
+            }
 
-		saveButton.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				try {
-					fieldGroup.commit();
+            @Override
+            public void postCommit(CommitEvent commitEvent)
+                    throws CommitException {
+                DataService.get().updateProduct(
+                        fieldGroup.getItemDataSource().getBean());
+            }
+        });
 
-					// only if validation succeeds
-					Product product = fieldGroup.getItemDataSource().getBean();
-					viewLogic.saveProduct(product);
-				} catch (CommitException e) {
-					Notification.show("Please re-check the fields",
-							Type.ERROR_MESSAGE);
-				}
-			}
-		});
+        saveButton.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                try {
+                    fieldGroup.commit();
 
-		cancelButton.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				viewLogic.cancelProduct();
-			}
-		});
-		
-		removeButton.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				Product product = fieldGroup.getItemDataSource().getBean();
-				viewLogic.deleteProduct(product);
-			}
-		});
-	}
+                    // only if validation succeeds
+                    Product product = fieldGroup.getItemDataSource().getBean();
+                    viewLogic.saveProduct(product);
+                } catch (CommitException e) {
+                    Notification.show("Please re-check the fields",
+                            Type.ERROR_MESSAGE);
+                }
+            }
+        });
 
-	public void setCategories(Collection<Category> categories) {
-		category.setOptions(categories);
-	}
+        cancelButton.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                viewLogic.cancelProduct();
+            }
+        });
 
-	public void editProduct(Product product) {
-		if (product == null) {
-			product = new Product();
-		}
-		fieldGroup.setItemDataSource(new BeanItem<Product>(product));
-	}
+        removeButton.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                Product product = fieldGroup.getItemDataSource().getBean();
+                viewLogic.deleteProduct(product);
+            }
+        });
+    }
 
-	private void formHasChanged() {
-		// only valid products can be saved
-		boolean allFieldsValid = fieldGroup.isValid();
-		saveButton.setEnabled(allFieldsValid);
+    public void setCategories(Collection<Category> categories) {
+        category.setOptions(categories);
+    }
 
-		// only products that have been saved should be removable
-		boolean canRemoveProduct = false;
-		BeanItem<Product> item = fieldGroup.getItemDataSource();
-		if (item != null) {
-			Product product = item.getBean();
-			canRemoveProduct = product.getId() != -1;
-		}
-		removeButton.setEnabled(canRemoveProduct);
-	}
+    public void editProduct(Product product) {
+        if (product == null) {
+            product = new Product();
+        }
+        fieldGroup.setItemDataSource(new BeanItem<Product>(product));
+    }
+
+    private void formHasChanged() {
+        // only valid products can be saved
+        boolean allFieldsValid = fieldGroup.isValid();
+        saveButton.setEnabled(allFieldsValid);
+
+        // only products that have been saved should be removable
+        boolean canRemoveProduct = false;
+        BeanItem<Product> item = fieldGroup.getItemDataSource();
+        if (item != null) {
+            Product product = item.getBean();
+            canRemoveProduct = product.getId() != -1;
+        }
+        removeButton.setEnabled(canRemoveProduct);
+    }
 }

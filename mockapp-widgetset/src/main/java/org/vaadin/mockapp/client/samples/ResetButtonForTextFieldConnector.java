@@ -18,10 +18,12 @@ import org.vaadin.mockapp.samples.ResetButtonForTextField;
 /**
  * Client side implementation of {@link ResetButtonForTextField}.
  * 
- * @see <a href="https://vaadin.com/blog/-/blogs/2656782">Extending components in Vaadin 7</a>
+ * @see <a href="https://vaadin.com/blog/-/blogs/2656782">Extending components
+ *      in Vaadin 7</a>
  */
 @Connect(ResetButtonForTextField.class)
-public class ResetButtonForTextFieldConnector extends AbstractExtensionConnector implements KeyUpHandler, AttachEvent.Handler {
+public class ResetButtonForTextFieldConnector extends
+        AbstractExtensionConnector implements KeyUpHandler, AttachEvent.Handler {
 
     public static final String CLASSNAME = "resetbuttonfortextfield";
     private VTextField textField;
@@ -29,19 +31,22 @@ public class ResetButtonForTextFieldConnector extends AbstractExtensionConnector
 
     @Override
     protected void extend(ServerConnector serverConnector) {
-        serverConnector.addStateChangeHandler(new StateChangeEvent.StateChangeHandler() {
-            @Override
-            public void onStateChanged(StateChangeEvent stateChangeEvent) {
-                Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+        serverConnector
+                .addStateChangeHandler(new StateChangeEvent.StateChangeHandler() {
                     @Override
-                    public void execute() {
-                        updateResetButtonVisibility();
+                    public void onStateChanged(StateChangeEvent stateChangeEvent) {
+                        Scheduler.get().scheduleDeferred(
+                                new Scheduler.ScheduledCommand() {
+                                    @Override
+                                    public void execute() {
+                                        updateResetButtonVisibility();
+                                    }
+                                });
                     }
                 });
-            }
-        });
 
-        textField = (VTextField) ((ComponentConnector) serverConnector).getWidget();
+        textField = (VTextField) ((ComponentConnector) serverConnector)
+                .getWidget();
         textField.addStyleName(CLASSNAME + "-textfield");
 
         resetButtonElement = DOM.createDiv();
@@ -52,7 +57,8 @@ public class ResetButtonForTextFieldConnector extends AbstractExtensionConnector
     }
 
     private void updateResetButtonVisibility() {
-        if (textField.getValue().isEmpty() || textField.getStyleName().contains("v-textfield-prompt")) {
+        if (textField.getValue().isEmpty()
+                || textField.getStyleName().contains("v-textfield-prompt")) {
             resetButtonElement.getStyle().setDisplay(Style.Display.NONE);
         } else {
             resetButtonElement.getStyle().clearDisplay();
@@ -80,7 +86,8 @@ public class ResetButtonForTextFieldConnector extends AbstractExtensionConnector
     @Override
     public void onAttachOrDetach(AttachEvent attachEvent) {
         if (attachEvent.isAttached()) {
-            textField.getElement().getParentElement().insertAfter(resetButtonElement, textField.getElement());
+            textField.getElement().getParentElement()
+                    .insertAfter(resetButtonElement, textField.getElement());
             updateResetButtonVisibility();
             addResetButtonClickListener(resetButtonElement);
         } else {

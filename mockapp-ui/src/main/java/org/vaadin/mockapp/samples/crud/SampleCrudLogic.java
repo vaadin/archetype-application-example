@@ -17,111 +17,109 @@ import com.vaadin.server.Page;
  */
 public class SampleCrudLogic {
 
-	private SampleCrudView view;
+    private SampleCrudView view;
 
-	public SampleCrudLogic(SampleCrudView simpleCrudView) {
-		this.view = simpleCrudView;
-	}
+    public SampleCrudLogic(SampleCrudView simpleCrudView) {
+        this.view = simpleCrudView;
+    }
 
-	public void init() {
-		editProduct(null);
-		// Hide and disable if not admin
-		if (!MockAppUI.get().getAccessControl().isUserInRole("admin")) {
-			view.setNewProductEnabled(false);
-		}
+    public void init() {
+        editProduct(null);
+        // Hide and disable if not admin
+        if (!MockAppUI.get().getAccessControl().isUserInRole("admin")) {
+            view.setNewProductEnabled(false);
+        }
 
-		refreshTable();
-	}
+        refreshTable();
+    }
 
-	public void cancelProduct() {
-		setFragmentParameter("");
-		view.clearSelection();
-		view.editProduct(null);
-	}
+    public void cancelProduct() {
+        setFragmentParameter("");
+        view.clearSelection();
+        view.editProduct(null);
+    }
 
-	/**
-	 * Update the fragment without causing navigator to change view
-	 */
-	private void setFragmentParameter(String productId) {
-		String fragmentParameter;
-		if (productId == null || productId.isEmpty()) {
-			fragmentParameter = "";
-		} else {
-			fragmentParameter = productId;
-		}
+    /**
+     * Update the fragment without causing navigator to change view
+     */
+    private void setFragmentParameter(String productId) {
+        String fragmentParameter;
+        if (productId == null || productId.isEmpty()) {
+            fragmentParameter = "";
+        } else {
+            fragmentParameter = productId;
+        }
 
-		Page page = MockAppUI.get().getPage();
-		page.setUriFragment("!" + SampleCrudView.VIEW_NAME + "/"
-				+ fragmentParameter, false);
-	}
+        Page page = MockAppUI.get().getPage();
+        page.setUriFragment("!" + SampleCrudView.VIEW_NAME + "/"
+                + fragmentParameter, false);
+    }
 
-	public void enter(String productId) {
-		if (productId != null && !productId.isEmpty()) {
-			if (productId.equals("new"))
-				newProduct();
-			else {
-				// Ensure this is selected even if coming directly here from
-				// login
-				try {
-					int pid = Integer.parseInt(productId);
-					Product product = findProduct(pid);
-					view.selectRow(product);
-				} catch (NumberFormatException e) {
-				}
-			}
-		}
-	}
+    public void enter(String productId) {
+        if (productId != null && !productId.isEmpty()) {
+            if (productId.equals("new"))
+                newProduct();
+            else {
+                // Ensure this is selected even if coming directly here from
+                // login
+                try {
+                    int pid = Integer.parseInt(productId);
+                    Product product = findProduct(pid);
+                    view.selectRow(product);
+                } catch (NumberFormatException e) {
+                }
+            }
+        }
+    }
 
+    private Product findProduct(int productId) {
+        return DataService.get().getProductById(productId);
+    }
 
-	private Product findProduct(int productId) {
-		return DataService.get().getProductById(productId);
-	}
+    public void saveProduct(Product product) {
+        view.showSaveNotification(product.getProductName() + " ("
+                + product.getId() + ") updated");
+        view.clearSelection();
+        view.editProduct(null);
+        refreshTable();
+        setFragmentParameter("");
+    }
 
-	public void saveProduct(Product product) {
-		view.showSaveNotification(product.getProductName() + " ("
-				+ product.getId() + ") updated");
-		view.clearSelection();
-		view.editProduct(null);
-		refreshTable();
-		setFragmentParameter("");
-	}
+    public void deleteProduct(Product product) {
+        DataService.get().deleteProduct(product.getId());
+        view.showSaveNotification(product.getProductName() + " ("
+                + product.getId() + ") removed");
 
-	public void deleteProduct(Product product) {
-		DataService.get().deleteProduct(product.getId());
-		view.showSaveNotification(product.getProductName() + " ("
-				+ product.getId() + ") removed");
+        view.clearSelection();
+        view.editProduct(null);
+        refreshTable();
+        setFragmentParameter("");
+    }
 
-		view.clearSelection();
-		view.editProduct(null);
-		refreshTable();
-		setFragmentParameter("");
-	}
+    public void editProduct(Product product) {
+        if (product == null)
+            setFragmentParameter("");
+        else {
+            setFragmentParameter(product.getId() + "");
+        }
+        view.editProduct(product);
+    }
 
+    private void refreshTable() {
+        Product oldSelection = view.getSelectedRow();
+        view.showProducts(DataService.get().getAllProducts());
+        view.selectRow(oldSelection);
+    }
 
-	public void editProduct(Product product) {
-		if (product == null)
-			setFragmentParameter("");
-		else {
-			setFragmentParameter(product.getId() + "");
-		}
-		view.editProduct(product);
-	}
+    public void newProduct() {
+        view.clearSelection();
+        setFragmentParameter("new");
+        view.editProduct(new Product());
+    }
 
-	private void refreshTable() {
-		Product oldSelection = view.getSelectedRow();
-		view.showProducts(DataService.get().getAllProducts());
-		view.selectRow(oldSelection);
-	}
-
-	public void newProduct() {
-		view.clearSelection();
-		setFragmentParameter("new");
-		view.editProduct(new Product());
-	}
-
-	public void rowSelected(Product product) {
-		if (MockAppUI.get().getAccessControl().isUserInRole("admin")) {
-			view.editProduct(product);
-		}
-	}
+    public void rowSelected(Product product) {
+        if (MockAppUI.get().getAccessControl().isUserInRole("admin")) {
+            view.editProduct(product);
+        }
+    }
 }

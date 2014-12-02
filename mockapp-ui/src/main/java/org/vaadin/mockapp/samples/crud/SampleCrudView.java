@@ -33,122 +33,122 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public class SampleCrudView extends CssLayout implements View {
 
-	public static final String VIEW_NAME = "Editor";
-	private ProductTable table;
-	private ProductForm form;
+    public static final String VIEW_NAME = "Editor";
+    private ProductTable table;
+    private ProductForm form;
 
-	private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
-	private Button newProduct;
+    private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
+    private Button newProduct;
 
-	public SampleCrudView() {
-		setSizeFull();
-		addStyleName("crud-view");
-		HorizontalLayout topLayout = createTopBar();
+    public SampleCrudView() {
+        setSizeFull();
+        addStyleName("crud-view");
+        HorizontalLayout topLayout = createTopBar();
 
-		table = new ProductTable();
-		table.addValueChangeListener(new ValueChangeListener() {
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				viewLogic.rowSelected(table.getValue());
-			}
-		});
-		
-		form = new ProductForm(viewLogic);
-		form.setCategories(DataService.get().getAllCategories());
+        table = new ProductTable();
+        table.addValueChangeListener(new ValueChangeListener() {
+            @Override
+            public void valueChange(ValueChangeEvent event) {
+                viewLogic.rowSelected(table.getValue());
+            }
+        });
 
-		VerticalLayout barAndTableLayout = new VerticalLayout();
-		barAndTableLayout.addComponent(topLayout);
-		barAndTableLayout.addComponent(table);
-		barAndTableLayout.setMargin(true);
-		barAndTableLayout.setSpacing(true);
-		barAndTableLayout.setSizeFull();
-		barAndTableLayout.setExpandRatio(table, 1);
-		barAndTableLayout.setStyleName("crud-main-layout");
+        form = new ProductForm(viewLogic);
+        form.setCategories(DataService.get().getAllCategories());
 
-		addComponent(barAndTableLayout);
-		addComponent(form);
+        VerticalLayout barAndTableLayout = new VerticalLayout();
+        barAndTableLayout.addComponent(topLayout);
+        barAndTableLayout.addComponent(table);
+        barAndTableLayout.setMargin(true);
+        barAndTableLayout.setSpacing(true);
+        barAndTableLayout.setSizeFull();
+        barAndTableLayout.setExpandRatio(table, 1);
+        barAndTableLayout.setStyleName("crud-main-layout");
 
-		viewLogic.init();
-	}
+        addComponent(barAndTableLayout);
+        addComponent(form);
 
-	public HorizontalLayout createTopBar() {
-		TextField filter = new TextField();
-		filter.setStyleName("filter-textfield");
-		filter.setInputPrompt("Filter");
-		ResetButtonForTextField.extend(filter);
-		filter.setImmediate(true);
-		filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
-			@Override
-			public void textChange(FieldEvents.TextChangeEvent event) {
-				table.setFilter(event.getText());
-			}
-		});
+        viewLogic.init();
+    }
 
-		newProduct = new Button("New product");
-		newProduct.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		newProduct.setIcon(FontAwesome.PLUS_CIRCLE);
-		newProduct.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				viewLogic.newProduct();
-			}
-		});
+    public HorizontalLayout createTopBar() {
+        TextField filter = new TextField();
+        filter.setStyleName("filter-textfield");
+        filter.setInputPrompt("Filter");
+        ResetButtonForTextField.extend(filter);
+        filter.setImmediate(true);
+        filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
+            @Override
+            public void textChange(FieldEvents.TextChangeEvent event) {
+                table.setFilter(event.getText());
+            }
+        });
 
-		HorizontalLayout topLayout = new HorizontalLayout();
-		topLayout.setSpacing(true);
-		topLayout.setWidth("100%");
-		topLayout.addComponent(filter);
-		topLayout.addComponent(newProduct);
-		topLayout.setComponentAlignment(filter, Alignment.MIDDLE_LEFT);
-		topLayout.setExpandRatio(filter, 1);
-		topLayout.setStyleName("top-bar");
-		return topLayout;
-	}
+        newProduct = new Button("New product");
+        newProduct.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        newProduct.setIcon(FontAwesome.PLUS_CIRCLE);
+        newProduct.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                viewLogic.newProduct();
+            }
+        });
 
-	@Override
-	public void enter(ViewChangeEvent event) {
-		viewLogic.enter(event.getParameters());
-	}
+        HorizontalLayout topLayout = new HorizontalLayout();
+        topLayout.setSpacing(true);
+        topLayout.setWidth("100%");
+        topLayout.addComponent(filter);
+        topLayout.addComponent(newProduct);
+        topLayout.setComponentAlignment(filter, Alignment.MIDDLE_LEFT);
+        topLayout.setExpandRatio(filter, 1);
+        topLayout.setStyleName("top-bar");
+        return topLayout;
+    }
 
-	public void showError(String msg) {
-		Notification.show(msg, Type.ERROR_MESSAGE);
-	}
+    @Override
+    public void enter(ViewChangeEvent event) {
+        viewLogic.enter(event.getParameters());
+    }
 
-	public void showSaveNotification(String msg) {
-		Notification.show(msg, Type.TRAY_NOTIFICATION);
-	}
+    public void showError(String msg) {
+        Notification.show(msg, Type.ERROR_MESSAGE);
+    }
 
-	public void setNewProductEnabled(boolean enabled) {
-		newProduct.setEnabled(enabled);
-	}
-	
-	public void clearSelection() {
-		table.setValue(null);
-	}
+    public void showSaveNotification(String msg) {
+        Notification.show(msg, Type.TRAY_NOTIFICATION);
+    }
 
-	public void selectRow(Product row) {
-		table.setValue(row);
-	}
+    public void setNewProductEnabled(boolean enabled) {
+        newProduct.setEnabled(enabled);
+    }
 
-	public void editProduct(Product product) {
-		if(product != null){
-			form.addStyleName("visible");
-			form.setEnabled(true);
-		} else {
-			form.removeStyleName("visible");
-			form.setEnabled(false);
-		}
-		form.editProduct(product);
-	}
+    public void clearSelection() {
+        table.setValue(null);
+    }
 
-	public Product getSelectedRow() {
-		return table.getValue();
-	}
+    public void selectRow(Product row) {
+        table.setValue(row);
+    }
 
-	public void showProducts(Collection<Product> products) {
-		BeanItemContainer<Product> container = table.getContainerDataSource();
-		container.removeAllItems();
-		container.addAll(products);
-	}
+    public void editProduct(Product product) {
+        if (product != null) {
+            form.addStyleName("visible");
+            form.setEnabled(true);
+        } else {
+            form.removeStyleName("visible");
+            form.setEnabled(false);
+        }
+        form.editProduct(product);
+    }
+
+    public Product getSelectedRow() {
+        return table.getValue();
+    }
+
+    public void showProducts(Collection<Product> products) {
+        BeanItemContainer<Product> container = table.getContainerDataSource();
+        container.removeAllItems();
+        container.addAll(products);
+    }
 
 }

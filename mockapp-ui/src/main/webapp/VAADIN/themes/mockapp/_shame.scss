@@ -1,0 +1,45 @@
+// This should be in the Valo theme as a shorthand
+$v-layout-margin: $v-layout-margin-top $v-layout-margin-right $v-layout-margin-bottom $v-layout-margin-left !default;
+
+
+
+// This should be in the Valo theme
+@mixin valo-table-header-style ($primary-stylename: v-table, $background-color: $v-background-color, $font-color: null) {
+  $border-color: first-color(valo-border($color: $background-color, $strength: 0.8));
+
+  .#{$primary-stylename}-header-wrap,
+  .#{$primary-stylename}-header-drag {
+    @include valo-gradient($background-color);
+    text-shadow: valo-text-shadow($background-color: $background-color);
+    color: $font-color or valo-font-color($background-color);
+  }
+
+  .#{$primary-stylename}-header-wrap {
+    border-bottom: $v-table-border-width solid;
+  }
+
+  .#{$primary-stylename}-header table {
+    @include box-shadow(0 0 0 $v-table-border-width $border-color);
+  }
+
+  .#{$primary-stylename}-header-wrap,
+  .#{$primary-stylename}-header-drag,
+  .#{$primary-stylename}-caption-container {
+    border-color: $border-color;
+  }
+
+  .#{$primary-stylename}-body {
+    border-top: none;
+  }
+}
+
+
+// Workarounds for bugs in Valo
+@mixin shame {
+
+  // Move default top menu space from UI to main screen only - workaround for #14679
+  .v-ui[width-range~="0-800px"] {
+    padding-top: 0;
+  }
+
+}

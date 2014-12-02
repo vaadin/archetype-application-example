@@ -1,11 +1,14 @@
-@import "addons.scss";
 @import "mockapp.scss";
+@import "addons.scss";
+@import "shame.scss";
 
-/*
- * This file prefixes all rules with the theme name to avoid causing conflicts with other themes.
- * The actual styles should be defined in mockapp.scss
- */
+// This file prefixes all rules with the theme name to avoid causing conflicts with other themes.
+// The actual styles should be defined in mockapp.scss
+
 .mockapp {
   @include addons;
   @include mockapp;
+
+  // TODO unwanted fixes and workarounds
+  @include shame;
 }

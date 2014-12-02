@@ -15,9 +15,6 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.event.FieldEvents.TextChangeNotifier;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -29,21 +26,22 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * A form for editing a single product.
- * 
+ *
  * Using responsive layouts, the form can be displayed either sliding out on the
  * side of the view or filling the whole screen - see the theme for the related
  * CSS rules.
  */
 public class ProductForm extends CssLayout {
 
-    TextField productName = new TextField("Product name:");
-    TextField price = new TextField("Price:");
-    TextField stockCount = new TextField("In stock:");
-    ComboBox availability = new ComboBox("Availability:");
-    CategoryField category = new CategoryField("Categories:");
+    TextField productName = new TextField("Product name");
+    TextField price = new TextField("Price");
+    TextField stockCount = new TextField("In Stock");
+    ComboBox availability = new ComboBox("Availability");
+    CategoryField category = new CategoryField("Categories");
     Button saveButton = new Button("Save");
     Button cancelButton = new Button("Cancel");
     Button removeButton = new Button("Delete");
@@ -51,7 +49,7 @@ public class ProductForm extends CssLayout {
     private BeanFieldGroup<Product> fieldGroup;
 
     public ProductForm(SampleCrudLogic sampleCrudLogic) {
-        this.viewLogic = sampleCrudLogic;
+        viewLogic = sampleCrudLogic;
         addStyleName("product-form-wrapper");
         productName.setWidth("100%");
 
@@ -72,12 +70,9 @@ public class ProductForm extends CssLayout {
 
         category.setWidth("100%");
 
-        saveButton.addStyleName("save-button");
-        cancelButton.addStyleName("cancel-button");
-        removeButton.addStyleName("remove-button");
-        saveButton.setWidth("100%");
-        cancelButton.setWidth("100%");
-        removeButton.setWidth("100%");
+        saveButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        cancelButton.addStyleName("cancel");
+        removeButton.addStyleName(ValoTheme.BUTTON_DANGER);
 
         VerticalLayout layout = new VerticalLayout();
         layout.setHeight("100%");

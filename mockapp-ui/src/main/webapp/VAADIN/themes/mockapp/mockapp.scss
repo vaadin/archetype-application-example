@@ -27,40 +27,71 @@
 // For more information, see: https://vaadin.com/book/-/page/themes.valo.html
 // Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
 
+$v-luminance-threshold: 180 !default;
+
+$editor-background-color: #3b3f42 !default;
+$valo-menu-background-color: $editor-background-color !default;
+
+$v-focus-color: rgb(96, 160, 234) !default;
+$v-error-indicator-color: #eb2977 !default;
+$v-friendly-color: rgb(54, 185, 85);
+$table-header-background-color: #989fa7 !default;
+$table-header-font-color: #fff !default;
+
+$v-font-size: 15px !default;
+$v-font-weight: 400 !default;
+$v-unit-size: 32px !default;
+
+$login-info-width: 300px !default;
+$login-info-opacity: 0.7 !default;
+$login-background-color: $editor-background-color !default;
+// Get more background images from unsplash.com (remember to optimize the filesize)
+$login-background-image: "img/archetype-login-bg.jpg" !default;
+
+$editor-shadow: 0 0 10px 10px rgba(0,0,0,.1) !default;
+$editor-embed-background-color: darken($editor-background-color, 5%) !default;
+$editor-raised-background-color: lighten($editor-background-color, 10%) !default;
+$editor-caption-font-color: valo-font-color($editor-background-color, 0.5) !default;
+
+$v-layout-margin-top: round($v-unit-size / 1.5) !default;
+$v-layout-margin-right: $v-layout-margin-top !default;
+$v-layout-margin-bottom: $v-layout-margin-top !default;
+$v-layout-margin-left: $v-layout-margin-top !default;
+$v-layout-spacing-vertical: round($v-unit-size / 1.8) !default;
+$v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
+
+
 @import "../valo/valo.scss";
+
 
 @mixin mockapp {
   @include valo;
-  
-  $login-opacity: 0.7;
-  
-  /* dark color for table header */
-  .v-table-header-wrap,
-  .v-table-footer-wrap,
-  .v-table-header-drag {
-    @include valo-gradient(#989fa7);
-    color: #ffffff;
-    text-shadow: 0 1px 0 rgba(70, 70, 70, 1);
+
+
+  .v-table {
+    @include valo-table-header-style($background-color: $table-header-background-color, $font-color: $table-header-font-color);
   }
-  
-  /* login screen - for small screens, see below */
+
+  // login screen - for small screens, see below
   .login-screen {
-    background: #dddddd;
-    background-image: url("img/archetype-login-bg.jpg");
-    background-size: cover;
-    background-position: 50% 50%;
-    
+    background: $editor-background-color;
+
+    @if $login-background-image {
+      background-image: url(#{$login-background-image});
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+
     width: 100%;
     height: 100%;
-    
-    $login-info-width: 300px;
 
     .login-form {
+      @include valo-panel-style;
       border: none;
-      padding: 10px 30px 10px 30px;
-      background-color: white;
+      padding: $v-layout-margin;
+      @include valo-animate-in-fade($duration: 1s);
     }
-    
+
     .login-information {
       display: inline-block;
       position: absolute;
@@ -68,127 +99,142 @@
       left: 0;
       width: $login-info-width;
       height: 100%;
-      background: rgba($v-selection-color, $login-opacity);
-      padding: 0.2 * $v-unit-size;
-      color: white;
+      background: $v-selection-color; // For IE8
+      background-color: rgba($v-selection-color, $login-info-opacity);
+      padding: $v-layout-margin;
+      color: valo-font-color($v-selection-color, 0.9);
+      @include animation(valo-animate-in-fade 1s 1s backwards);
+
       h1 {
-        color: white;
+        color: inherit;
       }
     }
-    
+
     .centering-layout {
       display: inline-block;
       width: 100%;
       height: 100%;
       padding-left: $login-info-width;
+
       .v-slot {
         height: 100%;
       }
     }
   }
 
-  /* Following buttons are in the CRUD editor */
-  .save-button {
-    @include valo-button-style($background-color: #60a0ea, $font-color: #ffffff);
-  }
-  
-  .remove-button {
-    @include valo-button-style($background-color: #eb2977, $font-color: #ffffff);
-  }
-  
-  .cancel-button {
-    @include valo-button-style($background-color: #ffffff, $font-color: #000000);
-  }
-  
-  /* makes the CRUD view keep the sidebar editor within the view as sidebar is absolutely positioned */
+  // makes the CRUD view keep the sidebar editor within the view as sidebar is absolutely positioned
   .crud-view {
-  	position:relative;
+  	position: relative;
+
     .filter-textfield {
-      width: 300px;
+      width: round($v-unit-size * 9);
     }
   }
-  
-  /** side bar editor for CRUD */
+
+  // sidebar editor for CRUD
   .product-form-wrapper {
-    $side-bar-color: #3b3f42 !default; 
-    $side-bar-field-color: #323335 !default;
-    $field-border: 2px solid #494d50;
-    $field-shadow: null;
-    position:absolute;
-    top:0;
-    bottom:0;
-    right:0;
-    width:300px;
-    height:100%;
-    z-index: 1;
-    padding: 10px;
-    
-    background-color: $side-bar-color;
-    color: valo-font-color($side-bar-color);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    width: round($v-unit-size * 9);
+    height: 100%;
+    padding-bottom: $v-layout-spacing-vertical;
+    background-color: $editor-background-color;
+    color: valo-font-color($editor-background-color, 0.8);
+
+    // Set the context color for the style mixins
+    $temp: $v-app-background-color;
+    $v-app-background-color: $editor-background-color;
+
     .v-textfield {
-      @include valo-textfield-style($background-color: $side-bar-field-color, $border: $field-border, $shadow: $field-shadow);
+      @include valo-textfield-style($background-color: $editor-embed-background-color);
     }
-    
+
     .v-checkbox {
-      @include valo-checkbox-style($background-color: $side-bar-field-color);
+      @include valo-checkbox-style($background-color: $editor-raised-background-color);
     }
-    
+
     .v-filterselect {
-      @include valo-combobox-style($background-color: $side-bar-field-color, $border: $field-border, $shadow: $field-shadow);
+      @include valo-combobox-style($background-color: $editor-raised-background-color, $bevel: $v-bevel, $gradient: $v-gradient);
     }
-    
+
+    // Restore variable
+    $v-app-background-color: $temp;
+
+    .v-button {
+      display: block;
+      margin: 0 $v-layout-spacing-horizontal;
+    }
+
+    .v-caption {
+      color: $editor-caption-font-color;
+    }
+
     @include transition(all 300ms);
     @include transform(translatex(100%));
   }
-  
-  /* Enables animation for opening CRUD editor */ 
+
+  // Enables animation for opening CRUD editor
   .visible {
   	@include transform(none);
+    @include box-shadow($editor-shadow);
   }
-  
-  /* Editor field section scrolls when there is not enough space vertically */
+
+  // Editor field section scrolls when there is not enough space vertically
   .product-form-fields {
-  	overflow:auto;
-  	height:100%;
+  	overflow: auto;
+  	height: 100%;
+    padding-top: $v-layout-spacing-vertical;
+    @include box-shadow(0 1px 0 rgba(255,255,255,.05), inset 0 -1px 0 rgba(0,0,0,.1));
+
+    > .v-slot {
+      padding: 0 $v-layout-spacing-horizontal;
+    }
   }
-  
-  /* About view */
-  
+
+  // About view
+
   .about-view {
-    background-color: #eeeeee;
     overflow: auto;
-    
+
     .about-content {
-      background-color: white;
+      @include valo-panel-style;
       max-width: 500px;
-      /* Override the default of CustomLayout */
+      // Override the default of CustomLayout
       padding: $v-unit-size !important;
     }
   }
 
-  /* Style rules for smaller display sizes */
-  
-  /* No top menu on the login view, login screen layout changes */
+  // Style rules for smaller display sizes
+
+  // No top menu on the login view, login screen layout changes
   .v-ui[width-range~="0-800px"] {
-    /* Move default top menu space from UI to main screen only - workaround for #14679 */
-    padding-top: 0;
+
     .main-screen {
       padding-top: $v-unit-size;
     }
-    /* TODO also move loading indicator if using the hack above */
-    
-    /* More compact login screen */
+    // TODO also move loading indicator if using the hack above
+
+    // More compact login screen
     .login-screen {
       height: auto;
+
       .login-information {
         position: static;
         width: 100%;
         height: auto;
+
         .v-label {
           text-align: center;
+
+          h1 {
+            margin-top: .4em;
+          }
         }
       }
-    
+
       .centering-layout {
         display: block;
         width: 100%;
@@ -197,17 +243,19 @@
         padding-top: 100px;
         padding-bottom: 150px;
       }
-      
+
       .login-form {
-        width: 100%;
-        height: 100%;
-        opacity: $login-opacity;
+        width: 400px;
+        max-width: 100%;
+
         table {
           width: 100%;
         }
+
         .v-textfield {
           width: 100% !important;
         }
+
         .v-formlayout-captioncell,
         .v-formlayout-contentcell,
         .v-formlayout-errorcell {
@@ -228,50 +276,61 @@
 
   // hide the logo for a more compact header when the menu is narrow
   .v-ui[width-range~="801px-1100px"] .valo-menu-part {
-    .v-slot-logo, .v-slot-logo + .v-spacing {
+    .v-slot-logo,
+    .v-slot-logo + .v-spacing {
       display: none;
     }
   }
 
-  /* Editor should take whole browser width when we are under 550px in width. */
+  // Editor should take whole browser width when we are under 550px in width.
   .v-ui[width-range~="0-550px"] {
     .product-form-wrapper {
       width:100%;
     }
-    /* Remove margins around the table and reduce top bar margins on small screens */
+
+    // Remove margins around the table and reduce top bar margins on small screens
     .crud-view .crud-main-layout {
       padding: 0 0 0 0;
+
       .top-bar {
-        /* Use spacing to the table below as the margin - smaller than default margin */
+        // Use spacing to the table below as the margin - smaller than default margin
         padding: $v-layout-spacing-vertical $v-layout-spacing-horizontal 0 $v-layout-spacing-horizontal;
+
         .filter-textfield {
           width: 100%;
-          max-width: 300px;
         }
       }
     }
-    
-    /* About view fills the display on small screens */
+
+    // About view fills the display on small screens
     .about-view {
       padding-bottom: 0;
       padding-top: 0;
-      background-color: #fafafa;
       height: auto;
       padding: 0.1 * $v-unit-size;
-      
+
       .v-slot-about-content {
         overflow: auto;
       }
-      
+
       .about-content {
         width: 100%;
         max-width: 100%;
         height: auto;
         vertical-align: top;
         padding: 0;
-        background-color: #fafafa;
+        background: transparent;
+        @include box-shadow(none);
       }
     }
+  }
+
+
+  // Hide spinner buttons from number input
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
 }

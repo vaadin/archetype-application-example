@@ -11,6 +11,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * Table of products, handling the visual presentation and filtering of a set of
@@ -58,6 +59,7 @@ public class ProductTable extends Table {
 
     public ProductTable() {
         setSizeFull();
+        addStyleName(ValoTheme.TABLE_NO_HORIZONTAL_LINES);
 
         container = new BeanItemContainer<Product>(Product.class);
         setContainerDataSource(container);

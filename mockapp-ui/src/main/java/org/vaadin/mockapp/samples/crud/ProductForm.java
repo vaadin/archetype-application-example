@@ -172,10 +172,9 @@ public class ProductForm extends CssLayout {
 
 	public void editProduct(Product product) {
 		if (product == null) {
-			fieldGroup.setItemDataSource(new BeanItem<Product>(new Product()));
-		} else {
-			fieldGroup.setItemDataSource(new BeanItem<Product>(product));
+			product = new Product();
 		}
+		fieldGroup.setItemDataSource(new BeanItem<Product>(product));
 	}
 
 	private void formHasChanged() {

@@ -170,6 +170,7 @@ public class ProductForm extends CssLayout {
             product = new Product();
         }
         fieldGroup.setItemDataSource(new BeanItem<Product>(product));
+        productName.focus();
     }
 
     private void formHasChanged() {

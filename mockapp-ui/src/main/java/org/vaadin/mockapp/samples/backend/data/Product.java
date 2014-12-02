@@ -6,12 +6,14 @@ import java.util.Set;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Product implements Serializable {
 
     @NotNull
     private int id = -1;
     @NotNull
+    @Size(min = 2, message = "Product name must have at least two characters")
     private String productName = "";
     @Min(0)
     private BigDecimal price = BigDecimal.ZERO;;

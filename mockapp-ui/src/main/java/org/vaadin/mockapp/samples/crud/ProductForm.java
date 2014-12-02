@@ -15,6 +15,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitEvent;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -145,6 +146,7 @@ public class ProductForm extends CssLayout {
             }
         });
 
+        cancelButton.setClickShortcut(KeyCode.ESCAPE);
         cancelButton.addClickListener(new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {

@@ -10,7 +10,7 @@ import com.vaadin.server.Page;
  * This class provides an interface for the logical operations between the CRUD
  * view, its parts like the product editor form and the data source, including
  * fetching and saving products.
- * 
+ *
  * Having this separate from the view makes it easier to test various parts of
  * the system separately, and to e.g. provide alternative views for the same
  * data.
@@ -20,7 +20,7 @@ public class SampleCrudLogic {
     private SampleCrudView view;
 
     public SampleCrudLogic(SampleCrudView simpleCrudView) {
-        this.view = simpleCrudView;
+        view = simpleCrudView;
     }
 
     public void init() {
@@ -57,9 +57,9 @@ public class SampleCrudLogic {
 
     public void enter(String productId) {
         if (productId != null && !productId.isEmpty()) {
-            if (productId.equals("new"))
+            if (productId.equals("new")) {
                 newProduct();
-            else {
+            } else {
                 // Ensure this is selected even if coming directly here from
                 // login
                 try {
@@ -97,9 +97,9 @@ public class SampleCrudLogic {
     }
 
     public void editProduct(Product product) {
-        if (product == null)
+        if (product == null) {
             setFragmentParameter("");
-        else {
+        } else {
             setFragmentParameter(product.getId() + "");
         }
         view.editProduct(product);

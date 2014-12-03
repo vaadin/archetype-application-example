@@ -2,7 +2,6 @@ package org.vaadin.mockapp.samples.crud;
 
 import java.util.Collection;
 
-import org.vaadin.mockapp.samples.AttributeExtension;
 import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.backend.data.Availability;
 import org.vaadin.mockapp.samples.backend.data.Category;
@@ -40,7 +39,7 @@ public class ProductForm extends CssLayout {
 
     TextField productName = new TextField("Product name");
     TextField price = new TextField("Price");
-    TextField stockCount = new TextField("In Stock");
+    NumberField stockCount = new NumberField("In Stock");
     ComboBox availability = new ComboBox("Availability");
     CategoryField category = new CategoryField("Categories");
     Button saveButton = new Button("Save");
@@ -56,11 +55,6 @@ public class ProductForm extends CssLayout {
 
         price.setConverter(new EuroConverter());
 
-        // Mark the field as numeric.
-        // This affects the virtual keyboard shown on mobile devices.
-        AttributeExtension ae = new AttributeExtension();
-        ae.extend(stockCount);
-        ae.setAttribute("type", "number");
         stockCount.setWidth("80px");
 
         availability.setNullSelectionAllowed(false);

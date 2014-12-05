@@ -167,20 +167,14 @@ public class ProductForm extends CssLayout {
         }
         fieldGroup.setItemDataSource(new BeanItem<Product>(product));
 
-        // before the user makes any changes, disable save button and
-        // validation error indicator of the product name field (which
-        // may be empty)
-        saveButton.setEnabled(false);
+        // before the user makes any changes, disable validation error indicator
+        // of the product name field (which may be empty)
         productName.setValidationVisible(false);
     }
 
     private void formHasChanged() {
         // show validation errors after the user has changed something
         productName.setValidationVisible(true);
-
-        // only valid products can be saved
-        boolean allFieldsValid = fieldGroup.isValid();
-        saveButton.setEnabled(allFieldsValid);
 
         // only products that have been saved should be removable
         boolean canRemoveProduct = false;

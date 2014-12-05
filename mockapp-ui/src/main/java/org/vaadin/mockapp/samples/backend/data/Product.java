@@ -16,7 +16,7 @@ public class Product implements Serializable {
     @Size(min = 2, message = "Product name must have at least two characters")
     private String productName = "";
     @Min(0)
-    private BigDecimal price = BigDecimal.ZERO;;
+    private BigDecimal price = BigDecimal.ZERO;
     private Set<Category> category;
     @Min(value = 0, message = "Can't have negative amount in stock")
     private int stockCount = 0;

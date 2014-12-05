@@ -13,15 +13,14 @@ import com.vaadin.data.util.converter.StringToBigDecimalConverter;
  */
 public class EuroConverter extends StringToBigDecimalConverter {
 
-    private static String suffix = " €";
-
     @Override
     public BigDecimal convertToModel(String value,
             Class<? extends BigDecimal> targetType, Locale locale)
             throws com.vaadin.data.util.converter.Converter.ConversionException {
-        if (value.endsWith(suffix)) {
-            value = value.substring(0, value.length() - 1 - suffix.length());
-        }
+        value = value.replaceAll("[€\\s]", "").trim();
+		if ("".equals(value)) {
+			value = "0";
+		}
         return super.convertToModel(value, targetType, locale);
     }
 
@@ -40,6 +39,6 @@ public class EuroConverter extends StringToBigDecimalConverter {
     public String convertToPresentation(BigDecimal value,
             Class<? extends String> targetType, Locale locale)
             throws com.vaadin.data.util.converter.Converter.ConversionException {
-        return super.convertToPresentation(value, targetType, locale) + suffix;
+        return super.convertToPresentation(value, targetType, locale) + " €";
     }
 }

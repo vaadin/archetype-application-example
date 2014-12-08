@@ -3,6 +3,7 @@ package org.vaadin.mockapp.samples.authentication;
 import java.io.Serializable;
 
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -92,7 +93,7 @@ public class LoginScreen extends CssLayout {
         forgotPassword.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                Notification.show("Hint: Try anything");
+                showNotification(new Notification("Hint: Try anything"));
             }
         });
         forgotPassword.addStyleName(ValoTheme.BUTTON_LINK);
@@ -114,11 +115,18 @@ public class LoginScreen extends CssLayout {
         if (accessControl.signIn(username.getValue(), password.getValue())) {
             loginListener.loginSuccessful();
         } else {
-            Notification.show("Login failed",
+            showNotification(new Notification("Login failed",
                     "Please check your username and password and try again.",
-                    Notification.Type.HUMANIZED_MESSAGE);
+                    Notification.Type.HUMANIZED_MESSAGE));
             username.focus();
         }
+    }
+
+    private void showNotification(Notification notification) {
+        // keep the notification visible a little while after moving the
+        // mouse, or until clicked
+        notification.setDelayMsec(2000);
+        notification.show(Page.getCurrent());
     }
 
     public interface LoginListener extends Serializable {

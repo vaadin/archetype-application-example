@@ -7,7 +7,8 @@ import org.vaadin.mockapp.samples.backend.data.Category;
 import org.vaadin.mockapp.samples.backend.data.Product;
 
 /**
- * Mock data model. Does not handling locking in any way and is not thread safe
+ * Mock data model. This implementation has very simplistic locking and does not
+ * notify users of modifications.
  */
 public class MockDataService extends DataService {
 
@@ -30,16 +31,18 @@ public class MockDataService extends DataService {
         return INSTANCE;
     }
 
-    public List<Product> getAllProducts() {
+    @Override
+    public synchronized List<Product> getAllProducts() {
         return products;
     }
 
-    public List<Category> getAllCategories() {
+    @Override
+    public synchronized List<Category> getAllCategories() {
         return categories;
     }
 
     @Override
-    public void updateProduct(Product p) {
+    public synchronized void updateProduct(Product p) {
         if (p.getId() < 0) {
             // New product
             p.setId(nextProductId++);
@@ -58,20 +61,22 @@ public class MockDataService extends DataService {
     }
 
     @Override
-    public Product getProductById(int productId) {
+    public synchronized Product getProductById(int productId) {
         for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getId() == productId)
+            if (products.get(i).getId() == productId) {
                 return products.get(i);
+            }
         }
         return null;
     }
 
     @Override
-    public void deleteProduct(int productId) {
+    public synchronized void deleteProduct(int productId) {
         Product p = getProductById(productId);
-        if (p == null)
+        if (p == null) {
             throw new IllegalArgumentException("Product with id " + productId
                     + " not found");
+        }
         products.remove(p);
     }
 }

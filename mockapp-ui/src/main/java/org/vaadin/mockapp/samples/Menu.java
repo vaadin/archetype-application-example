@@ -85,7 +85,7 @@ public class Menu extends CssLayout {
         showMenu.addStyleName(ValoTheme.BUTTON_PRIMARY);
         showMenu.addStyleName(ValoTheme.BUTTON_SMALL);
         showMenu.addStyleName(VALO_MENU_TOGGLE);
-        showMenu.setIcon(FontAwesome.LIST);
+        showMenu.setIcon(FontAwesome.NAVICON);
         menuPart.addComponent(showMenu);
 
         // container for the navigation buttons, which are added by addView()
@@ -99,9 +99,9 @@ public class Menu extends CssLayout {
     /**
      * Register a pre-created view instance in the navigation menu and in the
      * {@link Navigator}.
-     * 
+     *
      * @see Navigator#addView(String, View)
-     * 
+     *
      * @param view
      *            view instance to register
      * @param name
@@ -120,9 +120,9 @@ public class Menu extends CssLayout {
     /**
      * Register a view in the navigation menu and in the {@link Navigator} based
      * on a view class.
-     * 
+     *
      * @see Navigator#addView(String, Class)
-     * 
+     *
      * @param viewClass
      *            class of the views to create
      * @param name
@@ -157,7 +157,7 @@ public class Menu extends CssLayout {
     /**
      * Highlights a view navigation button as the currently active view in the
      * menu. This method does not perform the actual navigation.
-     * 
+     *
      * @param viewName
      *            the name of the view to show as active
      */

@@ -68,6 +68,7 @@ public class LoginScreen extends CssLayout {
         username.setWidth(15, Unit.EM);
         loginForm.addComponent(password = new PasswordField("Password"));
         password.setWidth(15, Unit.EM);
+        password.setDescription("Write anything");
         CssLayout buttons = new CssLayout();
         buttons.setStyleName("buttons");
         loginForm.addComponent(buttons);
@@ -104,7 +105,7 @@ public class LoginScreen extends CssLayout {
         Label loginInfoText = new Label(
                 "<h1>Login Information</h1>"
                         + "Log in as &quot;admin&quot; to have full access. Log in with any other username to have read-only access. For all users, any password is fine",
-                ContentMode.HTML);
+                        ContentMode.HTML);
         loginInformation.addComponent(loginInfoText);
         return loginInformation;
     }

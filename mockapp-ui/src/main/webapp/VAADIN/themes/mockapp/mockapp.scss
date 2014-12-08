@@ -220,6 +220,7 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
     // More compact login screen
     .login-screen {
       height: auto;
+      min-height: 100%;
 
       .login-information {
         position: static;
@@ -240,8 +241,8 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
         width: 100%;
         height: auto;
         padding-left: 0;
-        padding-top: 100px;
-        padding-bottom: 150px;
+        padding-top: 60px;
+        padding-bottom: 60px;
       }
 
       .login-form {

@@ -15,6 +15,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.server.Page;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -51,6 +52,7 @@ public class ProductForm extends CssLayout {
     public ProductForm(SampleCrudLogic sampleCrudLogic) {
         viewLogic = sampleCrudLogic;
         addStyleName("product-form-wrapper");
+        setId("product-form");
         productName.setWidth("100%");
 
         price.setConverter(new EuroConverter());
@@ -80,19 +82,21 @@ public class ProductForm extends CssLayout {
         price.setWidth("100%");
         stockCount.setWidth("100%");
         availability.setWidth("100%");
-        VerticalLayout fieldLayout = new VerticalLayout();
-        fieldLayout.setSpacing(true);
-        fieldLayout.addStyleName("product-form-fields");
-        fieldLayout.addComponent(productName);
-        fieldLayout.addComponent(priceAndStock);
-        fieldLayout.addComponent(availability);
-        fieldLayout.addComponent(category);
-        layout.addComponent(fieldLayout);
+
+        layout.addComponent(productName);
+        layout.addComponent(priceAndStock);
+        layout.addComponent(availability);
+        layout.addComponent(category);
+
+        CssLayout expander = new CssLayout();
+        expander.addStyleName("expander");
+        layout.addComponent(expander);
+        layout.setExpandRatio(expander, 1);
+
         layout.addComponent(saveButton);
         layout.addComponent(cancelButton);
         layout.addComponent(removeButton);
 
-        layout.setExpandRatio(fieldLayout, 1);
         addComponent(layout);
 
         fieldGroup = new BeanFieldGroup<Product>(Product.class);
@@ -172,6 +176,12 @@ public class ProductForm extends CssLayout {
         // before the user makes any changes, disable validation error indicator
         // of the product name field (which may be empty)
         productName.setValidationVisible(false);
+
+        // Scroll to the top
+        // As this is not a Panel, using JavaScript
+        String scrollScript = "window.document.getElementById('" + getId()
+                + "').scrollTop = 0;";
+        Page.getCurrent().getJavaScript().execute(scrollScript);
     }
 
     private void formHasChanged() {

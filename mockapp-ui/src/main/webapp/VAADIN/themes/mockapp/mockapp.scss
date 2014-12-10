@@ -335,6 +335,12 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
     }
   }
 
+  // Override valo default narrow menu button on small screens to have the full logout text visible
+  .v-ui[width-range~="0-500px"] {
+    .valo-menu .v-menubar-user-menu .v-menubar-menuitem-caption {
+      width: auto;
+    }
+  }
 
   // Hide spinner buttons from number input
   input[type=number]::-webkit-inner-spin-button,

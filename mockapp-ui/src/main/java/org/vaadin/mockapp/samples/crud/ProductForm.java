@@ -134,8 +134,10 @@ public class ProductForm extends CssLayout {
                     Product product = fieldGroup.getItemDataSource().getBean();
                     viewLogic.saveProduct(product);
                 } catch (CommitException e) {
-                    Notification.show("Please re-check the fields",
+                    Notification n = new Notification("Please re-check the fields",
                             Type.ERROR_MESSAGE);
+                    n.setDelayMsec(500);
+                    n.show(getUI().getPage());
                 }
             }
         });

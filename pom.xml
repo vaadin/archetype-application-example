@@ -28,6 +28,7 @@
 
 	<modules>
 		<module>mockapp-widgetset</module>
+		<module>mockapp-backend</module>
 		<module>mockapp-ui</module>
 		<module>mockapp-production</module>
 	</modules>

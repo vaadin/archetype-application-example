@@ -9,15 +9,6 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>mockapp-parent</name>
 
-	<developers>
-		<developer>
-			<name>Petter Holmström</name>
-			<email>petter@vaadin.com</email>
-			<organization>Vaadin</organization>
-			<organizationUrl>https://vaadin.com</organizationUrl>
-		</developer>
-	</developers>
-
 	<licenses>
 		<license>
 			<name>UNLICENSE</name>

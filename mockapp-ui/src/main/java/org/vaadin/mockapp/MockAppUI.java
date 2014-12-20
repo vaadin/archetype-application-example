@@ -1,6 +1,5 @@
 package org.vaadin.mockapp;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import org.vaadin.mockapp.samples.MainScreen;
@@ -11,6 +10,7 @@ import org.vaadin.mockapp.samples.authentication.LoginScreen.LoginListener;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.annotations.Viewport;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
@@ -18,8 +18,14 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 
 /**
- * 
+ * Main UI class of the application that shows either the login screen or the
+ * main view of the application depending on whether a user is signed in.
+ *
+ * The @Viewport annotation configures the viewport meta tags appropriately on
+ * mobile devices. Instead of device based scaling (default), using responsive
+ * layouts.
  */
+@Viewport("user-scalable=no,initial-scale=1.0")
 @Theme("mockapp")
 @Widgetset("org.vaadin.mockapp.MockAppWidgetset")
 public class MockAppUI extends UI {
@@ -59,20 +65,5 @@ public class MockAppUI extends UI {
     @WebServlet(urlPatterns = "/*", name = "MockAppUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MockAppUI.class, productionMode = false)
     public static class MockAppUIServlet extends VaadinServlet {
-        @Override
-        protected void servletInitialized() throws ServletException {
-            super.servletInitialized();
-            /*
-             * Configure the viewport meta tags appropriately on mobile devices.
-             * Instead of device based scaling (default), using responsive
-             * layouts.
-             * 
-             * If using Vaadin TouchKit, this is done automatically and it is
-             * sufficient to have an empty servlet class extending
-             * TouchKitServlet.
-             */
-            getService().addSessionInitListener(
-                    new ViewPortSessionInitListener());
-        }
     }
 }

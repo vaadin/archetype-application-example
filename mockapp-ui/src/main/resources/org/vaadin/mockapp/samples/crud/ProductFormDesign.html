@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="package-mapping" content="x:org.vaadin.mockapp.samples.crud" />
+</head>
+<body>
+<v-css-layout id="product-form" style-name="product-form-wrapper">
+    <v-vertical-layout height-full spacing style-name="form-layout">
+        <v-text-field caption="Product name" width-full />
+        <v-horizontal-layout width-full spacing>
+            <v-text-field caption="Price" width-full />
+            <x-number-field _id="stockCount" caption="In Stock" width-full />
+        </v-horizontal-layout>
+        <v-combo-box caption="Availability" width-full null-selection-allowed=false text-input-allowed=false />
+        <x-category-field _id="category" caption="Categories" width-full />
+        <v-css-layout :expand style-name="expander" />
+        <v-button style-name="primary">Save</v-button>
+        <v-button style-name="cancel" click-shortcut="escape">Cancel</v-button>
+        <v-button style-name="danger">Delete</v-button>
+    </v-vertical-layout>
+</v-css-layout>
+</body>
+</html>

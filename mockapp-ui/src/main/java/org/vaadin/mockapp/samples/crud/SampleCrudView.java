@@ -34,7 +34,7 @@ import com.vaadin.ui.themes.ValoTheme;
 public class SampleCrudView extends CssLayout implements View {
 
     public static final String VIEW_NAME = "Inventory";
-    private ProductTable table;
+    private ProductGrid grid;
     private ProductForm form;
 
     private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
@@ -45,28 +45,28 @@ public class SampleCrudView extends CssLayout implements View {
         addStyleName("crud-view");
         HorizontalLayout topLayout = createTopBar();
 
-        table = new ProductTable();
-        table.addSelectionListener(new SelectionListener() {
+        grid = new ProductGrid();
+        grid.addSelectionListener(new SelectionListener() {
 
             @Override
             public void select(SelectionEvent event) {
-                viewLogic.rowSelected(table.getSelectedRow());
+                viewLogic.rowSelected(grid.getSelectedRow());
             }
         });
 
         form = new ProductForm(viewLogic);
         form.setCategories(DataService.get().getAllCategories());
 
-        VerticalLayout barAndTableLayout = new VerticalLayout();
-        barAndTableLayout.addComponent(topLayout);
-        barAndTableLayout.addComponent(table);
-        barAndTableLayout.setMargin(true);
-        barAndTableLayout.setSpacing(true);
-        barAndTableLayout.setSizeFull();
-        barAndTableLayout.setExpandRatio(table, 1);
-        barAndTableLayout.setStyleName("crud-main-layout");
+        VerticalLayout barAndGridLayout = new VerticalLayout();
+        barAndGridLayout.addComponent(topLayout);
+        barAndGridLayout.addComponent(grid);
+        barAndGridLayout.setMargin(true);
+        barAndGridLayout.setSpacing(true);
+        barAndGridLayout.setSizeFull();
+        barAndGridLayout.setExpandRatio(grid, 1);
+        barAndGridLayout.setStyleName("crud-main-layout");
 
-        addComponent(barAndTableLayout);
+        addComponent(barAndGridLayout);
         addComponent(form);
 
         viewLogic.init();
@@ -81,7 +81,7 @@ public class SampleCrudView extends CssLayout implements View {
         filter.addTextChangeListener(new FieldEvents.TextChangeListener() {
             @Override
             public void textChange(FieldEvents.TextChangeEvent event) {
-                table.setFilter(event.getText());
+                grid.setFilter(event.getText());
             }
         });
 
@@ -124,15 +124,15 @@ public class SampleCrudView extends CssLayout implements View {
     }
 
     public void clearSelection() {
-        table.getSelectionModel().reset();
+        grid.getSelectionModel().reset();
     }
 
     public void selectRow(Product row) {
-        ((SelectionModel.Single) table.getSelectionModel()).select(row);
+        ((SelectionModel.Single) grid.getSelectionModel()).select(row);
     }
 
     public Product getSelectedRow() {
-        return table.getSelectedRow();
+        return grid.getSelectedRow();
     }
 
     public void editProduct(Product product) {
@@ -147,16 +147,16 @@ public class SampleCrudView extends CssLayout implements View {
     }
 
     public void showProducts(Collection<Product> products) {
-        table.setProducts(products);
+        grid.setProducts(products);
     }
 
     public void refreshProduct(Product product) {
-        table.refresh(product);
-        table.scrollTo(product);
+        grid.refresh(product);
+        grid.scrollTo(product);
     }
 
     public void removeProduct(Product product) {
-        table.remove(product);
+        grid.remove(product);
     }
 
 }

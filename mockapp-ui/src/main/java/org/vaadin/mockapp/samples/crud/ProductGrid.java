@@ -23,7 +23,7 @@ import com.vaadin.ui.renderer.HtmlRenderer;
  * items. This version uses an in-memory data source that is suitable for small
  * data sets.
  */
-public class ProductTable extends Grid {
+public class ProductGrid extends Grid {
 
     private StringToEnumConverter availabilityConverter = new StringToEnumConverter() {
         @Override
@@ -52,7 +52,7 @@ public class ProductTable extends Grid {
         };
     };
 
-    public ProductTable() {
+    public ProductGrid() {
         setSizeFull();
 
         setSelectionMode(SelectionMode.SINGLE);

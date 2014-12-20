@@ -1,112 +1,115 @@
 package org.vaadin.mockapp.samples.crud;
 
+import java.util.Collection;
+import java.util.Locale;
+
 import org.vaadin.mockapp.samples.backend.data.Availability;
 import org.vaadin.mockapp.samples.backend.data.Product;
 
-import com.vaadin.data.Property;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.MethodProperty;
+import com.vaadin.data.util.converter.Converter;
+import com.vaadin.data.util.converter.StringToEnumConverter;
+import com.vaadin.data.util.converter.StringToIntegerConverter;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.renderer.HtmlRenderer;
 
 /**
- * Table of products, handling the visual presentation and filtering of a set of
+ * Grid of products, handling the visual presentation and filtering of a set of
  * items. This version uses an in-memory data source that is suitable for small
  * data sets.
  */
-public class ProductTable extends Table {
+public class ProductTable extends Grid {
 
-    private BeanItemContainer<Product> container;
-
-    private ColumnGenerator availabilityGenerator = new ColumnGenerator() {
-
+    private StringToEnumConverter availabilityConverter = new StringToEnumConverter() {
         @Override
-        public Object generateCell(Table source, Object itemId, Object columnId) {
-            Property property = source.getItem(itemId)
-                    .getItemProperty(columnId);
-            if (property != null) {
-                Availability availability = (Availability) property.getValue();
-                String color = "";
-                if (availability == Availability.AVAILABLE) {
-                    color = "#2dd085";
-                } else if (availability == Availability.COMING) {
-                    color = "#ffc66e";
-                } else if (availability == Availability.DISCONTINUED) {
-                    color = "#f54993";
-                }
+        public String convertToPresentation(Enum availability,
+                java.lang.Class<? extends String> targetType, Locale locale)
+                        throws Converter.ConversionException {
+            String text = super.convertToPresentation(availability, targetType,
+                    locale);
 
-                String iconCode = "<span class=\"v-icon\" style=\"font-family: "
-                        + FontAwesome.CIRCLE.getFontFamily()
-                        + ";color:"
-                        + color
-                        + "\">&#x"
-                        + Integer
-                                .toHexString(FontAwesome.CIRCLE.getCodepoint())
-                        + ";</span>";
-
-                Label label = new Label(iconCode + " " + property.getValue(),
-                        ContentMode.HTML);
-                label.setSizeUndefined();
-                return label;
+            String color = "";
+            if (availability == Availability.AVAILABLE) {
+                color = "#2dd085";
+            } else if (availability == Availability.COMING) {
+                color = "#ffc66e";
+            } else if (availability == Availability.DISCONTINUED) {
+                color = "#f54993";
             }
-            return null;
-        }
+
+            String iconCode = "<span class=\"v-icon\" style=\"font-family: "
+                    + FontAwesome.CIRCLE.getFontFamily() + ";color:" + color
+                    + "\">&#x"
+                    + Integer.toHexString(FontAwesome.CIRCLE.getCodepoint())
+                    + ";</span>";
+
+            return iconCode + " " + text;
+        };
     };
 
     public ProductTable() {
         setSizeFull();
-        addStyleName(ValoTheme.TABLE_NO_HORIZONTAL_LINES);
 
-        container = new BeanItemContainer<Product>(Product.class);
+        setSelectionMode(SelectionMode.SINGLE);
+
+        BeanItemContainer<Product> container = new BeanItemContainer<Product>(
+                Product.class);
         setContainerDataSource(container);
-        setVisibleColumns("id", "productName", "price", "availability",
+        setColumnOrder("id", "productName", "price", "availability",
                 "stockCount", "category");
-        setColumnHeaders("ID", "Product", "Price", "Availability", "Stock",
-                "Categories");
-        setColumnCollapsingAllowed(true);
-        setColumnCollapsed("integerProperty", true);
-        setColumnCollapsed("bigDecimalProperty", true);
 
-        setColumnWidth("id", 50);
-        setColumnAlignment("price", Align.RIGHT);
-        setColumnAlignment("stockCount", Align.RIGHT);
-        setSelectable(true);
-        setImmediate(true);
+        // Show empty stock as "-"
+        getColumn("stockCount").setConverter(new StringToIntegerConverter() {
+            @Override
+            public String convertToPresentation(Integer value,
+                    java.lang.Class<? extends String> targetType, Locale locale)
+                            throws Converter.ConversionException {
+                if (value == 0) {
+                    return "-";
+                }
+
+                return super.convertToPresentation(value, targetType, locale);
+            };
+        });
+
         // Add an traffic light icon in front of availability
-        addGeneratedColumn("availability", availabilityGenerator);
-        // Add " €" automatically after price
-        setConverter("price", new EuroConverter());
-        // Show categories as a comma separated list
-        setConverter("category", new CollectionToStringConverter());
-    }
+        getColumn("availability").setConverter(availabilityConverter)
+        .setRenderer(new HtmlRenderer());
 
-    @Override
-    protected String formatPropertyValue(Object rowId, Object colId,
-            Property property) {
-        if (colId.equals("stockCount")) {
-            Integer stock = (Integer) property.getValue();
-            if (stock.equals(0)) {
-                return "-";
-            } else {
-                return stock.toString();
+        // Add " €" automatically after price
+        getColumn("price").setConverter(new EuroConverter());
+
+        // Show categories as a comma separated list
+        getColumn("category").setConverter(new CollectionToStringConverter());
+
+        // Align columns using a style generator and theme rule until #15438
+        setCellStyleGenerator(new CellStyleGenerator() {
+
+            @Override
+            public String getStyle(CellReference cellReference) {
+                if (cellReference.getPropertyId().equals("price")
+                        || cellReference.getPropertyId().equals("stockCount")) {
+                    return "align-right";
+                }
+                return null;
             }
-        }
-        return super.formatPropertyValue(rowId, colId, property);
+        });
     }
 
     /**
-     * Filter the table based on a search string that is searched for in the
+     * Filter the grid based on a search string that is searched for in the
      * product name, availability and category columns.
-     * 
+     *
      * @param filterString
      *            string to look for
      */
     public void setFilter(String filterString) {
-        container.removeAllContainerFilters();
+        getContainer().removeAllContainerFilters();
         if (filterString.length() > 0) {
             SimpleStringFilter nameFilter = new SimpleStringFilter(
                     "productName", filterString, true, false);
@@ -114,19 +117,41 @@ public class ProductTable extends Table {
                     "availability", filterString, true, false);
             SimpleStringFilter categoryFilter = new SimpleStringFilter(
                     "category", filterString, true, false);
-            container.addContainerFilter(new Or(nameFilter, availabilityFilter,
-                    categoryFilter));
+            getContainer().addContainerFilter(
+                    new Or(nameFilter, availabilityFilter, categoryFilter));
         }
 
     }
 
-    @Override
-    public Product getValue() {
-        return (Product) super.getValue();
+    private BeanItemContainer<Product> getContainer() {
+        return (BeanItemContainer<Product>) super.getContainerDataSource();
     }
 
     @Override
-    public BeanItemContainer<Product> getContainerDataSource() {
-        return container;
+    public Product getSelectedRow() throws IllegalStateException {
+        return (Product) super.getSelectedRow();
+    }
+
+    public void setProducts(Collection<Product> products) {
+        getContainer().removeAllItems();
+        getContainer().addAll(products);
+    }
+
+    public void refresh(Product product) {
+        // We avoid updating the whole table through the backend here so we can
+        // get a partial update for the grid
+        BeanItem<Product> item = getContainer().getItem(product);
+        if (item != null) {
+            // Updated product
+            MethodProperty p = (MethodProperty) item.getItemProperty("id");
+            p.fireValueChange();
+        } else {
+            // New product
+            getContainer().addBean(product);
+        }
+    }
+
+    public void remove(Product product) {
+        getContainer().removeItem(product);
     }
 }

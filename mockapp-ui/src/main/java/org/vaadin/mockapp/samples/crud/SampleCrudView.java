@@ -6,10 +6,9 @@ import org.vaadin.mockapp.samples.ResetButtonForTextField;
 import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.backend.data.Product;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents;
+import com.vaadin.event.SelectionEvent;
+import com.vaadin.event.SelectionEvent.SelectionListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -18,6 +17,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Grid.SelectionModel;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
@@ -46,10 +46,11 @@ public class SampleCrudView extends CssLayout implements View {
         HorizontalLayout topLayout = createTopBar();
 
         table = new ProductTable();
-        table.addValueChangeListener(new ValueChangeListener() {
+        table.addSelectionListener(new SelectionListener() {
+
             @Override
-            public void valueChange(ValueChangeEvent event) {
-                viewLogic.rowSelected(table.getValue());
+            public void select(SelectionEvent event) {
+                viewLogic.rowSelected(table.getSelectedRow());
             }
         });
 
@@ -123,11 +124,15 @@ public class SampleCrudView extends CssLayout implements View {
     }
 
     public void clearSelection() {
-        table.setValue(null);
+        table.getSelectionModel().reset();
     }
 
     public void selectRow(Product row) {
-        table.setValue(row);
+        ((SelectionModel.Single) table.getSelectionModel()).select(row);
+    }
+
+    public Product getSelectedRow() {
+        return table.getSelectedRow();
     }
 
     public void editProduct(Product product) {
@@ -141,14 +146,16 @@ public class SampleCrudView extends CssLayout implements View {
         form.editProduct(product);
     }
 
-    public Product getSelectedRow() {
-        return table.getValue();
+    public void showProducts(Collection<Product> products) {
+        table.setProducts(products);
     }
 
-    public void showProducts(Collection<Product> products) {
-        BeanItemContainer<Product> container = table.getContainerDataSource();
-        container.removeAllItems();
-        container.addAll(products);
+    public void refreshProduct(Product product) {
+        table.refresh(product);
+    }
+
+    public void removeProduct(Product product) {
+        table.remove(product);
     }
 
 }

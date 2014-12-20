@@ -35,8 +35,6 @@ $valo-menu-background-color: $editor-background-color !default;
 $v-focus-color: rgb(96, 160, 234) !default;
 $v-error-indicator-color: #eb2977 !default;
 $v-friendly-color: rgb(54, 185, 85);
-$table-header-background-color: #989fa7 !default;
-$table-header-font-color: #fff !default;
 
 $v-font-size: 15px !default;
 $v-font-weight: 400 !default;
@@ -67,10 +65,6 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
 @mixin mockapp {
   @include valo;
 
-
-  .v-table {
-    @include valo-table-header-style($background-color: $table-header-background-color, $font-color: $table-header-font-color);
-  }
 
   // login screen - for small screens, see below
   .login-screen {
@@ -137,7 +131,7 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
     top: 0;
     bottom: 0;
     right: 0;
-    z-index: 2;
+    z-index: 100;
     width: round($v-unit-size * 9);
     height: 100%;
     overflow: auto;
@@ -291,12 +285,12 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
       width:100%;
     }
 
-    // Remove margins around the table and reduce top bar margins on small screens
+    // Remove margins around the grid and reduce top bar margins on small screens
     .crud-view .crud-main-layout {
       padding: 0 0 0 0;
 
       .top-bar {
-        // Use spacing to the table below as the margin - smaller than default margin
+        // Use spacing to the grid below as the margin - smaller than default margin
         padding: $v-layout-spacing-vertical $v-layout-spacing-horizontal 0 $v-layout-spacing-horizontal;
 
         .filter-textfield {
@@ -340,6 +334,11 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
   input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+  
+  // For aligning in grid until #15438 is done
+  .align-right {
+  	text-align: right;
   }
 
 }

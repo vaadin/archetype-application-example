@@ -106,7 +106,7 @@ public class LoginScreen extends CssLayout {
         Label loginInfoText = new Label(
                 "<h1>Login Information</h1>"
                         + "Log in as &quot;admin&quot; to have full access. Log in with any other username to have read-only access. For all users, any password is fine",
-                        ContentMode.HTML);
+                ContentMode.HTML);
         loginInformation.addComponent(loginInfoText);
         return loginInformation;
     }

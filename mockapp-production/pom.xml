@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>mockapp-parent</artifactId>
         <groupId>org.vaadin.maven.mockapp</groupId>
@@ -12,15 +11,13 @@
     <artifactId>mockapp-production</artifactId>
     <name>mockapp-production</name>
     <packaging>war</packaging>
-    
+
     <properties>
         <vaadin.resource.directory>${project.build.directory}/${project.build.finalName}</vaadin.resource.directory>
     </properties>
 
     <dependencies>
-        <!--
-            Include the WAR-module as an overlay.
-          -->
+        <!-- Include the WAR-module as an overlay. -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>mockapp-ui</artifactId>
@@ -28,10 +25,8 @@
             <type>war</type>
             <scope>runtime</scope>
         </dependency>
-        <!--
-            Also include the compiled classes as a provided dependency so that the GWT compiler can pick up
-            all the GWT modules.
-          -->
+        <!-- Also include the compiled classes as a provided dependency so 
+            that the GWT compiler can pick up all the GWT modules. -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>mockapp-ui</artifactId>
@@ -53,7 +48,8 @@
             <id>production</id>
             <build>
                 <plugins>
-                    <!-- Unpack the theme and widgetset to (re)compile them for production mode -->
+                    <!-- Unpack the theme and widgetset to (re)compile them 
+                        for production mode -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
@@ -73,7 +69,8 @@
                                             <version>${project.version}</version>
                                             <type>war</type>
                                             <includes>VAADIN/themes/**/*</includes>
-                                            <!-- If there already is a compiled theme, we want to recompile it -->
+                                            <!-- If there already is a compiled 
+                                                theme, we want to recompile it -->
                                             <excludes>VAADIN/themes/**/styles.css</excludes>
                                             <outputDirectory>${vaadin.resource.directory}</outputDirectory>
                                         </artifactItem>
@@ -83,7 +80,8 @@
                                             <version>${project.version}</version>
                                             <type>jar</type>
                                             <includes>org/vaadin/mockapp/**</includes>
-                                            <!-- Vaadin/GWT plug-in expects .gwt.xml to be in its warSourceDirectory -->
+                                            <!-- Vaadin/GWT plug-in expects 
+                                                .gwt.xml to be in its warSourceDirectory -->
                                             <outputDirectory>${vaadin.resource.directory}/WEB-INF/classes</outputDirectory>
                                         </artifactItem>
                                     </artifactItems>
@@ -146,18 +144,23 @@
                                     <groupId>${project.groupId}</groupId>
                                     <artifactId>mockapp-ui</artifactId>
                                     <excludes>
-                                        <!-- Exclude larger development time widgetset. -->
-                                        <!-- The relevant classes are copied to the WAR above. -->
+                                        <!-- Exclude larger development time 
+                                            widgetset. -->
+                                        <!-- The relevant classes are copied 
+                                            to the WAR above. -->
                                         <exclude>WEB-INF/lib/mockapp-widgetset-*.jar</exclude>
-                                        <!-- Exclude the Sass compiler and its dependencies. -->
-                                        <!-- The production WAR includes a precompiled theme. -->
+                                        <!-- Exclude the Sass compiler and 
+                                            its dependencies. -->
+                                        <!-- The production WAR includes 
+                                            a precompiled theme. -->
                                         <exclude>WEB-INF/lib/vaadin-sass-compiler-*.jar</exclude>
                                         <exclude>WEB-INF/lib/sac-*.jar</exclude>
                                         <exclude>WEB-INF/lib/flute-*.jar</exclude>
                                     </excludes>
                                 </overlay>
                             </overlays>
-                            <!-- Exclude some unnecessary files generated by the GWT compiler. -->
+                            <!-- Exclude some unnecessary files generated 
+                                by the GWT compiler. -->
                             <packagingExcludes>VAADIN/gwt-unitCache/**,VAADIN/widgetsets/WEB-INF/**
                             </packagingExcludes>
                         </configuration>
@@ -173,9 +176,8 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!--
-                        The Jetty plugin allows us to easily test the production build by running jetty:run on the command line.
-                      -->
+                    <!-- The Jetty plugin allows us to easily test the production 
+                        build by running jetty:run on the command line. -->
                     <plugin>
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-maven-plugin</artifactId>
@@ -191,7 +193,8 @@
 
     <build>
         <plugins>
-            <!-- Do not produce and install artifacts when not using the production profile -->
+            <!-- Do not produce and install artifacts when not using the 
+                production profile -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -215,57 +218,59 @@
             </plugin>
         </plugins>
         <pluginManagement>
-        	<plugins>
-        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        		<!-- TODO Remove when http://dev.vaadin.com/ticket/14924 is resolved -->
-        		<plugin>
-        			<groupId>org.eclipse.m2e</groupId>
-        			<artifactId>lifecycle-mapping</artifactId>
-        			<version>1.0.0</version>
-        			<configuration>
-        				<lifecycleMappingMetadata>
-        					<pluginExecutions>
-        						<pluginExecution>
-        							<pluginExecutionFilter>
-        								<groupId>com.vaadin</groupId>
-        								<artifactId>
-        									vaadin-maven-plugin
-        								</artifactId>
-        								<versionRange>
-        									[7.1.11,)
-        								</versionRange>
-        								<goals>
-        									<goal>compile-theme</goal>
-        								</goals>
-        							</pluginExecutionFilter>
-        							<action>
-        								<ignore></ignore>
-        							</action>
-        						</pluginExecution>
-        						<pluginExecution>
-        							<pluginExecutionFilter>
-        								<groupId>
-        									org.apache.maven.plugins
-        								</groupId>
-        								<artifactId>
-        									maven-dependency-plugin
-        								</artifactId>
-        								<versionRange>
-        									[2.9,)
-        								</versionRange>
-        								<goals>
-        									<goal>unpack</goal>
-        								</goals>
-        							</pluginExecutionFilter>
-        							<action>
-        								<ignore></ignore>
-        							</action>
-        						</pluginExecution>
-        					</pluginExecutions>
-        				</lifecycleMappingMetadata>
-        			</configuration>
-        		</plugin>
-        	</plugins>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse 
+                    m2e settings only. It has no influence on the Maven build itself. -->
+                <!-- TODO Remove when http://dev.vaadin.com/ticket/14924 
+                    is resolved -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>com.vaadin</groupId>
+                                        <artifactId>
+                                            vaadin-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [7.1.11,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>compile-theme</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            org.apache.maven.plugins
+                                        </groupId>
+                                        <artifactId>
+                                            maven-dependency-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [2.9,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>unpack</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
         </pluginManagement>
     </build>
 

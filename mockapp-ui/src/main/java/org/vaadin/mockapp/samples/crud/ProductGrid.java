@@ -29,7 +29,7 @@ public class ProductGrid extends Grid {
         @Override
         public String convertToPresentation(Enum availability,
                 java.lang.Class<? extends String> targetType, Locale locale)
-                        throws Converter.ConversionException {
+                throws Converter.ConversionException {
             String text = super.convertToPresentation(availability, targetType,
                     locale);
 
@@ -68,7 +68,7 @@ public class ProductGrid extends Grid {
             @Override
             public String convertToPresentation(Integer value,
                     java.lang.Class<? extends String> targetType, Locale locale)
-                            throws Converter.ConversionException {
+                    throws Converter.ConversionException {
                 if (value == 0) {
                     return "-";
                 }
@@ -79,7 +79,7 @@ public class ProductGrid extends Grid {
 
         // Add an traffic light icon in front of availability
         getColumn("availability").setConverter(availabilityConverter)
-        .setRenderer(new HtmlRenderer());
+                .setRenderer(new HtmlRenderer());
 
         // Add " €" automatically after price
         getColumn("price").setConverter(new EuroConverter());

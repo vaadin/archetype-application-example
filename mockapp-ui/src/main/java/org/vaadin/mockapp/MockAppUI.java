@@ -16,6 +16,7 @@ import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * Main UI class of the application that shows either the login screen or the
@@ -50,6 +51,7 @@ public class MockAppUI extends UI {
     }
 
     protected void showMainView() {
+        addStyleName(ValoTheme.UI_WITH_MENU);
         setContent(new MainScreen(MockAppUI.this));
         getNavigator().navigateTo(getNavigator().getState());
     }

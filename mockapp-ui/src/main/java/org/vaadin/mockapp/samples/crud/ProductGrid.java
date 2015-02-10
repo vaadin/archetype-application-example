@@ -16,7 +16,7 @@ import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.renderer.HtmlRenderer;
+import com.vaadin.ui.renderers.HtmlRenderer;
 
 /**
  * Grid of products, handling the visual presentation and filtering of a set of

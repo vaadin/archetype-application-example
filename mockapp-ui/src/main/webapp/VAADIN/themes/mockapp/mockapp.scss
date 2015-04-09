@@ -171,6 +171,10 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
       padding-bottom: $v-layout-spacing-vertical;
     }
 
+  }
+  
+  .product-form {
+    right: 0;
     @include transition(all 300ms);
     @include transform(translatex(100%));
   }

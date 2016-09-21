@@ -30,11 +30,6 @@ Other basic workflow steps:
   - edit code in the ui module
   - run "mvn jetty:run" in ui module
   - open http://localhost:8080/
-- developing the theme
-  - run the application as above
-  - edit the theme in the ui module
-  - optional: see below for precompiling the theme
-  - reload the application page
 - client side changes or add-ons
   - edit code/POM in widgetset module
   - run "mvn install" in widgetset module
@@ -48,18 +43,25 @@ Other basic workflow steps:
   - run "mvn -Pproduction jetty:run-war" in the production mode module
 
 
-Using a precompiled theme
+Developing a theme using the runtime compiler
 -------------------------
 
-When developing the UI module, Vaadin can compile the theme on the fly on every
-application reload, or the theme can be precompiled to speed up page loads.
+When developing the theme, Vaadin can be configured to compile the SASS based
+theme at runtime in the server. This way you can just modify the scss files in
+your IDE and reload the browser to see changes.
 
-To precompile the theme run "mvn vaadin:compile-theme" in the ui module. Note, though,
-that once the theme has been precompiled, any theme changes will not be visible until
-the next theme compilation or running the "mvn clean" target.
+To use on the runtime compilation, open pom.xml of your UI project and comment 
+out the compile-theme goal from vaadin-maven-plugin configuration. To remove 
+an existing pre-compiled theme, remove the styles.css file in the theme directory.
 
-When developing the theme, running the application in the "run" mode (rather than
-in "debug") in the IDE can speed up consecutive on-the-fly theme compilations
+When using the runtime compiler, running the application in the "run" mode 
+(rather than in "debug" mode) can speed up consecutive theme compilations
 significantly.
 
 The production module always automatically precompiles the theme for the production WAR.
+
+Using Vaadin pre-releases
+-------------------------
+
+If Vaadin pre-releases are not enabled by default, use the Maven parameter
+"-P vaadin-prerelease" or change the activation default value of the profile in pom.xml .

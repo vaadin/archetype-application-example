@@ -1,5 +1,6 @@
 package org.vaadin.mockapp.samples.backend;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import org.vaadin.mockapp.samples.backend.data.Category;
@@ -9,7 +10,7 @@ import org.vaadin.mockapp.samples.backend.mock.MockDataService;
 /**
  * Back-end service interface for retrieving and updating product data.
  */
-public abstract class DataService {
+public abstract class DataService implements Serializable {
 
     public abstract Collection<Product> getAllProducts();
 

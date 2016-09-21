@@ -1,6 +1,6 @@
 package org.vaadin.mockapp.samples;
 
-import org.vaadin.mockapp.MockAppUI;
+import org.vaadin.mockapp.MyUI;
 import org.vaadin.mockapp.samples.about.AboutView;
 import org.vaadin.mockapp.samples.crud.SampleCrudView;
 
@@ -18,7 +18,7 @@ import com.vaadin.ui.HorizontalLayout;
 public class MainScreen extends HorizontalLayout {
     private Menu menu;
 
-    public MainScreen(MockAppUI ui) {
+    public MainScreen(MyUI ui) {
 
         setStyleName("main-screen");
 

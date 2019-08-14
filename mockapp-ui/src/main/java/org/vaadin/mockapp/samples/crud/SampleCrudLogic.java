@@ -1,9 +1,10 @@
 package org.vaadin.mockapp.samples.crud;
 
-import org.vaadin.mockapp.MockAppUI;
+import org.vaadin.mockapp.MyUI;
 import org.vaadin.mockapp.samples.backend.DataService;
 import org.vaadin.mockapp.samples.backend.data.Product;
 
+import java.io.Serializable;
 import com.vaadin.server.Page;
 
 /**
@@ -15,7 +16,7 @@ import com.vaadin.server.Page;
  * the system separately, and to e.g. provide alternative views for the same
  * data.
  */
-public class SampleCrudLogic {
+public class SampleCrudLogic implements Serializable {
 
     private SampleCrudView view;
 
@@ -26,7 +27,7 @@ public class SampleCrudLogic {
     public void init() {
         editProduct(null);
         // Hide and disable if not admin
-        if (!MockAppUI.get().getAccessControl().isUserInRole("admin")) {
+        if (!MyUI.get().getAccessControl().isUserInRole("admin")) {
             view.setNewProductEnabled(false);
         }
 
@@ -50,7 +51,7 @@ public class SampleCrudLogic {
             fragmentParameter = productId;
         }
 
-        Page page = MockAppUI.get().getPage();
+        Page page = MyUI.get().getPage();
         page.setUriFragment("!" + SampleCrudView.VIEW_NAME + "/"
                 + fragmentParameter, false);
     }
@@ -112,7 +113,7 @@ public class SampleCrudLogic {
     }
 
     public void rowSelected(Product product) {
-        if (MockAppUI.get().getAccessControl().isUserInRole("admin")) {
+        if (MyUI.get().getAccessControl().isUserInRole("admin")) {
             view.editProduct(product);
         }
     }

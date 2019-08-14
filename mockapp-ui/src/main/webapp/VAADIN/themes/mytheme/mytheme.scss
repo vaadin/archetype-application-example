@@ -1,3 +1,5 @@
+// If you edit this file you need to compile the theme. See README.md for details.
+
 // Global variable overrides. Must be declared before importing Valo.
 
 // Defines the plaintext font size, weight and family. Font size affects general component sizing.
@@ -62,7 +64,7 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
 @import "../valo/valo.scss";
 
 
-@mixin mockapp {
+@mixin mytheme {
   @include valo;
 
 
@@ -130,7 +132,6 @@ $v-layout-spacing-horizontal: round($v-unit-size / 1.8) !default;
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 0;
     z-index: 100;
     width: round($v-unit-size * 9);
     height: 100%;
